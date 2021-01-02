@@ -253,6 +253,7 @@
     <None Include="Resources\StatusAnnotations_Warning_32xLG_color.png" />
     <None Include="Resources\New16.bmp" />
     <None Include="Resources\New32.bmp" />
+    <None Include="Resources\vs.ico" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">
