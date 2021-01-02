@@ -47,6 +47,6 @@ Partial Public Class RsharpDevMain
     Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
         ' vsToolStripExtender1.SetStyle(mainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(toolBar, version, theme)
-        VisualStudioToolStripExtender1.SetStyle(StatusStrip1, version, theme)
+        VisualStudioToolStripExtender1.ApplyVsTheme(version, theme, StatusStrip1)
     End Sub
 End Class

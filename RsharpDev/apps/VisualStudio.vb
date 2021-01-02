@@ -1,4 +1,5 @@
-﻿Imports My
+﻿Imports System.Runtime.CompilerServices
+Imports My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Module VisualStudio
@@ -31,5 +32,16 @@ Module VisualStudio
     Public Sub AddDocument(doc As DockContent)
         doc.Show(MyApplication.RStudio.DockPanel1)
         doc.DockState = DockState.Document
+    End Sub
+
+    <Extension>
+    Public Sub ApplyVsTheme(extender As VisualStudioToolStripExtender,
+                            version As VisualStudioToolStripExtender.VsVersion,
+                            theme As ThemeBase,
+                            ParamArray controls As ToolStrip())
+
+        For Each toolstrip As ToolStrip In controls
+            Call extender.SetStyle(toolstrip, version, theme)
+        Next
     End Sub
 End Module
