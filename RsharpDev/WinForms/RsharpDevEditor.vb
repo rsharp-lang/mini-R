@@ -98,11 +98,11 @@ Public Class RsharpDevEditor : Inherits DockContent
     }.Select(Function(a) $"({a})") _
      .JoinBy("|") & ")\s*\("
 
-    Dim keywords As String = "(\s)?(" & {
-        "let", "const", "as", "integer",
-        "imports", "from",
-        "in",
-        "using"
+    Dim startKeyword As String = "(let|const|imports|using)\s"
+    Dim keywords As String = "\s(" & {
+        "as", "integer",
+        "from",
+        "in"
     }.Select(Function(a) $"({a})").JoinBy("|") & ")\s"
 
     Dim numbers As String = "[-]?\d*(\.\d+)?([Ee][-]?\d+)?"
@@ -176,6 +176,7 @@ Public Class RsharpDevEditor : Inherits DockContent
 
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
+        e.ChangedRange.SetStyle(blue, startKeyword)
         e.ChangedRange.SetStyle(blue, "\sfrom\s")
         e.ChangedRange.SetStyle(blue, functionKeyword)
         e.ChangedRange.SetStyle(purple, buildInfunction)
