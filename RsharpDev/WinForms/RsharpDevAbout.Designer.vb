@@ -92,7 +92,7 @@ Partial Class RsharpDevAbout
         '
         Me.TextBox1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox1.Location = New System.Drawing.Point(25, 83)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"

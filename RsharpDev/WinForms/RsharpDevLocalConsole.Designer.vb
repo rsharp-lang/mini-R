@@ -28,7 +28,7 @@ Partial Class RsharpDevLocalConsole
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(868, 557)
+        Me.ClientSize = New System.Drawing.Size(745, 570)
         Me.Name = "RsharpDevLocalConsole"
         Me.Text = "Form1"
         Me.ResumeLayout(False)

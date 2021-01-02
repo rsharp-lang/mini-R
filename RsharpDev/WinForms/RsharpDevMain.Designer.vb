@@ -50,7 +50,7 @@ Partial Public Class RsharpDevMain
         Me._ribbon.ResourceIdentifier = Nothing
         Me._ribbon.ResourceName = "RibbonMarkup.ribbon"
         Me._ribbon.ShortcutTableResourceName = Nothing
-        Me._ribbon.Size = New System.Drawing.Size(943, 100)
+        Me._ribbon.Size = New System.Drawing.Size(1529, 100)
         Me._ribbon.TabIndex = 5
         '
         'VisualStudioToolStripExtender1
@@ -62,14 +62,14 @@ Partial Public Class RsharpDevMain
         Me.DockPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DockPanel1.Location = New System.Drawing.Point(0, 100)
         Me.DockPanel1.Name = "DockPanel1"
-        Me.DockPanel1.Size = New System.Drawing.Size(943, 440)
+        Me.DockPanel1.Size = New System.Drawing.Size(1529, 762)
         Me.DockPanel1.TabIndex = 6
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 540)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 862)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(943, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1529, 22)
         Me.StatusStrip1.TabIndex = 7
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -78,14 +78,15 @@ Partial Public Class RsharpDevMain
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
-        'RsharpDevStudio
+        'RsharpDevMain
         '
-        Me.ClientSize = New System.Drawing.Size(943, 562)
+        Me.ClientSize = New System.Drawing.Size(1529, 884)
         Me.Controls.Add(Me.DockPanel1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me._ribbon)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RsharpDevStudio"
+        Me.Name = "RsharpDevMain"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "R# Develop Studio"
         Me.ResumeLayout(False)
         Me.PerformLayout()

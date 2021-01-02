@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Development
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Blocks
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.DataSets
@@ -56,10 +57,20 @@ Public Module Description
             Case GetType(UsingClosure) : Return DirectCast(expr, UsingClosure).GetDescription
             Case GetType(IfBranch) : Return DirectCast(expr, IfBranch).GetDescription
             Case GetType(ForLoop) : Return DirectCast(expr, ForLoop).GetDescription
+            Case GetType([Imports]) : Return DirectCast(expr, [Imports]).GetDescription
 
         End Select
 
         Return Nothing
+    End Function
+
+    <Extension>
+    Public Function GetDescription([imports] As [Imports]) As String
+        If [imports].library Is Nothing Then
+            Return $"includes script file '{[imports].packages}'."
+        Else
+            Return $"imports external package module: {[imports].packages} from package namespace '{[imports].library}'"
+        End If
     End Function
 
     <Extension>

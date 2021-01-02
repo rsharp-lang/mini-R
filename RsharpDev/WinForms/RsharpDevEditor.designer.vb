@@ -47,7 +47,7 @@ Partial Class RsharpDevEditor
         Me.FastColoredTextBox1.Paddings = New System.Windows.Forms.Padding(0)
         Me.FastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.FastColoredTextBox1.ServiceColors = CType(resources.GetObject("FastColoredTextBox1.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
-        Me.FastColoredTextBox1.Size = New System.Drawing.Size(787, 627)
+        Me.FastColoredTextBox1.Size = New System.Drawing.Size(629, 539)
         Me.FastColoredTextBox1.TabIndex = 0
         Me.FastColoredTextBox1.Text = "#/usr/bin/R#"
         Me.FastColoredTextBox1.Zoom = 100
@@ -56,9 +56,9 @@ Partial Class RsharpDevEditor
         '
         Me.DocumentMap1.Dock = System.Windows.Forms.DockStyle.Right
         Me.DocumentMap1.ForeColor = System.Drawing.Color.Maroon
-        Me.DocumentMap1.Location = New System.Drawing.Point(787, 0)
+        Me.DocumentMap1.Location = New System.Drawing.Point(629, 0)
         Me.DocumentMap1.Name = "DocumentMap1"
-        Me.DocumentMap1.Size = New System.Drawing.Size(254, 627)
+        Me.DocumentMap1.Size = New System.Drawing.Size(154, 539)
         Me.DocumentMap1.TabIndex = 1
         Me.DocumentMap1.Target = Me.FastColoredTextBox1
         Me.DocumentMap1.Text = "DocumentMap1"
@@ -67,7 +67,7 @@ Partial Class RsharpDevEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1041, 627)
+        Me.ClientSize = New System.Drawing.Size(783, 539)
         Me.Controls.Add(Me.FastColoredTextBox1)
         Me.Controls.Add(Me.DocumentMap1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
