@@ -6,8 +6,11 @@
     <Command Name="cmdGroupSimple" Id="1003" LabelTitle="Simple" />
     <Command Name="cmdGroupAdvanced" Id="1004" LabelTitle="Advanced" />
     <Command Name="cmdButtonNew" Id="1005" LabelTitle="&amp;New" LabelDescription="New Description" TooltipTitle="New (Ctrl+N)" TooltipDescription="Create a new image.">
+      <Command.SmallImages>
+        <Image>Resources/New16.bmp</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/New32.bmp</Image>
+        <Image>Resources/New32.bmp</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdButtonOpen" Id="1006" LabelTitle="Open" LabelDescription="Open Description" TooltipTitle="Open (Ctrl+O)" TooltipDescription="Open an existing image.">

@@ -237,6 +237,10 @@
     <None Include="Resources\Terminal.png" />
     <None Include="Resources\tracker.png" />
     <None Include="Resources\user-trash-full.png" />
+    <None Include="Resources\spinner.gif" />
+    <None Include="Resources\StatusAnnotations_Warning_32xLG_color.png" />
+    <None Include="Resources\New16.bmp" />
+    <None Include="Resources\New32.bmp" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">

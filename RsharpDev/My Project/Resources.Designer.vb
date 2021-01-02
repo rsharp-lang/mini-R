@@ -263,6 +263,26 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property New16() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("New16", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property New32() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("New32", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property preferences_desktop_locale() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("preferences_desktop_locale", resourceCulture)
@@ -286,6 +306,26 @@ Namespace My.Resources
         Friend ReadOnly Property preferences_system_sharing() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("preferences_system_sharing", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property spinner() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("spinner", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property StatusAnnotations_Warning_32xLG_color() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("StatusAnnotations_Warning_32xLG_color", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
