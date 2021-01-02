@@ -23,6 +23,7 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.DockPanel1 = New WeifenLuo.WinFormsUI.Docking.DockPanel()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
@@ -78,8 +79,9 @@ Partial Class frmMain
         Me.Controls.Add(Me.DockPanel1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Ribbon1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
-        Me.Text = "Form1"
+        Me.Text = "R# Studio"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

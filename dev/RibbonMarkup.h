@@ -34,4 +34,4 @@
 #define cmdButtonExit_TooltipDescription_RESID 60022
 #define cmdButtonExit_SmallImages_RESID 60023
 #define cmdButtonExit_LargeImages_RESID 60024
-#define InternalCmd2_LabelTitle_RESID 60025
+#define InternalCmd4_LabelTitle_RESID 60025
