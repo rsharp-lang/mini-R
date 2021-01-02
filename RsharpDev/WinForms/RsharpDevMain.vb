@@ -26,6 +26,9 @@ Partial Public Class RsharpDevMain
 
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
+
+        ' test
+        Call VisualStudio.AddDocument(New RsharpDevEditor)
     End Sub
 
     ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()

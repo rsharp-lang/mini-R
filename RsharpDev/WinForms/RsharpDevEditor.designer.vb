@@ -32,14 +32,14 @@ Partial Class RsharpDevEditor
         Me.FastColoredTextBox1.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
         Me.FastColoredTextBox1.AutoIndentCharsPatterns = "^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);" & Global.Microsoft.VisualBasic.ChrW(10) & "^\s*(case|default)\s*[^:]*(" &
     "?<range>:)\s*(?<range>[^;]+);"
-        Me.FastColoredTextBox1.AutoScrollMinSize = New System.Drawing.Size(123, 17)
+        Me.FastColoredTextBox1.AutoScrollMinSize = New System.Drawing.Size(109, 15)
         Me.FastColoredTextBox1.BackBrush = Nothing
-        Me.FastColoredTextBox1.CharHeight = 17
-        Me.FastColoredTextBox1.CharWidth = 8
+        Me.FastColoredTextBox1.CharHeight = 15
+        Me.FastColoredTextBox1.CharWidth = 7
         Me.FastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.FastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.FastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FastColoredTextBox1.Font = New System.Drawing.Font("Consolas", 11.25!)
+        Me.FastColoredTextBox1.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FastColoredTextBox1.IsReplaceMode = False
         Me.FastColoredTextBox1.Location = New System.Drawing.Point(0, 0)
         Me.FastColoredTextBox1.Name = "FastColoredTextBox1"
@@ -57,6 +57,7 @@ Partial Class RsharpDevEditor
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1041, 627)
         Me.Controls.Add(Me.FastColoredTextBox1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RsharpDevEditor"
         Me.Text = "New Script"
         CType(Me.FastColoredTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
