@@ -87,9 +87,10 @@ Public Class RsharpDevEditor : Inherits DockContent
         "using"
     }.Select(Function(a) $"({a})").JoinBy("|") & ")\s"
 
+    Dim functionKeyword As String = "\s(function|if|for)\s*\("
     Dim keyword2 As String = "\s(" & {
-        "function", "double", "boolean", "string", "integer",
-        "for", "if", "else"
+        "double", "boolean", "string", "integer",
+        "else"
     }.Select(Function(a) $"({a})") _
      .JoinBy("|") & ")(\s|\)|,)"
 
@@ -109,6 +110,14 @@ Public Class RsharpDevEditor : Inherits DockContent
     Private Function GetTooltipContent(hoveredWord As String) As String
         hoveredWord = hoveredWord.Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
 
+        If hoveredWord.StringEmpty Then
+            Return Nothing
+        End If
+
+        If hoveredWord.First = "}"c AndAlso hoveredWord.Last = "{"c Then
+            hoveredWord = hoveredWord.GetStackValue("}", "{").Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
+        End If
+
         Select Case hoveredWord
             Case "function" : Return "A keyword for identify current symbol is a function closure data object."
             Case "as" : Return "A keyword for add type constraint decorating to the target symbol."
@@ -119,6 +128,9 @@ Public Class RsharpDevEditor : Inherits DockContent
             Case "double" : Return "R# float64 type"
             Case "boolean" : Return "R# logical type"
             Case "if" : Return "Execute the code closure based on the test condition is true or not."
+            Case "else" : Return "Execute the code in next closure if the given test condition is FALSE."
+            Case "using" : Return "A closure that will auto dispose the target symbol after finished the closure executation."
+            Case "for" : Return $"Loop through each elements in the given sequence."
         End Select
 
         Return Description.GetDescription(hoveredWord)
@@ -136,6 +148,7 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
+        e.ChangedRange.SetStyle(blue, functionKeyword)
         e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
     End Sub

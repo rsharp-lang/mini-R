@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Development
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Blocks
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.DataSets
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -41,10 +42,28 @@ Public Module Description
             Case GetType(DeclareNewFunction) : Return DirectCast(expr, DeclareNewFunction).GetDescription()
             Case GetType(DeclareNewSymbol) : Return DirectCast(expr, DeclareNewSymbol).GetDescription
             Case GetType(FunctionInvoke) : Return DirectCast(expr, FunctionInvoke).GetDescription
+            Case GetType(UsingClosure) : Return DirectCast(expr, UsingClosure).GetDescription
+            Case GetType(IfBranch) : Return DirectCast(expr, IfBranch).GetDescription
+            Case GetType(ForLoop) : Return DirectCast(expr, ForLoop).GetDescription
 
         End Select
 
         Return Nothing
+    End Function
+
+    <Extension>
+    Public Function GetDescription([for] As ForLoop) As String
+        Return $"Loop through each elements in the given sequence."
+    End Function
+
+    <Extension>
+    Public Function GetDescription([if] As IfBranch) As String
+        Return "Execute the next closure if the given test condition is TRUE."
+    End Function
+
+    <Extension>
+    Public Function GetDescription([using] As UsingClosure) As String
+        Return $"A closure that will auto dispose the target symbol after finished the closure executation."
     End Function
 
     <Extension>
@@ -65,7 +84,10 @@ Public Module Description
                 End Using
             End If
 
-            Return help.ToString.Replace("``", "").Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF) & vbCrLf & vbCrLf & text
+            Return help.ToString _
+                .Replace("``", "") _
+                .Replace("@T:", "") _
+                .Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF) & vbCrLf & vbCrLf & text
         Else
             Return $"Run R# function '{calls.funcName}'."
         End If

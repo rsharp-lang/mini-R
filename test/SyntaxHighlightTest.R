@@ -16,5 +16,9 @@ using zip as file(filepath) {
 	}
 }
 
+for(i in b) {
+
+
+}
 
 #endregion
