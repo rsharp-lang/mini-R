@@ -42,19 +42,19 @@ Partial Class ToolWinSolution
         '
         Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ScriptToolStripMenuItem})
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.NewToolStripMenuItem.Text = "Add"
         '
         'ScriptToolStripMenuItem
         '
         Me.ScriptToolStripMenuItem.Name = "ScriptToolStripMenuItem"
-        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(104, 22)
         Me.ScriptToolStripMenuItem.Text = "Script"
         '
         'BuildToolStripMenuItem
         '
         Me.BuildToolStripMenuItem.Name = "BuildToolStripMenuItem"
-        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.BuildToolStripMenuItem.Text = "Build"
         '
         'Panel1
@@ -62,15 +62,15 @@ Partial Class ToolWinSolution
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(471, 57)
+        Me.Panel1.Size = New System.Drawing.Size(471, 24)
         Me.Panel1.TabIndex = 1
         '
         'TreeView1
         '
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeView1.Location = New System.Drawing.Point(0, 57)
+        Me.TreeView1.Location = New System.Drawing.Point(0, 24)
         Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.Size = New System.Drawing.Size(471, 528)
+        Me.TreeView1.Size = New System.Drawing.Size(471, 561)
         Me.TreeView1.TabIndex = 2
         '
         'ToolWinSolution
