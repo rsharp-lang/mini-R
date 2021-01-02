@@ -16,6 +16,7 @@ Partial Public Class RsharpDevMain
         ribbon = New RibbonItems(_ribbon)
 
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
+        AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
 
         MyApplication.Register(Me)
     End Sub

@@ -17,15 +17,18 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _GroupSimple As RibbonGroup, _ButtonSwitchToAdvanced As RibbonButton, _ButtonDropA As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
-    ' Warning: *.h file does not exist. The commands maybe incomplete !!!
+    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ButtonSwitchToAdvanced As RibbonButton, _ButtonDropA As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
-        Public Const cmdTabMain As UInteger = 1001
-        Public Const cmdGroupCommon As UInteger = 1002
+        Public Const cmdRecents As UInteger = 15
         Public Const cmdButtonNew As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1006
         Public Const cmdButtonSave As UInteger = 1007
+        Public Const cmdRsharpDev As UInteger = 17
+        Public Const cmdAbout As UInteger = 16
+        Public Const cmdHelp As UInteger = 14
+        Public Const cmdTabMain As UInteger = 1001
+        Public Const cmdGroupCommon As UInteger = 1002
         Public Const cmdGroupSimple As UInteger = 1003
         Public Const cmdButtonSwitchToAdvanced As UInteger = 1011
         Public Const cmdButtonDropA As UInteger = 1008
@@ -44,21 +47,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property TabMain As RibbonTab
+    Public Property Recents As RibbonRecentItems
         Get
-            Return _TabMain
+            Return _Recents
         End Get
-        Private Set(ByVal value As RibbonTab)
-            _TabMain = value
-        End Set
-    End Property
-
-    Public Property GroupCommon As RibbonGroup
-        Get
-            Return _GroupCommon
-        End Get
-        Private Set(ByVal value As RibbonGroup)
-            _GroupCommon = value
+        Private Set(ByVal value As RibbonRecentItems)
+            _Recents = value
         End Set
     End Property
 
@@ -86,6 +80,51 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonSave = value
+        End Set
+    End Property
+
+    Public Property RsharpDev As RibbonDropDownButton
+        Get
+            Return _RsharpDev
+        End Get
+        Private Set(ByVal value As RibbonDropDownButton)
+            _RsharpDev = value
+        End Set
+    End Property
+
+    Public Property About As RibbonButton
+        Get
+            Return _About
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _About = value
+        End Set
+    End Property
+
+    Public Property Help As RibbonHelpButton
+        Get
+            Return _Help
+        End Get
+        Private Set(ByVal value As RibbonHelpButton)
+            _Help = value
+        End Set
+    End Property
+
+    Public Property TabMain As RibbonTab
+        Get
+            Return _TabMain
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabMain = value
+        End Set
+    End Property
+
+    Public Property GroupCommon As RibbonGroup
+        Get
+            Return _GroupCommon
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupCommon = value
         End Set
     End Property
 
@@ -155,11 +194,15 @@ Partial Class RibbonItems
     Public Sub New(ByVal ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         Me.Ribbon = ribbon
-        TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
-        GroupCommon = New RibbonGroup(ribbon, Cmd.cmdGroupCommon)
+        Recents = New RibbonRecentItems(ribbon, Cmd.cmdRecents)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpen = New RibbonButton(ribbon, Cmd.cmdButtonOpen)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
+        RsharpDev = New RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev)
+        About = New RibbonButton(ribbon, Cmd.cmdAbout)
+        Help = New RibbonHelpButton(ribbon, Cmd.cmdHelp)
+        TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
+        GroupCommon = New RibbonGroup(ribbon, Cmd.cmdGroupCommon)
         GroupSimple = New RibbonGroup(ribbon, Cmd.cmdGroupSimple)
         ButtonSwitchToAdvanced = New RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)

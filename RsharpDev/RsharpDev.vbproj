@@ -132,6 +132,12 @@
     <Compile Include="apps\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
+    <Compile Include="WinForms\RsharpDevAbout.Designer.vb">
+      <DependentUpon>RsharpDevAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\RsharpDevEditor.designer.vb">
       <DependentUpon>RsharpDevEditor.vb</DependentUpon>
     </Compile>
@@ -173,6 +179,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WinForms\RsharpDevAbout.resx">
+      <DependentUpon>RsharpDevAbout.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevEditor.resx">
       <DependentUpon>RsharpDevEditor.vb</DependentUpon>
     </EmbeddedResource>
