@@ -1,4 +1,5 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports Microsoft.VisualBasic.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ToolWinSolution
 
@@ -14,5 +15,9 @@ Public Class ToolWinSolution
 
     Private Sub ScriptToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ScriptToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        Call VisualStudio.AddDocument(SingletonHolder(Of PackageConfiguration).Instance)
     End Sub
 End Class

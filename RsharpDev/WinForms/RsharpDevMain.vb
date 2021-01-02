@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.My
 Imports My
 Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
@@ -29,8 +30,7 @@ Partial Public Class RsharpDevMain
         Call VisualStudio.InitializeUI()
         Call Program.Initialize()
 
-        ' test
-        Call VisualStudio.AddDocument(New RsharpDevEditor)
+        Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
     End Sub
 
     ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()

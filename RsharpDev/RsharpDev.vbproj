@@ -140,6 +140,24 @@
     <Compile Include="apps\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
+    <Compile Include="WinForms\Pages\PackageConfiguration.Designer.vb">
+      <DependentUpon>PackageConfiguration.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\PackageConfiguration.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\Pages\StudioSettings.Designer.vb">
+      <DependentUpon>StudioSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\StudioSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\Pages\StartPage.Designer.vb">
+      <DependentUpon>StartPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\StartPage.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\SplashScreen.Designer.vb">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </Compile>
@@ -199,6 +217,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
+      <DependentUpon>PackageConfiguration.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Pages\StartPage.resx">
+      <DependentUpon>StartPage.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevAbout.resx">
       <DependentUpon>RsharpDevAbout.vb</DependentUpon>
     </EmbeddedResource>

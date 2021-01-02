@@ -23,17 +23,18 @@ Partial Class ToolWinSolution
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("assembly")
-        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("data")
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("man")
-        Dim TreeNode11 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("R")
-        Dim TreeNode12 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("DESCRIPTION")
-        Dim TreeNode13 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("LICENSE")
-        Dim TreeNode14 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Solution", New System.Windows.Forms.TreeNode() {TreeNode8, TreeNode9, TreeNode10, TreeNode11, TreeNode12, TreeNode13})
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("assembly")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("data")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("man")
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("R")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("DESCRIPTION")
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("LICENSE")
+        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Solution", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2, TreeNode3, TreeNode4, TreeNode5, TreeNode6})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ToolWinSolution))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BuildToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
@@ -52,7 +53,6 @@ Partial Class ToolWinSolution
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -68,21 +68,26 @@ Partial Class ToolWinSolution
         Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ScriptToolStripMenuItem})
         Me.NewToolStripMenuItem.Image = Global.My.Resources.Resources.New32
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.NewToolStripMenuItem.Text = "Add"
         '
         'ScriptToolStripMenuItem
         '
         Me.ScriptToolStripMenuItem.Image = Global.My.Resources.Resources.script_32xLG
         Me.ScriptToolStripMenuItem.Name = "ScriptToolStripMenuItem"
-        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(104, 22)
         Me.ScriptToolStripMenuItem.Text = "Script"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(98, 6)
         '
         'BuildToolStripMenuItem
         '
         Me.BuildToolStripMenuItem.Image = Global.My.Resources.Resources.build_Selection_32xLG
         Me.BuildToolStripMenuItem.Name = "BuildToolStripMenuItem"
-        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.BuildToolStripMenuItem.Text = "Build"
         '
         'TreeView1
@@ -97,28 +102,28 @@ Partial Class ToolWinSolution
         Me.TreeView1.LabelEdit = True
         Me.TreeView1.Location = New System.Drawing.Point(0, 25)
         Me.TreeView1.Name = "TreeView1"
-        TreeNode8.ImageIndex = 2
-        TreeNode8.Name = "Node3"
-        TreeNode8.Text = "assembly"
-        TreeNode9.ImageIndex = 2
-        TreeNode9.Name = "Node2"
-        TreeNode9.Text = "data"
-        TreeNode10.ImageIndex = 2
-        TreeNode10.Name = "Node1"
-        TreeNode10.Text = "man"
-        TreeNode11.ImageIndex = 2
-        TreeNode11.Name = "Node0"
-        TreeNode11.Text = "R"
-        TreeNode12.ImageIndex = 6
-        TreeNode12.Name = "Node0"
-        TreeNode12.Text = "DESCRIPTION"
-        TreeNode13.ImageIndex = 7
-        TreeNode13.Name = "Node1"
-        TreeNode13.Text = "LICENSE"
-        TreeNode14.ImageIndex = 5
-        TreeNode14.Name = "Node4"
-        TreeNode14.Text = "Solution"
-        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode14})
+        TreeNode1.ImageIndex = 2
+        TreeNode1.Name = "Node3"
+        TreeNode1.Text = "assembly"
+        TreeNode2.ImageIndex = 2
+        TreeNode2.Name = "Node2"
+        TreeNode2.Text = "data"
+        TreeNode3.ImageIndex = 2
+        TreeNode3.Name = "Node1"
+        TreeNode3.Text = "man"
+        TreeNode4.ImageIndex = 2
+        TreeNode4.Name = "Node0"
+        TreeNode4.Text = "R"
+        TreeNode5.ImageIndex = 6
+        TreeNode5.Name = "Node0"
+        TreeNode5.Text = "DESCRIPTION"
+        TreeNode6.ImageIndex = 7
+        TreeNode6.Name = "Node1"
+        TreeNode6.Text = "LICENSE"
+        TreeNode7.ImageIndex = 5
+        TreeNode7.Name = "Node4"
+        TreeNode7.Text = "Solution"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode7})
         Me.TreeView1.SelectedImageIndex = 0
         Me.TreeView1.ShowNodeToolTips = True
         Me.TreeView1.Size = New System.Drawing.Size(471, 560)
@@ -168,11 +173,6 @@ Partial Class ToolWinSolution
         Me.ToolStripButton2.Name = "ToolStripButton2"
         Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton2.Text = "Build Package"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'ToolWinSolution
         '
