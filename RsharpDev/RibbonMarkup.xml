@@ -142,29 +142,64 @@
         <String Id="40">Switch to simple mode</String>
       </Command.TooltipDescription>
     </Command>
-    <Command Name="cmdHelp" Id="14" LabelTitle="Help" TooltipTitle="Help">
+    <Command Name="cmdHelp" Id="14">
+      <Command.LabelTitle>
+        <String Id="41">Help</String>
+      </Command.LabelTitle>
+      <Command.TooltipTitle>
+        <String Id="42">Help</String>
+      </Command.TooltipTitle>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+        <Image Id="43" MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+        <Image Id="44" MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdRecents" Id="15" LabelTitle="Recent Files" />
-    <Command Name="cmdAbout" Id="16" LabelTitle="About">
+    <Command Name="cmdRecents" Id="15">
+      <Command.LabelTitle>
+        <String Id="45">Recent Files</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdAbout" Id="16">
+      <Command.LabelTitle>
+        <String Id="46">About</String>
+      </Command.LabelTitle>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+        <Image Id="47" MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+        <Image Id="48" MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdRsharpDev" Id="17" LabelTitle="R# Develop Studio">
+    <Command Name="cmdRsharpDev" Id="17">
+      <Command.LabelTitle>
+        <String Id="49">R# Develop Studio</String>
+      </Command.LabelTitle>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/R-sharp.png</Image>
+        <Image Id="50" MinDPI="192">Resources/R-sharp.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/R-sharp.png</Image>
+        <Image Id="51" MinDPI="192">Resources/R-sharp.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdRunScript" Id="18">
+      <Command.LabelTitle>
+        <String Id="52">Run</String>
+      </Command.LabelTitle>
+      <Command.SmallImages>
+        <Image Id="53" MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image Id="54" MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdRunRemote" Id="19" LabelTitle="Run Script On Remote Server">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/Terminal.bmp</Image>
       </Command.LargeImages>
     </Command>
   </Application.Commands>
@@ -207,7 +242,10 @@
           </Group>
           <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="TwoButtons">
             <Button CommandName="cmdButtonSwitchToAdvanced" />
-            <Button CommandName="cmdButtonDropA" />
+            <SplitButton>
+              <Button CommandName="cmdRunScript" />
+              <Button CommandName="cmdRunRemote" />
+            </SplitButton>
           </Group>
           <Group CommandName="cmdGroupAdvanced" ApplicationModes="1" SizeDefinition="FourButtons">
             <Button CommandName="cmdButtonSwitchToSimple" />

@@ -29,9 +29,11 @@ using RibbonLib.Interop;
             public const uint cmdGroupCommon = 1002;
             public const uint cmdGroupSimple = 1003;
             public const uint cmdButtonSwitchToAdvanced = 1011;
-            public const uint cmdButtonDropA = 1008;
+            public const uint cmdRunScript = 18;
+            public const uint cmdRunRemote = 19;
             public const uint cmdGroupAdvanced = 1004;
             public const uint cmdButtonSwitchToSimple = 1012;
+            public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
         }
@@ -50,9 +52,11 @@ using RibbonLib.Interop;
         public RibbonGroup GroupCommon { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
         public RibbonButton ButtonSwitchToAdvanced { get; private set; }
-        public RibbonButton ButtonDropA { get; private set; }
+        public RibbonButton RunScript { get; private set; }
+        public RibbonButton RunRemote { get; private set; }
         public RibbonGroup GroupAdvanced { get; private set; }
         public RibbonButton ButtonSwitchToSimple { get; private set; }
+        public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
 
@@ -72,9 +76,11 @@ using RibbonLib.Interop;
             GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
             ButtonSwitchToAdvanced = new RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced);
-            ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
+            RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);
+            RunRemote = new RibbonButton(ribbon, Cmd.cmdRunRemote);
             GroupAdvanced = new RibbonGroup(ribbon, Cmd.cmdGroupAdvanced);
             ButtonSwitchToSimple = new RibbonButton(ribbon, Cmd.cmdButtonSwitchToSimple);
+            ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
         }

@@ -17,7 +17,7 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ButtonSwitchToAdvanced As RibbonButton, _ButtonDropA As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
+    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ButtonSwitchToAdvanced As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdRecents As UInteger = 15
@@ -31,9 +31,11 @@ Partial Class RibbonItems
         Public Const cmdGroupCommon As UInteger = 1002
         Public Const cmdGroupSimple As UInteger = 1003
         Public Const cmdButtonSwitchToAdvanced As UInteger = 1011
-        Public Const cmdButtonDropA As UInteger = 1008
+        Public Const cmdRunScript As UInteger = 18
+        Public Const cmdRunRemote As UInteger = 19
         Public Const cmdGroupAdvanced As UInteger = 1004
         Public Const cmdButtonSwitchToSimple As UInteger = 1012
+        Public Const cmdButtonDropA As UInteger = 1008
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
     End Class
@@ -146,12 +148,21 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonDropA As RibbonButton
+    Public Property RunScript As RibbonButton
         Get
-            Return _ButtonDropA
+            Return _RunScript
         End Get
         Private Set(ByVal value As RibbonButton)
-            _ButtonDropA = value
+            _RunScript = value
+        End Set
+    End Property
+
+    Public Property RunRemote As RibbonButton
+        Get
+            Return _RunRemote
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _RunRemote = value
         End Set
     End Property
 
@@ -170,6 +181,15 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonSwitchToSimple = value
+        End Set
+    End Property
+
+    Public Property ButtonDropA As RibbonButton
+        Get
+            Return _ButtonDropA
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonDropA = value
         End Set
     End Property
 
@@ -205,9 +225,11 @@ Partial Class RibbonItems
         GroupCommon = New RibbonGroup(ribbon, Cmd.cmdGroupCommon)
         GroupSimple = New RibbonGroup(ribbon, Cmd.cmdGroupSimple)
         ButtonSwitchToAdvanced = New RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced)
-        ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
+        RunScript = New RibbonButton(ribbon, Cmd.cmdRunScript)
+        RunRemote = New RibbonButton(ribbon, Cmd.cmdRunRemote)
         GroupAdvanced = New RibbonGroup(ribbon, Cmd.cmdGroupAdvanced)
         ButtonSwitchToSimple = New RibbonButton(ribbon, Cmd.cmdButtonSwitchToSimple)
+        ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
         ButtonDropB = New RibbonButton(ribbon, Cmd.cmdButtonDropB)
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
     End Sub
