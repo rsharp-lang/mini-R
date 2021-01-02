@@ -271,6 +271,7 @@
     <None Include="Resources\New16.bmp" />
     <None Include="Resources\New32.bmp" />
     <None Include="Resources\vs.ico" />
+    <None Include="Resources\R-sharp.png" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">
