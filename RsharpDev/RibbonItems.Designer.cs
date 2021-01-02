@@ -13,18 +13,21 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
-// Warning: *.h file does not exist. The commands maybe incomplete !!!
-
         private static class Cmd
         {
-            public const uint cmdTabMain = 1001;
-            public const uint cmdGroupCommon = 1002;
+            public const uint cmdRecents = 15;
             public const uint cmdButtonNew = 1005;
             public const uint cmdButtonOpen = 1006;
             public const uint cmdButtonSave = 1007;
+            public const uint cmdRsharpDev = 17;
+            public const uint cmdAbout = 16;
+            public const uint cmdHelp = 14;
+            public const uint cmdTabMain = 1001;
+            public const uint cmdGroupCommon = 1002;
             public const uint cmdGroupSimple = 1003;
             public const uint cmdButtonSwitchToAdvanced = 1011;
             public const uint cmdButtonDropA = 1008;
@@ -37,11 +40,15 @@ using RibbonLib.Interop;
         // ContextPopup CommandName
 
         public Ribbon Ribbon { get; private set; }
-        public RibbonTab TabMain { get; private set; }
-        public RibbonGroup GroupCommon { get; private set; }
+        public RibbonRecentItems Recents { get; private set; }
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpen { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
+        public RibbonDropDownButton RsharpDev { get; private set; }
+        public RibbonButton About { get; private set; }
+        public RibbonHelpButton Help { get; private set; }
+        public RibbonTab TabMain { get; private set; }
+        public RibbonGroup GroupCommon { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
         public RibbonButton ButtonSwitchToAdvanced { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
@@ -55,11 +62,15 @@ using RibbonLib.Interop;
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
             this.Ribbon = ribbon;
-            TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
-            GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
+            Recents = new RibbonRecentItems(ribbon, Cmd.cmdRecents);
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
+            RsharpDev = new RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev);
+            About = new RibbonButton(ribbon, Cmd.cmdAbout);
+            Help = new RibbonHelpButton(ribbon, Cmd.cmdHelp);
+            TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
+            GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
             ButtonSwitchToAdvanced = new RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
@@ -70,3 +81,4 @@ using RibbonLib.Interop;
         }
 
     }
+}

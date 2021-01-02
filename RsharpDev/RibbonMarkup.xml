@@ -1,61 +1,202 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://schemas.microsoft.com/windows/2009/Ribbon">
   <Application.Commands>
-    <Command Name="cmdTabMain" Id="1001" LabelTitle="Main" />
-    <Command Name="cmdGroupCommon" Id="1002" LabelTitle="Common" />
-    <Command Name="cmdGroupSimple" Id="1003" LabelTitle="Simple" />
-    <Command Name="cmdGroupAdvanced" Id="1004" LabelTitle="Advanced" />
-    <Command Name="cmdButtonNew" Id="1005" LabelTitle="&amp;New" LabelDescription="New Description" TooltipTitle="New (Ctrl+N)" TooltipDescription="Create a new image.">
+    <Command Name="cmdTabMain" Id="1001">
+      <Command.LabelTitle>
+        <String Id="2">Main</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdGroupCommon" Id="1002">
+      <Command.LabelTitle>
+        <String Id="3">Common</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdGroupSimple" Id="1003">
+      <Command.LabelTitle>
+        <String Id="4">Simple</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdGroupAdvanced" Id="1004">
+      <Command.LabelTitle>
+        <String Id="5">Advanced</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdButtonNew" Id="1005">
+      <Command.LabelTitle>
+        <String Id="6">&amp;New</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="7">New Description</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="8">New (Ctrl+N)</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="9">Create a new image.</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image>Resources/New16.bmp</Image>
+        <Image Id="10">Resources/New16.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Resources/New32.bmp</Image>
+        <Image Id="11">Resources/New32.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpen" Id="1006" LabelTitle="Open" LabelDescription="Open Description" TooltipTitle="Open (Ctrl+O)" TooltipDescription="Open an existing image.">
+    <Command Name="cmdButtonOpen" Id="1006">
+      <Command.LabelTitle>
+        <String Id="12">Open</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="13">Open Description</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="14">Open (Ctrl+O)</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="15">Open an existing image.</String>
+      </Command.TooltipDescription>
+      <Command.SmallImages>
+        <Image Id="16" MinDPI="192">Resources/folder-documents.bmp</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/Open32.bmp</Image>
+        <Image Id="17" MinDPI="192">Resources/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonSave" Id="1007" LabelTitle="Save" LabelDescription="Save Description" TooltipTitle="Save (Ctrl+S)" TooltipDescription="Save the current image.">
+    <Command Name="cmdButtonSave" Id="1007">
+      <Command.LabelTitle>
+        <String Id="18">Save</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="19">Save Description</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="20">Save (Ctrl+S)</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="21">Save the current image.</String>
+      </Command.TooltipDescription>
+      <Command.SmallImages>
+        <Image Id="22" MinDPI="192">Resources/document-save.bmp</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/Save32.bmp</Image>
+        <Image Id="23" MinDPI="192">Resources/document-save.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonDropA" Id="1008" LabelTitle="Drop A" LabelDescription="Sub button A" TooltipTitle="Drop A">
+    <Command Name="cmdButtonDropA" Id="1008">
+      <Command.LabelTitle>
+        <String Id="24">Drop A</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="25">Sub button A</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="26">Drop A</String>
+      </Command.TooltipTitle>
+    </Command>
+    <Command Name="cmdButtonDropB" Id="1009">
+      <Command.LabelTitle>
+        <String Id="27">Drop B</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="28">Sub button B</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="29">Drop B</String>
+      </Command.TooltipTitle>
+    </Command>
+    <Command Name="cmdButtonDropC" Id="1010">
+      <Command.LabelTitle>
+        <String Id="30">Drop C</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="31">Sub button C</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="32">Drop C</String>
+      </Command.TooltipTitle>
+    </Command>
+    <Command Name="cmdButtonSwitchToAdvanced" Id="1011">
+      <Command.LabelTitle>
+        <String Id="33">Advanced</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="34">Switch to advanced mode</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="35">Advanced</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="36">Switch to advanced mode</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdButtonSwitchToSimple" Id="1012">
+      <Command.LabelTitle>
+        <String Id="37">Simple</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="38">Switch to simple mode</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="39">Simple</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="40">Switch to simple mode</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdHelp" Id="14" LabelTitle="Help" TooltipTitle="Help">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/DropA32.bmp</Image>
+        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonDropB" Id="1009" LabelTitle="Drop B" LabelDescription="Sub button B" TooltipTitle="Drop B">
+    <Command Name="cmdRecents" Id="15" LabelTitle="Recent Files" />
+    <Command Name="cmdAbout" Id="16" LabelTitle="About">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/DropB32.bmp</Image>
+        <Image MinDPI="192">Resources/dialog-information.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonDropC" Id="1010" LabelTitle="Drop C" LabelDescription="Sub button C" TooltipTitle="Drop C">
+    <Command Name="cmdRsharpDev" Id="17" LabelTitle="R# Develop Studio">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/R-sharp.png</Image>
+      </Command.SmallImages>
       <Command.LargeImages>
-        <Image>Res/DropC32.bmp</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdButtonSwitchToAdvanced" Id="1011" LabelTitle="Advanced" LabelDescription="Switch to advanced mode" TooltipTitle="Advanced" TooltipDescription="Switch to advanced mode">
-      <Command.LargeImages>
-        <Image>Res/Simple32.bmp</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdButtonSwitchToSimple" Id="1012" LabelTitle="Simple" LabelDescription="Switch to simple mode" TooltipTitle="Simple" TooltipDescription="Switch to simple mode">
-      <Command.LargeImages>
-        <Image>Res/Advanced32.bmp</Image>
+        <Image MinDPI="192">Resources/R-sharp.png</Image>
       </Command.LargeImages>
     </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
       <Ribbon.ApplicationMenu>
-        <ApplicationMenu />
+        <ApplicationMenu>
+          <ApplicationMenu.RecentItems>
+            <RecentItems CommandName="cmdRecents" />
+          </ApplicationMenu.RecentItems>
+          <MenuGroup>
+            <Button CommandName="cmdButtonNew" />
+            <Button CommandName="cmdButtonOpen" />
+            <Button CommandName="cmdButtonSave" />
+          </MenuGroup>
+          <MenuGroup>
+            <DropDownButton CommandName="cmdRsharpDev">
+              <Button CommandName="cmdAbout" />
+            </DropDownButton>
+          </MenuGroup>
+        </ApplicationMenu>
       </Ribbon.ApplicationMenu>
+      <Ribbon.HelpButton>
+        <HelpButton CommandName="cmdHelp" />
+      </Ribbon.HelpButton>
       <Ribbon.QuickAccessToolbar>
-        <QuickAccessToolbar />
+        <QuickAccessToolbar>
+          <QuickAccessToolbar.ApplicationDefaults>
+            <Button CommandName="cmdButtonOpen" ApplicationDefaults.IsChecked="true" />
+            <Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="true" />
+          </QuickAccessToolbar.ApplicationDefaults>
+        </QuickAccessToolbar>
       </Ribbon.QuickAccessToolbar>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain" ApplicationModes="0,1">
