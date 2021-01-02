@@ -44,7 +44,7 @@ Partial Class frmMain
         '
         Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
         Me.Ribbon1.Name = "Ribbon1"
-        Me.Ribbon1.ResourceIdentifier = Nothing
+        Me.Ribbon1.ResourceIdentifier = "Rdev.RibbonMarkup.ribbon"
         Me.Ribbon1.ResourceName = Nothing
         Me.Ribbon1.ShortcutTableResourceName = Nothing
         Me.Ribbon1.Size = New System.Drawing.Size(1174, 23)
@@ -66,7 +66,7 @@ Partial Class frmMain
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
         '
-        'VisualStudioToolStripExtender1
+        'vsToolStripExtender1
         '
         Me.vsToolStripExtender1.DefaultRenderer = Nothing
         '

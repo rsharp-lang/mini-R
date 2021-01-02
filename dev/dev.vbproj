@@ -3,13 +3,21 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>dev</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <RootNamespace>Rdev</RootNamespace>
+    <StartupObject>Rdev.frmMain</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ApplicationIcon>R#.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="RibbonMarkup.ribbon" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="RibbonMarkup.ribbon" />
+  </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />
