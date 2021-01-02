@@ -17,6 +17,8 @@ const clusters = alpha([
 print("cluster colors:");
 print(clusters);
 
+# https://github.com/xieguigang/sciBASIC/blob/master/Data_science/DataMining/UMAP/Umap.vb
+
 let manifold = MNIST_LabelledVectorArray 
 :> read.mnist.labelledvector(takes = 25000)
 :> umap(

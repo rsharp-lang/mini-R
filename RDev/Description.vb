@@ -29,7 +29,18 @@ Public Module Description
             text = text & "]"
         End If
 
-        Return GetDescription(Program.BuildProgram(text))
+        If text.StartsWith(":>") Then
+            text = text.Substring(2).Trim
+        End If
+        If text.StringEmpty Then
+            Return Nothing
+        End If
+
+        Try
+            Return GetDescription(Program.BuildProgram(text))
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     Public Function GetDescription(program As Program) As String

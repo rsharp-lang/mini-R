@@ -83,10 +83,15 @@ Public Class RsharpDevEditor : Inherits DockContent
     ''' 数字
     ''' </summary>
     Dim orange As New TextStyle(Brushes.OrangeRed, Nothing, FontStyle.Bold)
-
+    Dim link As New TextStyle(Brushes.Blue, Brushes.AliceBlue, FontStyle.Underline Or FontStyle.Bold)
     Dim colorCode As New TextStyle(Brushes.Red, Brushes.LightGray, fontStyle:=FontStyle.Bold Or FontStyle.Italic Or FontStyle.Underline)
+    Dim pipeLine As New TextStyle(Brushes.Red, Brushes.LightGray, FontStyle.Underline)
+    Dim interpolate As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Italic)
+    Dim funcCall As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Regular)
 
+    Dim callFunc As String = "[^\s]+\s*\("
     Dim htmlcolor As String = "[#][0-9a-fA-F]{6}"
+    Dim stringInterpolate As String = "[$]\{.+?\}"
 
     Dim buildInfunction As String = "\s?(" & {
         "list", "stop", "print"
@@ -150,6 +155,11 @@ Public Class RsharpDevEditor : Inherits DockContent
         Return Description.GetDescription(hoveredWord)
     End Function
 
+    ''' <summary>
+    ''' 顺序处于后面的优先级会很低
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub FastColoredTextBox1_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FastColoredTextBox1.TextChanged
         ' clear folding markers of changed range
         e.ChangedRange.ClearFoldingMarkers()
@@ -161,9 +171,9 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetFoldingMarkers("#region", "#endregion")
 
         e.ChangedRange.ClearStyle(blue, green, red, endSymbol)
+        e.ChangedRange.SetStyle(link, "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?")
         e.ChangedRange.SetStyle(colorCode, htmlcolor)
-        e.ChangedRange.SetStyle(green, "#.*")
-        e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
+
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
         e.ChangedRange.SetStyle(blue, "\sfrom\s")
@@ -171,5 +181,42 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
         e.ChangedRange.SetStyle(orange, numbers)
+        e.ChangedRange.SetStyle(pipeLine, "[:]>")
+        e.ChangedRange.SetStyle(interpolate, stringInterpolate)
+        e.ChangedRange.SetStyle(funcCall, callFunc)
+
+        e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
+        e.ChangedRange.SetStyle(green, "#.*")
+    End Sub
+
+    Private Function CharIsHyperlink(place As Place) As Boolean
+        Dim mask = FastColoredTextBox1.GetStyleIndexMask(New Style() {link})
+
+        If (place.iChar < FastColoredTextBox1.GetLineLength(place.iLine)) Then
+            If ((FastColoredTextBox1(place).style And mask) <> 0) Then
+                Return True
+            End If
+        End If
+
+        Return False
+    End Function
+
+    Private Sub FastColoredTextBox1_MouseMove(sender As Object, e As MouseEventArgs) Handles FastColoredTextBox1.MouseMove
+        Dim p = FastColoredTextBox1.PointToPlace(e.Location)
+
+        If (CharIsHyperlink(p)) Then
+            FastColoredTextBox1.Cursor = Cursors.Hand
+        Else
+            FastColoredTextBox1.Cursor = Cursors.IBeam
+        End If
+    End Sub
+
+    Private Sub FastColoredTextBox1_MouseDown(sender As Object, e As MouseEventArgs) Handles FastColoredTextBox1.MouseDown
+        Dim p = FastColoredTextBox1.PointToPlace(e.Location)
+
+        If (CharIsHyperlink(p)) Then
+            Dim url = FastColoredTextBox1.GetRange(p, p).GetFragment("[\S]").Text
+            Process.Start(url)
+        End If
     End Sub
 End Class
