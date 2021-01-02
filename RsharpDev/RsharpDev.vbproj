@@ -194,6 +194,9 @@
     <EmbeddedResource Include="WinForms\ToolWindows\ToolWinServers.resx">
       <DependentUpon>ToolWinServers.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\ToolWindows\ToolWinSolution.resx">
+      <DependentUpon>ToolWinSolution.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -279,9 +282,21 @@
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\Centos\Centos.vbproj">
+      <Project>{04f7d21b-53e8-4107-a5e0-d28e3f70efde}</Project>
+      <Name>Centos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\Docker\Docker.vbproj">
+      <Project>{b028826a-e615-4f26-b192-b9b0a997696a}</Project>
+      <Name>Docker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RDev\RDev.vbproj">
+      <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
+      <Name>RDev</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems" Label="Shared" />
