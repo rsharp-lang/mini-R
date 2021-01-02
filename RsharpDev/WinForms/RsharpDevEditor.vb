@@ -38,19 +38,25 @@ Public Class RsharpDevEditor : Inherits DockContent
         FastColoredTextBox1.Text = "#!/usr/local/bin/R#"
         FastColoredTextBox1.SyntaxHighlighter = syntaxHighlighter
 
-        Call LoadScript("E:\mini-R\test\SyntaxHighlightTest.R".ReadAllText)
+        Call LoadScript("E:\mini-R\test\SyntaxHighlightTest.R")
     End Sub
 
     Public Sub LoadScript(script As String)
+        If script.FileExists Then
+            FilePath = script
+            script = script.ReadAllText
+            TabText = FilePath.FileName
+        End If
+
         FastColoredTextBox1.Text = script
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        Throw New NotImplementedException()
+        Return FastColoredTextBox1.Text.SaveTo(path, encoding)
     End Function
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-        Throw New NotImplementedException()
+        Return Save(path, encoding.CodePage)
     End Function
 
     ''' <summary>
@@ -77,6 +83,10 @@ Public Class RsharpDevEditor : Inherits DockContent
     ''' 数字
     ''' </summary>
     Dim orange As New TextStyle(Brushes.OrangeRed, Nothing, FontStyle.Bold)
+
+    Dim colorCode As New TextStyle(Brushes.Red, Brushes.LightGray, fontStyle:=FontStyle.Bold Or FontStyle.Italic Or FontStyle.Underline)
+
+    Dim htmlcolor As String = "[#][0-9a-fA-F]{6}"
 
     Dim buildInfunction As String = "\s?(" & {
         "list", "stop", "print"
@@ -151,6 +161,7 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetFoldingMarkers("#region", "#endregion")
 
         e.ChangedRange.ClearStyle(blue, green, red, endSymbol)
+        e.ChangedRange.SetStyle(colorCode, htmlcolor)
         e.ChangedRange.SetStyle(green, "#.*")
         e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
         e.ChangedRange.SetStyle(blue, keywords)

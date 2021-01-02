@@ -36,7 +36,10 @@ Partial Public Class RsharpDevMain
 
     Private Sub InitializeVsUI()
         VisualStudioToolStripExtender1.DefaultRenderer = _toolStripProfessionalRenderer
+
         DockPanel1.Theme = VS2015LightTheme1
+        DockPanel1.ShowDocumentIcon = True
+
         EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1)
     End Sub
 
