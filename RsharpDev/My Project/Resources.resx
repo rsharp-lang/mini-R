@@ -127,20 +127,44 @@
   <data name="applications_utilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\applications-utilities.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="application_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\application_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="application_exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application-exit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="application_x_object" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application-x-object.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="arrow_back_color_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\arrow_back_color_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrow_Forward_color_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\arrow_Forward_color_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="baobab" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\baobab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="build_Selection_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\build_Selection_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cheese" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cheese.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="class_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\class_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cloud_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Cloud_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Contract_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Contract_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="dialog_information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dialog-information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\document_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="document_open_recent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\document-open-recent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,8 +187,17 @@
   <data name="excel_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\excel-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FileGroup_10135_32x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\FileGroup_10135_32x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder_Closed_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\folder_Closed_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="folder_documents" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder-documents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder_Open_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\folder_Open_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folder_pictures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder-pictures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,17 +205,44 @@
   <data name="folder_publicshare" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder-publicshare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gear_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\gear_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gnome_window_manager" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gnome-window-manager.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gparted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gparted.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="graph_highPerformanceComputingChart_5170_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\graph_highPerformanceComputingChart_5170_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="manifest_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\manifest_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="module_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\module_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="New16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\New16.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="New32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\New32.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Office_Excel_Application_32xMD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Office_Excel_Application_32xMD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="package_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\package_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Partition_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Partition_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PencilAngled_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\PencilAngled_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PencilAngled_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\PencilAngled_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="preferences_desktop_locale" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\preferences-desktop-locale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,11 +256,110 @@
   <data name="R_sharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\R-sharp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="script_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\script_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Alert_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Alert_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Alert_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Alert_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Complete_and_ok_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Complete_and_ok_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Complete_and_ok_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Complete_and_ok_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Critical_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Critical_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security_Shields_Critical_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\Security_Shields_Critical_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="server_Local_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\server_Local_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="server_Remote_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\server_Remote_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="spinner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\spinner.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="StatusAnnotationRed_No_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotationRed_No_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotationRed_No_32xMD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotationRed_No_32xMD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Alert_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Alert_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Alert_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Alert_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Blocked_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Blocked_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Blocked_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Blocked_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Complete_and_ok_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Complete_and_ok_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Complete_and_ok_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Complete_and_ok_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Critical_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Critical_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Critical_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Critical_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Help_and_inconclusive_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Help_and_inconclusive_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Help_and_inconclusive_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Help_and_inconclusive_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Information_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Information_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Information_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Information_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Pause_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Pause_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Pause_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Pause_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Play_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Play_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Play_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Play_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Required_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Required_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Required_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Required_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Stop_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Stop_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Stop_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Stop_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Warning_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Warning_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="StatusAnnotations_Warning_32xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatusAnnotations_Warning_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusAnnotations_Warning_32xLG_color1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\StatusAnnotations_Warning_32xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="system_software_update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\system-software-update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -216,5 +375,11 @@
   </data>
   <data name="vs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vs.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WorkItem_32xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\WorkItem_32xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XMLFile_828_32x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vs_icon\XMLFile_828_32x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
