@@ -10,4 +10,8 @@ Public Class RsharpDevEditor : Inherits DockContent
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
+
+    Private Sub RsharpDevEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+    End Sub
 End Class
