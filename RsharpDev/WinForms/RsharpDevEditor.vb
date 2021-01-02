@@ -3,6 +3,7 @@ Imports FastColoredTextBoxNS
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports RDev
 Imports WeifenLuo.WinFormsUI.Docking
 Imports RProgram = SMRUCC.Rsharp.Interpreter.Program
 
@@ -84,16 +85,21 @@ Public Class RsharpDevEditor : Inherits DockContent
     End Sub
 
     Private Function GetTooltipContent(hoveredWord As String) As String
+        hoveredWord = hoveredWord.Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
+
         Select Case hoveredWord
             Case "function" : Return "A keyword for identify current symbol is a function closure data object."
             Case "as" : Return "A keyword for add type constraint decorating to the target symbol."
             Case "let" : Return "A keyword for declare new symbol."
             Case "const" : Return "A keyword for declare a new symbol that not mutable."
+            Case "string" : Return "R# character string type"
+            Case "integer" : Return "R# int64 type"
+            Case "double" : Return "R# float64 type"
+            Case "boolean" : Return "R# logical type"
+            Case "if" : Return "Execute the code closure based on the test condition is true or not."
         End Select
 
-        Dim program As RProgram = RProgram.BuildProgram(scriptText:=hoveredWord)
-
-
+        Return Description.GetDescription(hoveredWord)
     End Function
 
     Private Sub FastColoredTextBox1_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FastColoredTextBox1.TextChanged
