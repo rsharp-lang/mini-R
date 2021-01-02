@@ -2,8 +2,11 @@
 
 Public Class frmMain
 
+    Dim ribbonItems As RibbonItems
+
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AutoScaleMode = AutoScaleMode.Dpi
+        ribbonItems = New RibbonItems(Ribbon1)
 
         Call InitializeVsUI()
     End Sub
