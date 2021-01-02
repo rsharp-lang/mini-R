@@ -6,7 +6,6 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports RDev
 Imports WeifenLuo.WinFormsUI.Docking
-Imports RProgram = SMRUCC.Rsharp.Interpreter.Program
 
 Public Class RsharpDevEditor : Inherits DockContent
     Implements ISaveHandle
@@ -74,6 +73,10 @@ Public Class RsharpDevEditor : Inherits DockContent
     ''' 内部函数
     ''' </summary>
     Dim purple As New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
+    ''' <summary>
+    ''' 数字
+    ''' </summary>
+    Dim orange As New TextStyle(Brushes.OrangeRed, Nothing, FontStyle.Bold)
 
     Dim buildInfunction As String = "\s?(" & {
         "list", "stop", "print"
@@ -87,7 +90,8 @@ Public Class RsharpDevEditor : Inherits DockContent
         "using"
     }.Select(Function(a) $"({a})").JoinBy("|") & ")\s"
 
-    Dim functionKeyword As String = "\s(function|if|for)\s*\("
+    Dim numbers As String = "[-]?\d*(\.\d+)?([Ee][-]?\d+)?"
+    Dim functionKeyword As String = "\s(function|if|for|require)\s*\("
     Dim keyword2 As String = "\s(" & {
         "double", "boolean", "string", "integer",
         "else"
@@ -141,6 +145,9 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.ClearFoldingMarkers()
         ' set folding markers
         e.ChangedRange.SetFoldingMarkers("{", "}")
+        e.ChangedRange.SetFoldingMarkers("\[", "\]")
+        e.ChangedRange.SetFoldingMarkers("\(", "\)")
+        e.ChangedRange.SetFoldingMarkers("""", """")
         e.ChangedRange.SetFoldingMarkers("#region", "#endregion")
 
         e.ChangedRange.ClearStyle(blue, green, red, endSymbol)
@@ -148,8 +155,10 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
+        e.ChangedRange.SetStyle(blue, "\sfrom\s")
         e.ChangedRange.SetStyle(blue, functionKeyword)
         e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
+        e.ChangedRange.SetStyle(orange, numbers)
     End Sub
 End Class
