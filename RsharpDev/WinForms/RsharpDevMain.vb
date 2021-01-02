@@ -1,8 +1,4 @@
 Imports My
-Imports RibbonLib
-Imports RibbonLib.Controls
-Imports RibbonLib.Controls.Events
-Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
 
 Partial Public Class RsharpDevMain
@@ -17,6 +13,7 @@ Partial Public Class RsharpDevMain
 
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
         AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
+        AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenScript()
 
         MyApplication.Register(Me)
     End Sub
