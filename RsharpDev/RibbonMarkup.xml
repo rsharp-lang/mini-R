@@ -3,17 +3,17 @@
   <Application.Commands>
     <Command Name="cmdTabMain" Id="1001">
       <Command.LabelTitle>
-        <String Id="2">Main</String>
+        <String Id="2">R# Studio</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdGroupCommon" Id="1002">
       <Command.LabelTitle>
-        <String Id="3">Common</String>
+        <String Id="3">File</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdGroupSimple" Id="1003">
       <Command.LabelTitle>
-        <String Id="4">Simple</String>
+        <String Id="4">Executation</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdGroupAdvanced" Id="1004">
@@ -26,13 +26,13 @@
         <String Id="6">&amp;New</String>
       </Command.LabelTitle>
       <Command.LabelDescription>
-        <String Id="7">New Description</String>
+        <String Id="7">New Script File</String>
       </Command.LabelDescription>
       <Command.TooltipTitle>
         <String Id="8">New (Ctrl+N)</String>
       </Command.TooltipTitle>
       <Command.TooltipDescription>
-        <String Id="9">Create a new image.</String>
+        <String Id="9">Create a new R# script file or solution project.</String>
       </Command.TooltipDescription>
       <Command.SmallImages>
         <Image Id="10">Resources/New16.bmp</Image>
@@ -46,13 +46,13 @@
         <String Id="12">Open</String>
       </Command.LabelTitle>
       <Command.LabelDescription>
-        <String Id="13">Open Description</String>
+        <String Id="13">Open R# script</String>
       </Command.LabelDescription>
       <Command.TooltipTitle>
         <String Id="14">Open (Ctrl+O)</String>
       </Command.TooltipTitle>
       <Command.TooltipDescription>
-        <String Id="15">Open an existing image.</String>
+        <String Id="15">Open an existing R# script file or solution project.</String>
       </Command.TooltipDescription>
       <Command.SmallImages>
         <Image Id="16" MinDPI="192">Resources/folder-documents.bmp</Image>
@@ -66,13 +66,13 @@
         <String Id="18">Save</String>
       </Command.LabelTitle>
       <Command.LabelDescription>
-        <String Id="19">Save Description</String>
+        <String Id="19">Save current script file</String>
       </Command.LabelDescription>
       <Command.TooltipTitle>
         <String Id="20">Save (Ctrl+S)</String>
       </Command.TooltipTitle>
       <Command.TooltipDescription>
-        <String Id="21">Save the current image.</String>
+        <String Id="21">Save the current R# script file.</String>
       </Command.TooltipDescription>
       <Command.SmallImages>
         <Image Id="22" MinDPI="192">Resources/document-save.bmp</Image>
@@ -202,6 +202,17 @@
         <Image MinDPI="192">Resources/Terminal.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdSoluationTabGroup" Id="20" LabelTitle="Solution" />
+    <Command Name="cmdViewProperty" Id="21" LabelTitle="Solution Information" />
+    <Command Name="cmdSolutionTab" Id="22" LabelTitle="Solution" />
+    <Command Name="cmdConfigServer" Id="23" LabelTitle="Config Server" LabelDescription="Config the remote linux server for run current script">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/baobab.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/baobab.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -233,6 +244,15 @@
           </QuickAccessToolbar.ApplicationDefaults>
         </QuickAccessToolbar>
       </Ribbon.QuickAccessToolbar>
+      <Ribbon.ContextualTabs>
+        <TabGroup CommandName="cmdSoluationTabGroup">
+          <Tab CommandName="cmdSolutionTab">
+            <Group>
+              <Button CommandName="cmdViewProperty" />
+            </Group>
+          </Tab>
+        </TabGroup>
+      </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain" ApplicationModes="0,1">
           <Group CommandName="cmdGroupCommon" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
@@ -241,7 +261,7 @@
             <Button CommandName="cmdButtonSave" />
           </Group>
           <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="TwoButtons">
-            <Button CommandName="cmdButtonSwitchToAdvanced" />
+            <Button CommandName="cmdConfigServer" />
             <SplitButton>
               <Button CommandName="cmdRunScript" />
               <Button CommandName="cmdRunRemote" />

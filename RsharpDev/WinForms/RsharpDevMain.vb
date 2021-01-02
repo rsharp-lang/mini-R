@@ -1,4 +1,5 @@
 Imports My
+Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
 
 Partial Public Class RsharpDevMain
@@ -14,6 +15,9 @@ Partial Public Class RsharpDevMain
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
         AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenScript()
+
+        ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.Active
+        ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"
 
         MyApplication.Register(Me)
     End Sub

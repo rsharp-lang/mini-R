@@ -17,7 +17,7 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ButtonSwitchToAdvanced As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
+    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdRecents As UInteger = 15
@@ -27,10 +27,13 @@ Partial Class RibbonItems
         Public Const cmdRsharpDev As UInteger = 17
         Public Const cmdAbout As UInteger = 16
         Public Const cmdHelp As UInteger = 14
+        Public Const cmdSoluationTabGroup As UInteger = 20
+        Public Const cmdSolutionTab As UInteger = 22
+        Public Const cmdViewProperty As UInteger = 21
         Public Const cmdTabMain As UInteger = 1001
         Public Const cmdGroupCommon As UInteger = 1002
         Public Const cmdGroupSimple As UInteger = 1003
-        Public Const cmdButtonSwitchToAdvanced As UInteger = 1011
+        Public Const cmdConfigServer As UInteger = 23
         Public Const cmdRunScript As UInteger = 18
         Public Const cmdRunRemote As UInteger = 19
         Public Const cmdGroupAdvanced As UInteger = 1004
@@ -112,6 +115,33 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property SoluationTabGroup As RibbonTabGroup
+        Get
+            Return _SoluationTabGroup
+        End Get
+        Private Set(ByVal value As RibbonTabGroup)
+            _SoluationTabGroup = value
+        End Set
+    End Property
+
+    Public Property SolutionTab As RibbonTab
+        Get
+            Return _SolutionTab
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _SolutionTab = value
+        End Set
+    End Property
+
+    Public Property ViewProperty As RibbonButton
+        Get
+            Return _ViewProperty
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ViewProperty = value
+        End Set
+    End Property
+
     Public Property TabMain As RibbonTab
         Get
             Return _TabMain
@@ -139,12 +169,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonSwitchToAdvanced As RibbonButton
+    Public Property ConfigServer As RibbonButton
         Get
-            Return _ButtonSwitchToAdvanced
+            Return _ConfigServer
         End Get
         Private Set(ByVal value As RibbonButton)
-            _ButtonSwitchToAdvanced = value
+            _ConfigServer = value
         End Set
     End Property
 
@@ -221,10 +251,13 @@ Partial Class RibbonItems
         RsharpDev = New RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev)
         About = New RibbonButton(ribbon, Cmd.cmdAbout)
         Help = New RibbonHelpButton(ribbon, Cmd.cmdHelp)
+        SoluationTabGroup = New RibbonTabGroup(ribbon, Cmd.cmdSoluationTabGroup)
+        SolutionTab = New RibbonTab(ribbon, Cmd.cmdSolutionTab)
+        ViewProperty = New RibbonButton(ribbon, Cmd.cmdViewProperty)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         GroupCommon = New RibbonGroup(ribbon, Cmd.cmdGroupCommon)
         GroupSimple = New RibbonGroup(ribbon, Cmd.cmdGroupSimple)
-        ButtonSwitchToAdvanced = New RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced)
+        ConfigServer = New RibbonButton(ribbon, Cmd.cmdConfigServer)
         RunScript = New RibbonButton(ribbon, Cmd.cmdRunScript)
         RunRemote = New RibbonButton(ribbon, Cmd.cmdRunRemote)
         GroupAdvanced = New RibbonGroup(ribbon, Cmd.cmdGroupAdvanced)

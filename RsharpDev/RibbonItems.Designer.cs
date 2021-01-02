@@ -25,10 +25,13 @@ using RibbonLib.Interop;
             public const uint cmdRsharpDev = 17;
             public const uint cmdAbout = 16;
             public const uint cmdHelp = 14;
+            public const uint cmdSoluationTabGroup = 20;
+            public const uint cmdSolutionTab = 22;
+            public const uint cmdViewProperty = 21;
             public const uint cmdTabMain = 1001;
             public const uint cmdGroupCommon = 1002;
             public const uint cmdGroupSimple = 1003;
-            public const uint cmdButtonSwitchToAdvanced = 1011;
+            public const uint cmdConfigServer = 23;
             public const uint cmdRunScript = 18;
             public const uint cmdRunRemote = 19;
             public const uint cmdGroupAdvanced = 1004;
@@ -48,10 +51,13 @@ using RibbonLib.Interop;
         public RibbonDropDownButton RsharpDev { get; private set; }
         public RibbonButton About { get; private set; }
         public RibbonHelpButton Help { get; private set; }
+        public RibbonTabGroup SoluationTabGroup { get; private set; }
+        public RibbonTab SolutionTab { get; private set; }
+        public RibbonButton ViewProperty { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupCommon { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
-        public RibbonButton ButtonSwitchToAdvanced { get; private set; }
+        public RibbonButton ConfigServer { get; private set; }
         public RibbonButton RunScript { get; private set; }
         public RibbonButton RunRemote { get; private set; }
         public RibbonGroup GroupAdvanced { get; private set; }
@@ -72,10 +78,13 @@ using RibbonLib.Interop;
             RsharpDev = new RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev);
             About = new RibbonButton(ribbon, Cmd.cmdAbout);
             Help = new RibbonHelpButton(ribbon, Cmd.cmdHelp);
+            SoluationTabGroup = new RibbonTabGroup(ribbon, Cmd.cmdSoluationTabGroup);
+            SolutionTab = new RibbonTab(ribbon, Cmd.cmdSolutionTab);
+            ViewProperty = new RibbonButton(ribbon, Cmd.cmdViewProperty);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
-            ButtonSwitchToAdvanced = new RibbonButton(ribbon, Cmd.cmdButtonSwitchToAdvanced);
+            ConfigServer = new RibbonButton(ribbon, Cmd.cmdConfigServer);
             RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);
             RunRemote = new RibbonButton(ribbon, Cmd.cmdRunRemote);
             GroupAdvanced = new RibbonGroup(ribbon, Cmd.cmdGroupAdvanced);
