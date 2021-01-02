@@ -10,11 +10,13 @@ Partial Public Class RsharpDevMain
 
     ReadOnly ribbon As RibbonItems
 
-
     Public Sub New()
         InitializeComponent()
 
         ribbon = New RibbonItems(_ribbon)
+
+        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
+
         MyApplication.Register(Me)
     End Sub
 
