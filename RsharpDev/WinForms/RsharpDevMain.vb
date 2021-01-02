@@ -24,6 +24,7 @@ Partial Public Class RsharpDevMain
         AutoScaleMode = AutoScaleMode.Dpi
 
         Call InitializeVsUI()
+        Call VisualStudio.InitializeUI()
     End Sub
 
     ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()

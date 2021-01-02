@@ -144,10 +144,22 @@
     <Compile Include="WinForms\RsharpDevMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForms\ToolWindow.designer.vb">
+    <Compile Include="WinForms\ToolWindows\ToolWinServers.Designer.vb">
+      <DependentUpon>ToolWinServers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolWinServers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolWinSolution.Designer.vb">
+      <DependentUpon>ToolWinSolution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolWinSolution.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolWindow.designer.vb">
       <DependentUpon>ToolWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="WinForms\ToolWindow.vb">
+    <Compile Include="WinForms\ToolWindows\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -167,8 +179,11 @@
     <EmbeddedResource Include="WinForms\RsharpDevMain.resx">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\ToolWindow.resx">
+    <EmbeddedResource Include="WinForms\ToolWindows\ToolWindow.resx">
       <DependentUpon>ToolWindow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\ToolWindows\ToolWinServers.resx">
+      <DependentUpon>ToolWinServers.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="My Project\Settings.settings">
