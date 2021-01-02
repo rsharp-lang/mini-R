@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports FastColoredTextBoxNS
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports RDev
@@ -53,10 +54,28 @@ Public Class RsharpDevEditor : Inherits DockContent
         Throw New NotImplementedException()
     End Function
 
+    ''' <summary>
+    ''' 关键词
+    ''' </summary>
     Dim blue As New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
+    ''' <summary>
+    ''' 代码注释
+    ''' </summary>
     Dim green As New TextStyle(Brushes.Green, Nothing, FontStyle.Italic)
-    Dim red As New TextStyle(Brushes.RosyBrown, Nothing, FontStyle.Bold)
+    ''' <summary>
+    ''' 字符串
+    ''' </summary>
+    Dim red As New TextStyle(Brushes.Brown, Nothing, FontStyle.Bold)
+    ''' <summary>
+    ''' 结束符号
+    ''' </summary>
     Dim endSymbol As New TextStyle(Brushes.Black, Nothing, FontStyle.Bold)
+    ''' <summary>
+    ''' 内部函数
+    ''' </summary>
+    Dim purple As New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
+
+    Dim buildInfunction As String = ""
 
     Dim keywords As String = "(\s)?(" & {
         "let", "const", "as", "integer",
@@ -67,21 +86,21 @@ Public Class RsharpDevEditor : Inherits DockContent
 
     Dim keyword2 As String = "\s(" & {
         "function", "double", "boolean", "string", "integer",
-        "list", "for", "if", "else"
+        "list", "for", "if", "else", "stop", "print"
     }.Select(Function(a) $"({a})") _
      .JoinBy("|") & ")(\s|\)|,)"
 
     Private Sub FastColoredTextBox1_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles FastColoredTextBox1.ToolTipNeeded
         If Not String.IsNullOrEmpty(e.HoveredWord) Then
             e.ToolTipTitle = e.HoveredWord
-            e.ToolTipText = GetTooltipContent(Strings.Trim(e.HoveredWord))
+            e.ToolTipText = vbCrLf & GetTooltipContent(Strings.Trim(e.HoveredWord)).DoCall(AddressOf Strings.Trim)
         End If
 
         Dim range As New Range(sender, e.Place, e.Place)
         Dim hoveredWord = range.GetFragment("[^\n]").Text
 
         e.ToolTipTitle = hoveredWord
-        e.ToolTipText = GetTooltipContent(Strings.Trim(hoveredWord))
+        e.ToolTipText = vbCrLf & GetTooltipContent(Strings.Trim(hoveredWord)).DoCall(AddressOf Strings.Trim)
     End Sub
 
     Private Function GetTooltipContent(hoveredWord As String) As String

@@ -140,6 +140,12 @@
     <Compile Include="apps\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
+    <Compile Include="WinForms\RsharpDevLocalConsole.Designer.vb">
+      <DependentUpon>RsharpDevLocalConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevLocalConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\RsharpDevAbout.Designer.vb">
       <DependentUpon>RsharpDevAbout.vb</DependentUpon>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevEditor.resx">
       <DependentUpon>RsharpDevEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\RsharpDevLocalConsole.resx">
+      <DependentUpon>RsharpDevLocalConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevMain.resx">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>

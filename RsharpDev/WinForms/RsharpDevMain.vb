@@ -26,6 +26,7 @@ Partial Public Class RsharpDevMain
 
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
+        Call Program.Initialize()
 
         ' test
         Call VisualStudio.AddDocument(New RsharpDevEditor)

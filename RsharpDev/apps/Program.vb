@@ -4,16 +4,12 @@ Friend NotInheritable Class Program
 
     Public Shared ReadOnly Property REngine As New RInterpreter
 
-    ''' <summary>
-    ''' The main entry point for the application.
-    ''' </summary>
-    Private Sub New()
+    Shared Sub New()
+        Call RDev.Description.SetEngine(REngine)
     End Sub
 
-    <STAThread>
-    Shared Sub Main()
-        Application.EnableVisualStyles()
-        Application.SetCompatibleTextRenderingDefault(False)
-        Application.Run(New RsharpDevMain())
+    Public Shared Sub Initialize()
+
     End Sub
+
 End Class
