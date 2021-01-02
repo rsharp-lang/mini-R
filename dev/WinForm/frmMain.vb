@@ -8,6 +8,7 @@ Public Class frmMain
         AutoScaleMode = AutoScaleMode.Dpi
         ribbonItems = New RibbonItems(Ribbon1)
 
+
         Call InitializeVsUI()
     End Sub
 

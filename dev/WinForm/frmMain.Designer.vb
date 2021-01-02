@@ -45,18 +45,18 @@ Partial Class frmMain
         '
         Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
         Me.Ribbon1.Name = "Ribbon1"
-        Me.Ribbon1.ResourceIdentifier = "Rdev.RibbonMarkup.ribbon"
+        Me.Ribbon1.ResourceIdentifier = "RibbonMarkup.ribbon"
         Me.Ribbon1.ResourceName = Nothing
         Me.Ribbon1.ShortcutTableResourceName = Nothing
-        Me.Ribbon1.Size = New System.Drawing.Size(1174, 23)
+        Me.Ribbon1.Size = New System.Drawing.Size(1174, 109)
         Me.Ribbon1.TabIndex = 0
         '
         'DockPanel1
         '
         Me.DockPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DockPanel1.Location = New System.Drawing.Point(0, 23)
+        Me.DockPanel1.Location = New System.Drawing.Point(0, 109)
         Me.DockPanel1.Name = "DockPanel1"
-        Me.DockPanel1.Size = New System.Drawing.Size(1174, 625)
+        Me.DockPanel1.Size = New System.Drawing.Size(1174, 539)
         Me.DockPanel1.TabIndex = 1
         '
         'StatusStrip1
