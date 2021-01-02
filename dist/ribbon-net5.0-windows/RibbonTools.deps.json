@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "RibbonTools/1.0.0": {
+        "dependencies": {
+          "Microsoft.Windows.Ribbon": "1.0.0"
+        },
+        "runtime": {
+          "RibbonTools.dll": {}
+        }
+      },
+      "Microsoft.Windows.Ribbon/1.0.0": {
+        "runtime": {
+          "Microsoft.Windows.Ribbon.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RibbonTools/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Windows.Ribbon/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
