@@ -5,13 +5,13 @@ Imports System.Runtime.InteropServices
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
-<Assembly: AssemblyTitle("_13_ApplicationModes")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("R# Studio")>
+<Assembly: AssemblyDescription("Development Studio for R-sharp language")>
 <Assembly: AssemblyConfiguration("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("_13_ApplicationModes")>
-<Assembly: AssemblyCopyright("Copyright ©  2009")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCompany("I@xieguigang.me")>
+<Assembly: AssemblyProduct("R#")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2020")>
+<Assembly: AssemblyTrademark("GCModeller")>
 <Assembly: AssemblyCulture("")>
 
 ' Setting ComVisible to false makes the types in this assembly not visible 
