@@ -75,7 +75,10 @@ Public Class RsharpDevEditor : Inherits DockContent
     ''' </summary>
     Dim purple As New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
 
-    Dim buildInfunction As String = ""
+    Dim buildInfunction As String = "\s?(" & {
+        "list", "stop", "print"
+    }.Select(Function(a) $"({a})") _
+     .JoinBy("|") & ")\s*\("
 
     Dim keywords As String = "(\s)?(" & {
         "let", "const", "as", "integer",
@@ -86,7 +89,7 @@ Public Class RsharpDevEditor : Inherits DockContent
 
     Dim keyword2 As String = "\s(" & {
         "function", "double", "boolean", "string", "integer",
-        "list", "for", "if", "else", "stop", "print"
+        "for", "if", "else"
     }.Select(Function(a) $"({a})") _
      .JoinBy("|") & ")(\s|\)|,)"
 
@@ -133,6 +136,7 @@ Public Class RsharpDevEditor : Inherits DockContent
         e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
+        e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
     End Sub
 End Class

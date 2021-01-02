@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Development
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
@@ -64,7 +65,7 @@ Public Module Description
                 End Using
             End If
 
-            Return help.ToString & vbCrLf & vbCrLf & text
+            Return help.ToString.Replace("``", "").Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF) & vbCrLf & vbCrLf & text
         Else
             Return $"Run R# function '{calls.funcName}'."
         End If
