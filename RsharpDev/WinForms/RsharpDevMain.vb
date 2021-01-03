@@ -27,9 +27,9 @@ Partial Public Class RsharpDevMain
     Private Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AutoScaleMode = AutoScaleMode.Dpi
 
+        Call Program.Initialize()
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
-        Call Program.Initialize()
 
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
     End Sub
