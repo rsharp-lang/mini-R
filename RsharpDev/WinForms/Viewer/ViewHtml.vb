@@ -17,6 +17,7 @@ Public Class ViewHtml : Implements Viewer
     Public Function View(file As String) As DockContent Implements Viewer.View
         WebBrowser1.DocumentText = file.ReadAllText
         FilePath = file
+        TabText = file.FileName
         Return Me
     End Function
 

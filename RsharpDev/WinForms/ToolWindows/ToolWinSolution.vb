@@ -33,8 +33,10 @@ Public Class ToolWinSolution
             Call OpenSolutionInfo(Nothing, Nothing)
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("png", "jpg", "bitmap", "gif") Then
             Call VisualStudio.AddDocument(New ViewImage, Sub(c) DirectCast(c, ViewImage).View(TreeView1.SelectedNode.Tag))
-        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("xml", "json", "txt") Then
+        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("xml", "txt") Then
             Call VisualStudio.AddDocument(New ViewText, Sub(c) DirectCast(c, ViewText).View(TreeView1.SelectedNode.Tag))
+        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("json") Then
+            Call VisualStudio.AddDocument(New ViewJSON, Sub(c) DirectCast(c, ViewJSON).View(TreeView1.SelectedNode.Tag))
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("html", "htm") Then
             Call VisualStudio.AddDocument(New ViewHtml, Sub(c) DirectCast(c, ViewHtml).View(TreeView1.SelectedNode.Tag))
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("R") Then

@@ -17,6 +17,7 @@ Public Class ViewText : Implements Viewer
     Public Function View(file As String) As DockContent Implements Viewer.View
         TextBox1.Text = file.ReadAllText
         FilePath = file
+        TabText = file.FileName
         Return Me
     End Function
 

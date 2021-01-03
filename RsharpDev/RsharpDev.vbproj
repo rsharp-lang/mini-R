@@ -226,6 +226,12 @@
     <Compile Include="WinForms\ToolWindows\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Viewer\ViewJSON.Designer.vb">
+      <DependentUpon>ViewJSON.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Viewer\ViewJSON.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Viewer\ViewHtml.Designer.vb">
       <DependentUpon>ViewHtml.vb</DependentUpon>
     </Compile>
@@ -300,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Viewer\ViewImage.resx">
       <DependentUpon>ViewImage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Viewer\ViewJSON.resx">
+      <DependentUpon>ViewJSON.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Viewer\ViewText.resx">
       <DependentUpon>ViewText.vb</DependentUpon>
@@ -464,6 +473,10 @@
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26f1-44df-8d40-347136c743cd}</Project>
+      <Name>application.json</Name>
     </ProjectReference>
     <ProjectReference Include="..\RDev\RDev.vbproj">
       <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
