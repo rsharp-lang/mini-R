@@ -39,6 +39,8 @@ Public Class ToolWinSolution
             Call VisualStudio.AddDocument(New ViewImage, Sub(c) DirectCast(c, ViewImage).View(TreeView1.SelectedNode.Tag))
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("xml", "json", "txt") Then
             Call VisualStudio.AddDocument(New ViewText, Sub(c) DirectCast(c, ViewText).View(TreeView1.SelectedNode.Tag))
+        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("html", "htm") Then
+            Call VisualStudio.AddDocument(New ViewHtml, Sub(c) DirectCast(c, ViewHtml).View(TreeView1.SelectedNode.Tag))
         End If
     End Sub
 End Class
