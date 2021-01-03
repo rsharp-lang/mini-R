@@ -19,5 +19,12 @@ Public Class ToolWinSolution
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Call VisualStudio.AddDocument(SingletonHolder(Of PackageConfiguration).Instance)
+        Call SingletonHolder(Of PackageConfiguration).Instance.LoadSolution()
+    End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+        If e.Node.Text = "DESCRIPTION" Then
+            Call ToolStripButton1_Click(Nothing, Nothing)
+        End If
     End Sub
 End Class

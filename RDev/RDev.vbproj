@@ -64,7 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Description.vb" />
+    <Compile Include="DescriptionTooltip.vb" />
     <Compile Include="Solution.vb" />
     <Compile Include="ServerConnection.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

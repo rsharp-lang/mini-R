@@ -15,7 +15,7 @@ Partial Public Class RsharpDevMain
 
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
         AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
-        AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenScript()
+        AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
 
         ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.Active
         ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"

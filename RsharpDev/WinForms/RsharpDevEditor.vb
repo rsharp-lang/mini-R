@@ -152,7 +152,7 @@ Public Class RsharpDevEditor : Inherits DockContent
             Case "for" : Return $"Loop through each elements in the given sequence."
         End Select
 
-        Return Description.GetDescription(hoveredWord)
+        Return DescriptionTooltip.GetDescription(hoveredWord)
     End Function
 
     ''' <summary>

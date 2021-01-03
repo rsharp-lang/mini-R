@@ -15,16 +15,20 @@ Module VisualStudio
         LinuxServerList.DockState = DockState.DockLeftAutoHide
     End Sub
 
-    Public Sub OpenScript()
+    Public Sub OpenFile()
         Using file As New OpenFileDialog With {
-            .Filter = "R# script(*.R)|*.R",
-            .Title = "Open a R# Script File"
+            .Filter = "R# Package Project(*.Rproj)|*.Rproj|R# script(*.R)|*.R",
+            .Title = "Open a R# package project or Script File"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Dim editor As New RsharpDevEditor
+                If file.FileName.ExtensionSuffix("Rproj") Then
+                    Call Program.LoadSolution(Rproj:=file.FileName)
+                Else
+                    Dim editor As New RsharpDevEditor
 
-                Call AddDocument(editor)
-                Call editor.LoadScript(file.FileName)
+                    Call AddDocument(editor)
+                    Call editor.LoadScript(file.FileName)
+                End If
             End If
         End Using
     End Sub

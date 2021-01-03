@@ -13,7 +13,7 @@ Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.DataSets
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 
-Public Module Description
+Public Module DescriptionTooltip
 
     Dim REngine As RInterpreter
 

@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.Rsharp.Development.Package.File
 
 Public Class Solution
     Implements ISaveHandle
@@ -14,6 +15,14 @@ Public Class Solution
             Throw New NotImplementedException()
         End Get
     End Property
+
+    Public Function LoadInformation() As DESCRIPTION
+        Return DESCRIPTION.Parse($"{FilePath.ParentPath}/DESCRIPTION")
+    End Function
+
+    Public Shared Function LoadRproj(file As String) As Solution
+        Return New Solution With {.FilePath = file}
+    End Function
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Throw New NotImplementedException()
