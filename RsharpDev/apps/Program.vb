@@ -67,6 +67,11 @@ Friend NotInheritable Class Program
         If Config Is Nothing Then
             _Config = New ConfigFile
         End If
+
+        If Config.theme = VisualStudioToolStripExtender.VsVersion.Unknown Then
+            Config.theme = VisualStudioToolStripExtender.VsVersion.Vs2015
+            Config.type = ThemeType.Light
+        End If
     End Sub
 
 End Class

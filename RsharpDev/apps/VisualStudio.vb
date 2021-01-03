@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Config
 Imports Microsoft.VisualBasic.My
 Imports My
 Imports WeifenLuo.WinFormsUI.Docking
@@ -10,6 +11,20 @@ Module VisualStudio
     Public ReadOnly Property Output As New ToolOutput
 
     Public Const FolderClose As Integer = 2
+
+    Friend WithEvents VS2003Theme1 As New VS2003Theme
+    Friend WithEvents VS2005Theme1 As New VS2005Theme
+    Friend WithEvents VS2012BlueTheme1 As New VS2012BlueTheme
+    Friend WithEvents VS2012DarkTheme1 As New VS2012DarkTheme
+    Friend WithEvents VS2012LightTheme1 As New VS2012LightTheme
+    Friend WithEvents VS2013BlueTheme1 As New VS2013BlueTheme
+    Friend WithEvents VS2013DarkTheme1 As New VS2013DarkTheme
+    Friend WithEvents VS2013LightTheme1 As New VS2013LightTheme
+    Friend WithEvents VS2015BlueTheme1 As New VS2015BlueTheme
+    Friend WithEvents VS2015DarkTheme1 As New VS2015DarkTheme
+    Friend WithEvents VS2015LightTheme1 As New VS2015LightTheme
+
+    Friend ReadOnly vsWindow As New List(Of IApplyVsTheme)
 
     Sub InitializeUI()
         SolutionView.Show(MyApplication.RStudio.DockPanel1)
@@ -67,10 +82,46 @@ Module VisualStudio
     End Sub
 
     <Extension>
-    Public Sub ApplyVsTheme(extender As VisualStudioToolStripExtender,
-                            version As VisualStudioToolStripExtender.VsVersion,
-                            theme As ThemeBase,
-                            ParamArray controls As ToolStrip())
+    Public Sub ApplyVsTheme(extender As VisualStudioToolStripExtender, ParamArray controls As ToolStrip())
+        Dim version = Program.Config.theme
+        Dim theme As ThemeBase = Nothing
+
+        Select Case Program.Config.theme
+            Case VisualStudioToolStripExtender.VsVersion.Vs2003
+                theme = VS2003Theme1
+            Case VisualStudioToolStripExtender.VsVersion.Vs2005
+                theme = VS2005Theme1
+            Case VisualStudioToolStripExtender.VsVersion.Vs2012
+                Select Case Program.Config.type
+                    Case Config.ThemeType.Blue
+                        theme = VS2012BlueTheme1
+                    Case Config.ThemeType.Dark
+                        theme = VS2012DarkTheme1
+                    Case Config.ThemeType.Light
+                        theme = VS2012LightTheme1
+                End Select
+
+            Case VisualStudioToolStripExtender.VsVersion.Vs2013
+                Select Case Program.Config.type
+                    Case Config.ThemeType.Blue
+                        theme = VS2013BlueTheme1
+                    Case Config.ThemeType.Dark
+                        theme = VS2013DarkTheme1
+                    Case Config.ThemeType.Light
+                        theme = VS2013LightTheme1
+                End Select
+
+            Case VisualStudioToolStripExtender.VsVersion.Vs2015
+                Select Case Program.Config.type
+                    Case Config.ThemeType.Blue
+                        theme = VS2015BlueTheme1
+                    Case Config.ThemeType.Dark
+                        theme = VS2015DarkTheme1
+                    Case Config.ThemeType.Light
+                        theme = VS2015LightTheme1
+                End Select
+
+        End Select
 
         For Each toolstrip As ToolStrip In controls
             Call extender.SetStyle(toolstrip, version, theme)

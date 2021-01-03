@@ -1,10 +1,11 @@
+Imports Config
 Imports Microsoft.VisualBasic.My
 Imports My
 Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
 
-Partial Public Class RsharpDevMain
-    Inherits Form
+Partial Public Class RsharpDevMain : Inherits Form
+    Implements IApplyVsTheme
 
     Friend ReadOnly ribbon As RibbonItems
 
@@ -20,6 +21,7 @@ Partial Public Class RsharpDevMain
         AddHandler ribbon.ConfigServer.ExecuteEvent, Sub() VisualStudio.LinuxServerList.DockState = DockState.DockLeft
         AddHandler ribbon.Console.ExecuteEvent, Sub() VisualStudio.AddDocument(SingletonHolder(Of RsharpDevConsole).Instance)
         AddHandler ribbon.ViewProperty.ExecuteEvent, Sub() Call VisualStudio.OpenSolution()
+        AddHandler ribbon.Config.ExecuteEvent, Sub() Call New ConfigApp().ShowDialog()
 
         ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.NotAvailable
         ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"
@@ -38,7 +40,7 @@ Partial Public Class RsharpDevMain
         Call Program.Initialize()
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
-
+        Call VisualStudio.vsWindow.Add(Me)
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
     End Sub
 
@@ -50,12 +52,12 @@ Partial Public Class RsharpDevMain
         DockPanel1.Theme = VS2015LightTheme1
         DockPanel1.ShowDocumentIcon = True
 
-        EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1)
+        EnableVSRenderer()
     End Sub
 
-    Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
+    Private Sub EnableVSRenderer() Implements IApplyVsTheme.ApplyVsTheme
         ' vsToolStripExtender1.SetStyle(mainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(toolBar, version, theme)
-        VisualStudioToolStripExtender1.ApplyVsTheme(version, theme, StatusStrip1)
+        VisualStudioToolStripExtender1.ApplyVsTheme(StatusStrip1)
     End Sub
 End Class

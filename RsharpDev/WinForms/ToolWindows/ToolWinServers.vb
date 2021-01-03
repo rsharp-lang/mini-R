@@ -5,9 +5,14 @@ Public Class ToolWinServers
 
     Private Sub ToolWinServers_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "Linux Server Resources"
-        VisualStudioToolStripExtender1.ApplyVsTheme(VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1, ToolStrip1)
 
+        Call ApplyVsTheme()
         Call LoadServers()
+        Call VisualStudio.vsWindow.Add(Me)
+    End Sub
+
+    Public Overrides Sub ApplyVsTheme()
+        VisualStudioToolStripExtender1.ApplyVsTheme(ToolStrip1)
     End Sub
 
     Private Sub ToolStripButtonAddServer_Click(sender As Object, e As EventArgs) Handles ToolStripButtonAddServer.Click

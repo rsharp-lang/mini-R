@@ -24,6 +24,8 @@ Partial Class AddLinuxServer
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AddLinuxServer))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtAlias = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.txtDescription = New System.Windows.Forms.TextBox()
         Me.txtPwd = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
@@ -39,8 +41,6 @@ Partial Class AddLinuxServer
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtAlias = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -62,17 +62,33 @@ Partial Class AddLinuxServer
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(9, 13)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(615, 288)
+        Me.GroupBox1.Size = New System.Drawing.Size(615, 280)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Server Login"
         '
+        'txtAlias
+        '
+        Me.txtAlias.Location = New System.Drawing.Point(143, 33)
+        Me.txtAlias.Name = "txtAlias"
+        Me.txtAlias.Size = New System.Drawing.Size(220, 20)
+        Me.txtAlias.TabIndex = 11
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(62, 36)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(63, 13)
+        Me.Label7.TabIndex = 10
+        Me.Label7.Text = "Alias Name:"
+        '
         'txtDescription
         '
-        Me.txtDescription.Location = New System.Drawing.Point(143, 178)
+        Me.txtDescription.Location = New System.Drawing.Point(143, 172)
         Me.txtDescription.Multiline = True
         Me.txtDescription.Name = "txtDescription"
-        Me.txtDescription.Size = New System.Drawing.Size(453, 90)
+        Me.txtDescription.Size = New System.Drawing.Size(453, 95)
         Me.txtDescription.TabIndex = 9
         '
         'txtPwd
@@ -93,7 +109,7 @@ Partial Class AddLinuxServer
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(385, 74)
+        Me.Label5.Location = New System.Drawing.Point(381, 73)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(29, 13)
         Me.Label5.TabIndex = 6
@@ -101,7 +117,7 @@ Partial Class AddLinuxServer
         '
         'txtPort
         '
-        Me.txtPort.Location = New System.Drawing.Point(430, 70)
+        Me.txtPort.Location = New System.Drawing.Point(416, 70)
         Me.txtPort.Name = "txtPort"
         Me.txtPort.Size = New System.Drawing.Size(65, 20)
         Me.txtPort.TabIndex = 5
@@ -117,7 +133,7 @@ Partial Class AddLinuxServer
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(62, 178)
+        Me.Label4.Location = New System.Drawing.Point(62, 172)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(63, 13)
         Me.Label4.TabIndex = 3
@@ -172,9 +188,9 @@ Partial Class AddLinuxServer
         '
         Me.PictureBox1.BackgroundImage = CType(resources.GetObject("PictureBox1.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(472, 11)
+        Me.PictureBox1.Location = New System.Drawing.Point(453, 11)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(152, 92)
+        Me.PictureBox1.Size = New System.Drawing.Size(174, 93)
         Me.PictureBox1.TabIndex = 3
         Me.PictureBox1.TabStop = False
         '
@@ -196,27 +212,11 @@ Partial Class AddLinuxServer
         Me.Label6.BackColor = System.Drawing.Color.White
         Me.Label6.Font = New System.Drawing.Font("Microsoft YaHei", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.SteelBlue
-        Me.Label6.Location = New System.Drawing.Point(12, 25)
+        Me.Label6.Location = New System.Drawing.Point(12, 11)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(378, 42)
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "Add New Linux Server"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(62, 36)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(63, 13)
-        Me.Label7.TabIndex = 10
-        Me.Label7.Text = "Alias Name:"
-        '
-        'txtAlias
-        '
-        Me.txtAlias.Location = New System.Drawing.Point(143, 33)
-        Me.txtAlias.Name = "txtAlias"
-        Me.txtAlias.Size = New System.Drawing.Size(220, 20)
-        Me.txtAlias.TabIndex = 11
         '
         'AddLinuxServer
         '

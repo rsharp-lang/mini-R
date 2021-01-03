@@ -1,9 +1,13 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports WeifenLuo.WinFormsUI.Docking
 
 Namespace Config
 
     Public Class ConfigFile : Inherits XmlDataModel
+
+        Public Property theme As VisualStudioToolStripExtender.VsVersion
+        Public Property type As ThemeType
 
         <XmlElement>
         Public Property server As LinuxServer()
@@ -15,4 +19,10 @@ Namespace Config
         End Property
 
     End Class
+
+    Public Enum ThemeType
+        Blue
+        Dark
+        Light
+    End Enum
 End Namespace

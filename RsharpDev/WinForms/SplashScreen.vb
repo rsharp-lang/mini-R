@@ -13,9 +13,9 @@ Public Class SplashScreen
     End Sub
 
     Private Sub SplashScreen_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        Dim w As Single = 3
+        Dim w As Single = 2
 
-        e.Graphics.DrawRectangle(New Pen(Brushes.Gray, w) With {.DashStyle = DashStyle.Dot}, New Rectangle(New Point, New Size(Width - w, Height - w)))
+        e.Graphics.DrawRectangle(New Pen(Brushes.Gray, w) With {.DashStyle = DashStyle.Dot}, New Rectangle(New Point, New Size(Width - w / 2, Height - w / 2)))
     End Sub
 
     Private Sub SplashScreen_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
