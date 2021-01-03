@@ -84,7 +84,6 @@ Partial Class ToolWinSolution
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TreeView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeView1.FullRowSelect = True
-        Me.TreeView1.HotTracking = True
         Me.TreeView1.ImageIndex = 0
         Me.TreeView1.ImageList = Me.ImageList1
         Me.TreeView1.LabelEdit = True
@@ -115,7 +114,6 @@ Partial Class ToolWinSolution
         Me.TreeView1.SelectedImageIndex = 0
         Me.TreeView1.ShowNodeToolTips = True
         Me.TreeView1.Size = New System.Drawing.Size(471, 560)
-        Me.TreeView1.StateImageList = Me.ImageList1
         Me.TreeView1.TabIndex = 2
         '
         'ImageList1

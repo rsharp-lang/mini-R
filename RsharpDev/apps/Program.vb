@@ -45,7 +45,8 @@ Friend NotInheritable Class Program
         For Each dir As String In folder.ListDirectory
             Dim dirNode As New TreeNode With {
                 .Text = dir.BaseName,
-                .ImageIndex = VisualStudio.FolderClose
+                .ImageIndex = VisualStudio.FolderClose,
+                .SelectedImageIndex = .ImageIndex
             }
 
             explorer.Nodes.Add(dirNode)
@@ -53,8 +54,24 @@ Friend NotInheritable Class Program
         Next
 
         For Each file As String In folder.EnumerateFiles
-            Dim fileNode As New TreeNode With {.Text = file.FileName, .Tag = file}
+            Dim fileName As String = file.FileName
+            Dim fileNode As New TreeNode With {.Text = fileName, .Tag = file}
 
+            If fileName = "DESCRIPTION" Then
+                fileNode.ImageIndex = 6
+            ElseIf fileName = "LICENSE" Then
+                fileNode.ImageIndex = 7
+            ElseIf fileName.ExtensionSuffix("R") Then
+                fileNode.ImageIndex = 4
+
+                For Each item In DescriptionTooltip.GetSymbols(file.ReadAllText)
+                    fileNode.Nodes.Add(item.Name)
+                Next
+            Else
+                fileNode.ImageIndex = 1
+            End If
+
+            fileNode.SelectedImageIndex = fileNode.ImageIndex
             explorer.Nodes.Add(fileNode)
         Next
     End Sub

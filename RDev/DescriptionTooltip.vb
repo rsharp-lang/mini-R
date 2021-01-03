@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Development
 Imports SMRUCC.Rsharp.Interpreter
@@ -20,6 +21,28 @@ Public Module DescriptionTooltip
     Public Sub SetEngine(engine As RInterpreter)
         REngine = engine
     End Sub
+
+    Public Iterator Function GetSymbols(script As String) As IEnumerable(Of NamedValue(Of String))
+        Dim program As Program
+
+        Try
+            program = Program.BuildProgram(script)
+        Catch ex As Exception
+            Return
+        End Try
+
+        For Each line As Expression In program
+            If TypeOf line Is DeclareNewSymbol Then
+                For Each name As String In DirectCast(line, DeclareNewSymbol).names
+                    Yield New NamedValue(Of String) With {.Name = name, .Value = "symbol"}
+                Next
+            ElseIf TypeOf line Is DeclareNewFunction Then
+                Yield New NamedValue(Of String) With {.Name = DirectCast(line, DeclareNewFunction).funcName, .Value = "function"}
+            ElseIf TypeOf line Is DeclareLambdaFunction Then
+                Yield New NamedValue(Of String) With {.Name = DirectCast(line, DeclareLambdaFunction).name, .Value = "lambda"}
+            End If
+        Next
+    End Function
 
     Public Function GetDescription(text As String) As String
         If text.Last = "{"c Then
