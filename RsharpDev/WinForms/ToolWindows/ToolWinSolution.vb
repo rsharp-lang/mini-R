@@ -14,10 +14,7 @@ Public Class ToolWinSolution
     End Sub
 
     Private Sub OpenSolutionInfo(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        If Not Program.Solution Is Nothing Then
-            Call VisualStudio.AddDocument(SingletonHolder(Of PackageConfiguration).Instance)
-            Call SingletonHolder(Of PackageConfiguration).Instance.LoadSolution()
-        End If
+        Call VisualStudio.OpenSolution()
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
@@ -33,7 +30,7 @@ Public Class ToolWinSolution
             Call OpenSolutionInfo(Nothing, Nothing)
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("png", "jpg", "bitmap", "gif") Then
             Call VisualStudio.AddDocument(New ViewImage, Sub(c) DirectCast(c, ViewImage).View(TreeView1.SelectedNode.Tag))
-        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("xml", "txt") Then
+        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("xml", "txt", "log") Then
             Call VisualStudio.AddDocument(New ViewText, Sub(c) DirectCast(c, ViewText).View(TreeView1.SelectedNode.Tag))
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("json") Then
             Call VisualStudio.AddDocument(New ViewJSON, Sub(c) DirectCast(c, ViewJSON).View(TreeView1.SelectedNode.Tag))

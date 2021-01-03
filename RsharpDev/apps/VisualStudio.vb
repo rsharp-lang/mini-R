@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.My
 Imports My
 Imports WeifenLuo.WinFormsUI.Docking
 
@@ -19,6 +20,13 @@ Module VisualStudio
 
         Output.Show(MyApplication.RStudio.DockPanel1)
         Output.DockState = DockState.DockBottomAutoHide
+    End Sub
+
+    Public Sub OpenSolution()
+        If Not Program.Solution Is Nothing Then
+            Call VisualStudio.AddDocument(SingletonHolder(Of PackageConfiguration).Instance)
+            Call SingletonHolder(Of PackageConfiguration).Instance.LoadSolution()
+        End If
     End Sub
 
     Public Function ConfigRemote() As (plink$, pscp$)
