@@ -5,10 +5,13 @@ Imports WeifenLuo.WinFormsUI.Docking
 Partial Public Class ToolWindow
     Inherits DockContent
 
+    Protected ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()
+
     Public Sub New()
         InitializeComponent()
 
         AutoScaleMode = AutoScaleMode.Dpi
+        VisualStudioToolStripExtender1.DefaultRenderer = _toolStripProfessionalRenderer
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click

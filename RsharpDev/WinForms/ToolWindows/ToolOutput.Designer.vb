@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ToolOutput
     Inherits ToolWindow
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,12 +20,12 @@ Partial Class ToolOutput
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
         Me.txtBuild = New System.Windows.Forms.TextBox()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -37,6 +37,12 @@ Partial Class ToolOutput
         Me.ToolStrip1.Size = New System.Drawing.Size(800, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(107, 22)
+        Me.ToolStripLabel1.Text = "Show output from:"
         '
         'ToolStripComboBox1
         '
@@ -54,12 +60,6 @@ Partial Class ToolOutput
         Me.txtBuild.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.txtBuild.Size = New System.Drawing.Size(800, 425)
         Me.txtBuild.TabIndex = 1
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(107, 22)
-        Me.ToolStripLabel1.Text = "Show output from:"
         '
         'ToolOutput
         '

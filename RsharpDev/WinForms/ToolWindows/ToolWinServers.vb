@@ -1,9 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.Linq
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ToolWinServers
 
     Private Sub ToolWinServers_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "Linux Server Resources"
+        VisualStudioToolStripExtender1.ApplyVsTheme(VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1, ToolStrip1)
 
         Call LoadServers()
     End Sub
