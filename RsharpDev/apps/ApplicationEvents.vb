@@ -11,6 +11,7 @@
 
         Public Shared Sub Register(rstudio As RsharpDevMain)
             MyApplication._RStudio = rstudio
+            VisualStudio.ConfigRemote()
         End Sub
 
     End Class
