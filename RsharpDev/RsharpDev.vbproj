@@ -397,6 +397,8 @@
     <None Include="Resources\vs_icon\StatusAnnotations_Warning_32xLG_color.png" />
     <None Include="Resources\vs_icon\WorkItem_32xLG.png" />
     <None Include="Resources\vs_icon\XMLFile_828_32x.png" />
+    <None Include="..\dist\plink.exe" />
+    <None Include="..\dist\pscp.exe" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">

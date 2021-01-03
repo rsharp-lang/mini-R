@@ -481,6 +481,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property plink() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("plink", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property preferences_desktop_locale() As System.Drawing.Bitmap
@@ -507,6 +517,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("preferences_system_sharing", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property pscp() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("pscp", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
         
