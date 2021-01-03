@@ -5,7 +5,7 @@ Public Class ToolWinSolution
 
     Private Sub ToolWinSolution_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "Solution Explorer"
-
+        TreeView1.Nodes(Scan0).Nodes.Clear()
         VisualStudioToolStripExtender1.ApplyVsTheme(VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1, ContextMenuStrip1, ToolStrip1)
     End Sub
 
