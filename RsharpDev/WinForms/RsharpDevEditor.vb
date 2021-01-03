@@ -10,6 +10,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 Public Class RsharpDevEditor : Inherits DockContent
     Implements ISaveHandle
     Implements IFileReference
+    Implements Viewer
 
     Sub New()
 
@@ -37,11 +38,9 @@ Public Class RsharpDevEditor : Inherits DockContent
 
         FastColoredTextBox1.Text = "#!/usr/local/bin/R#"
         FastColoredTextBox1.SyntaxHighlighter = syntaxHighlighter
-
-        Call LoadScript("E:\mini-R\test\SyntaxHighlightTest.R")
     End Sub
 
-    Public Sub LoadScript(script As String)
+    Public Function View(script As String) As DockContent Implements Viewer.View
         If script.FileExists Then
             FilePath = script
             script = script.ReadAllText
@@ -49,7 +48,9 @@ Public Class RsharpDevEditor : Inherits DockContent
         End If
 
         FastColoredTextBox1.Text = script
-    End Sub
+
+        Return Me
+    End Function
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Return FastColoredTextBox1.Text.SaveTo(path, encoding)

@@ -26,10 +26,7 @@ Module VisualStudio
                 If file.FileName.ExtensionSuffix("Rproj") Then
                     Call Program.LoadSolution(Rproj:=file.FileName)
                 Else
-                    Dim editor As New RsharpDevEditor
-
-                    Call AddDocument(editor)
-                    Call editor.LoadScript(file.FileName)
+                    Call AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(file.FileName))
                 End If
             End If
         End Using

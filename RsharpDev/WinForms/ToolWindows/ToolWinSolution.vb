@@ -41,6 +41,8 @@ Public Class ToolWinSolution
             Call VisualStudio.AddDocument(New ViewText, Sub(c) DirectCast(c, ViewText).View(TreeView1.SelectedNode.Tag))
         ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("html", "htm") Then
             Call VisualStudio.AddDocument(New ViewHtml, Sub(c) DirectCast(c, ViewHtml).View(TreeView1.SelectedNode.Tag))
+        ElseIf TreeView1.SelectedNode.Text.ExtensionSuffix("R") Then
+            Call VisualStudio.AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(TreeView1.SelectedNode.Tag))
         End If
     End Sub
 End Class
