@@ -6,7 +6,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 Partial Public Class RsharpDevMain
     Inherits Form
 
-    ReadOnly ribbon As RibbonItems
+    Friend ReadOnly ribbon As RibbonItems
 
     Public Sub New()
         InitializeComponent()
@@ -17,8 +17,9 @@ Partial Public Class RsharpDevMain
         AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
 
-        ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.Active
+        ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.NotAvailable
         ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"
+        ribbon.SolutionTab.Label = "Solution [RsharpDev]"
 
         MyApplication.Register(Me)
     End Sub

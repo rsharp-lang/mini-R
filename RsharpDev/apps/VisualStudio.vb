@@ -7,6 +7,8 @@ Module VisualStudio
     Public ReadOnly Property SolutionView As New ToolWinSolution
     Public ReadOnly Property LinuxServerList As New ToolWinServers
 
+    Public Const FolderClose As Integer = 2
+
     Sub InitializeUI()
         SolutionView.Show(MyApplication.RStudio.DockPanel1)
         SolutionView.DockState = DockState.DockRightAutoHide
@@ -33,9 +35,13 @@ Module VisualStudio
         End Using
     End Sub
 
-    Public Sub AddDocument(doc As DockContent)
+    Public Sub AddDocument(doc As DockContent, Optional after As Action(Of DockContent) = Nothing)
         doc.Show(MyApplication.RStudio.DockPanel1)
         doc.DockState = DockState.Document
+
+        If Not after Is Nothing Then
+            Call after(doc)
+        End If
     End Sub
 
     <Extension>

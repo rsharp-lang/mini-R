@@ -17,6 +17,7 @@ Public Class PackageConfiguration
         txtDescription.Text = info.Description
         txtLincese.Text = info.License
 
+        Text = $"Solution '{info.Package}'"
     End Sub
 
     Private Sub PackageConfiguration_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
