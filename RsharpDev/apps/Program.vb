@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports Config
+Imports Microsoft.VisualBasic.Linq
 Imports My
 Imports RDev
 Imports RibbonLib.Interop
@@ -9,9 +10,17 @@ Friend NotInheritable Class Program
 
     Public Shared ReadOnly Property REngine As New RInterpreter
     Public Shared ReadOnly Property Solution As Solution
+    Public Shared ReadOnly Property Config As ConfigFile
 
     Shared Sub New()
         Call RDev.DescriptionTooltip.SetEngine(REngine)
+    End Sub
+
+    ''' <summary>
+    ''' save config
+    ''' </summary>
+    Public Shared Sub Save()
+        Call Config.GetXml.SaveTo(ConfigFile.FileLocation)
     End Sub
 
     Public Shared Sub LoadSolution(Rproj As String)
@@ -51,7 +60,13 @@ Friend NotInheritable Class Program
     End Sub
 
     Public Shared Sub Initialize()
+        If ConfigFile.FileLocation.FileExists Then
+            _Config = ConfigFile.FileLocation.LoadXml(Of ConfigFile)(throwEx:=False)
+        End If
 
+        If Config Is Nothing Then
+            _Config = New ConfigFile
+        End If
     End Sub
 
 End Class

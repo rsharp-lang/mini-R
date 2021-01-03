@@ -22,18 +22,30 @@ Partial Class ToolWinServers
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("All Servers")
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ToolWinServers))
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButtonAddServer = New System.Windows.Forms.ToolStripButton()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TreeView1
         '
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeView1.ImageIndex = 0
+        Me.TreeView1.ImageList = Me.ImageList1
         Me.TreeView1.Location = New System.Drawing.Point(0, 25)
         Me.TreeView1.Name = "TreeView1"
+        TreeNode1.ImageIndex = 0
+        TreeNode1.Name = "Node0"
+        TreeNode1.Text = "All Servers"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1})
+        Me.TreeView1.SelectedImageIndex = 0
         Me.TreeView1.Size = New System.Drawing.Size(499, 503)
+        Me.TreeView1.StateImageList = Me.ImageList1
         Me.TreeView1.TabIndex = 1
         '
         'ToolStrip1
@@ -54,6 +66,14 @@ Partial Class ToolWinServers
         Me.ToolStripButtonAddServer.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButtonAddServer.Text = "Add Server"
         '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "folder_Closed_32xLG.png")
+        Me.ImageList1.Images.SetKeyName(1, "folder_Open_32xLG.png")
+        Me.ImageList1.Images.SetKeyName(2, "server_Remote_32xLG.png")
+        '
         'ToolWinServers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -72,4 +92,5 @@ Partial Class ToolWinServers
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripButtonAddServer As ToolStripButton
+    Friend WithEvents ImageList1 As ImageList
 End Class

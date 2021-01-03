@@ -131,6 +131,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="apps\ApplicationEvents.vb" />
+    <Compile Include="apps\Config\LinuxServer.vb" />
+    <Compile Include="apps\Config\ConfigFile.vb" />
     <Compile Include="RibbonItems.Designer.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
