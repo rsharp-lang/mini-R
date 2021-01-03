@@ -376,6 +376,9 @@
   <data name="Terminal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Terminal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ThemeColor" xml:space="preserve">
+    <value>SteelBlue</value>
+  </data>
   <data name="tracker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tracker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

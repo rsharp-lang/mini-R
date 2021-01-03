@@ -22,8 +22,10 @@ using RibbonLib.Interop;
             public const uint cmdButtonNew = 1005;
             public const uint cmdButtonOpen = 1006;
             public const uint cmdButtonSave = 1007;
-            public const uint cmdRsharpDev = 17;
             public const uint cmdAbout = 16;
+            public const uint cmdLicense = 25;
+            public const uint cmdConfig = 26;
+            public const uint cmdClose = 24;
             public const uint cmdHelp = 14;
             public const uint cmdSoluationTabGroup = 20;
             public const uint cmdSolutionTab = 22;
@@ -48,8 +50,10 @@ using RibbonLib.Interop;
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpen { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
-        public RibbonDropDownButton RsharpDev { get; private set; }
         public RibbonButton About { get; private set; }
+        public RibbonButton License { get; private set; }
+        public RibbonButton Config { get; private set; }
+        public RibbonButton Close { get; private set; }
         public RibbonHelpButton Help { get; private set; }
         public RibbonTabGroup SoluationTabGroup { get; private set; }
         public RibbonTab SolutionTab { get; private set; }
@@ -75,8 +79,10 @@ using RibbonLib.Interop;
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
-            RsharpDev = new RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev);
             About = new RibbonButton(ribbon, Cmd.cmdAbout);
+            License = new RibbonButton(ribbon, Cmd.cmdLicense);
+            Config = new RibbonButton(ribbon, Cmd.cmdConfig);
+            Close = new RibbonButton(ribbon, Cmd.cmdClose);
             Help = new RibbonHelpButton(ribbon, Cmd.cmdHelp);
             SoluationTabGroup = new RibbonTabGroup(ribbon, Cmd.cmdSoluationTabGroup);
             SolutionTab = new RibbonTab(ribbon, Cmd.cmdSolutionTab);

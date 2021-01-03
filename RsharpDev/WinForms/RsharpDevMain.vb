@@ -14,7 +14,8 @@ Partial Public Class RsharpDevMain
         ribbon = New RibbonItems(_ribbon)
 
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
-        AddHandler ribbon.About.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
+        AddHandler ribbon.License.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
+        AddHandler ribbon.About.ExecuteEvent, Sub() Call showAboutSplash()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
         AddHandler ribbon.ConfigServer.ExecuteEvent, Sub() VisualStudio.LinuxServerList.DockState = DockState.DockLeft
 
@@ -23,6 +24,10 @@ Partial Public Class RsharpDevMain
         ribbon.SolutionTab.Label = "Solution [RsharpDev]"
 
         MyApplication.Register(Me)
+    End Sub
+
+    Private Sub showAboutSplash()
+        Call New SplashScreen() With {.AutoClose = True}.ShowDialog()
     End Sub
 
     Private Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load

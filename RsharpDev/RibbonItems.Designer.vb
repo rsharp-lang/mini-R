@@ -17,15 +17,17 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _RsharpDev As RibbonDropDownButton, _About As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
+    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _About As RibbonButton, _License As RibbonButton, _Config As RibbonButton, _Close As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdRecents As UInteger = 15
         Public Const cmdButtonNew As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1006
         Public Const cmdButtonSave As UInteger = 1007
-        Public Const cmdRsharpDev As UInteger = 17
         Public Const cmdAbout As UInteger = 16
+        Public Const cmdLicense As UInteger = 25
+        Public Const cmdConfig As UInteger = 26
+        Public Const cmdClose As UInteger = 24
         Public Const cmdHelp As UInteger = 14
         Public Const cmdSoluationTabGroup As UInteger = 20
         Public Const cmdSolutionTab As UInteger = 22
@@ -88,21 +90,39 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property RsharpDev As RibbonDropDownButton
-        Get
-            Return _RsharpDev
-        End Get
-        Private Set(ByVal value As RibbonDropDownButton)
-            _RsharpDev = value
-        End Set
-    End Property
-
     Public Property About As RibbonButton
         Get
             Return _About
         End Get
         Private Set(ByVal value As RibbonButton)
             _About = value
+        End Set
+    End Property
+
+    Public Property License As RibbonButton
+        Get
+            Return _License
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _License = value
+        End Set
+    End Property
+
+    Public Property Config As RibbonButton
+        Get
+            Return _Config
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _Config = value
+        End Set
+    End Property
+
+    Public Property Close As RibbonButton
+        Get
+            Return _Close
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _Close = value
         End Set
     End Property
 
@@ -248,8 +268,10 @@ Partial Class RibbonItems
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpen = New RibbonButton(ribbon, Cmd.cmdButtonOpen)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
-        RsharpDev = New RibbonDropDownButton(ribbon, Cmd.cmdRsharpDev)
         About = New RibbonButton(ribbon, Cmd.cmdAbout)
+        License = New RibbonButton(ribbon, Cmd.cmdLicense)
+        Config = New RibbonButton(ribbon, Cmd.cmdConfig)
+        Close = New RibbonButton(ribbon, Cmd.cmdClose)
         Help = New RibbonHelpButton(ribbon, Cmd.cmdHelp)
         SoluationTabGroup = New RibbonTabGroup(ribbon, Cmd.cmdSoluationTabGroup)
         SolutionTab = New RibbonTab(ribbon, Cmd.cmdSolutionTab)

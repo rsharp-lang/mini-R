@@ -921,6 +921,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to SteelBlue.
+        '''</summary>
+        Friend ReadOnly Property ThemeColor() As String
+            Get
+                Return ResourceManager.GetString("ThemeColor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property tracker() As System.Drawing.Bitmap
