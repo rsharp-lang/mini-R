@@ -22,25 +22,37 @@ Partial Class ToolWinServers
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButtonAddServer = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'Panel1
-        '
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(499, 61)
-        Me.Panel1.TabIndex = 0
         '
         'TreeView1
         '
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeView1.Location = New System.Drawing.Point(0, 61)
+        Me.TreeView1.Location = New System.Drawing.Point(0, 25)
         Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.Size = New System.Drawing.Size(499, 467)
+        Me.TreeView1.Size = New System.Drawing.Size(499, 503)
         Me.TreeView1.TabIndex = 1
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonAddServer})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(499, 25)
+        Me.ToolStrip1.TabIndex = 2
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ToolStripButtonAddServer
+        '
+        Me.ToolStripButtonAddServer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButtonAddServer.Image = Global.My.Resources.Resources.AddMark_10580
+        Me.ToolStripButtonAddServer.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButtonAddServer.Name = "ToolStripButtonAddServer"
+        Me.ToolStripButtonAddServer.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButtonAddServer.Text = "Add Server"
         '
         'ToolWinServers
         '
@@ -48,13 +60,16 @@ Partial Class ToolWinServers
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(499, 528)
         Me.Controls.Add(Me.TreeView1)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "ToolWinServers"
         Me.Text = "Server Explorer"
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripButtonAddServer As ToolStripButton
 End Class

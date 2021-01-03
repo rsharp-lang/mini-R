@@ -140,6 +140,12 @@
     <Compile Include="apps\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
+    <Compile Include="WinForms\Dialogs\AddLinuxServer.Designer.vb">
+      <DependentUpon>AddLinuxServer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Dialogs\AddLinuxServer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Pages\PackageConfiguration.Designer.vb">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
     </Compile>
@@ -242,6 +248,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WinForms\Dialogs\AddLinuxServer.resx">
+      <DependentUpon>AddLinuxServer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
     </EmbeddedResource>
@@ -399,6 +408,7 @@
     <None Include="Resources\vs_icon\XMLFile_828_32x.png" />
     <None Include="..\dist\plink.exe" />
     <None Include="..\dist\pscp.exe" />
+    <None Include="Resources\vs_icon\AddMark_10580.png" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">
