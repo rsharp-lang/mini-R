@@ -6,6 +6,7 @@ Module VisualStudio
 
     Public ReadOnly Property SolutionView As New ToolWinSolution
     Public ReadOnly Property LinuxServerList As New ToolWinServers
+    Public ReadOnly Property Output As New ToolOutput
 
     Public Const FolderClose As Integer = 2
 
@@ -15,6 +16,9 @@ Module VisualStudio
 
         LinuxServerList.Show(MyApplication.RStudio.DockPanel1)
         LinuxServerList.DockState = DockState.DockLeftAutoHide
+
+        Output.Show(MyApplication.RStudio.DockPanel1)
+        Output.DockState = DockState.DockBottomAutoHide
     End Sub
 
     Public Sub OpenFile()

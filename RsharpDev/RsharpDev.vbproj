@@ -188,6 +188,12 @@
     <Compile Include="WinForms\RsharpDevMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolOutput.Designer.vb">
+      <DependentUpon>ToolOutput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\ToolWindows\ToolOutput.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\ToolWindows\ToolWinServers.Designer.vb">
       <DependentUpon>ToolWinServers.vb</DependentUpon>
     </Compile>
@@ -256,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\ToolWindows\ToolOutput.resx">
+      <DependentUpon>ToolOutput.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ToolWindows\ToolWindow.resx">
       <DependentUpon>ToolWindow.vb</DependentUpon>
