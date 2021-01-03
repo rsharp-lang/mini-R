@@ -18,6 +18,7 @@ Partial Public Class RsharpDevMain
         AddHandler ribbon.About.ExecuteEvent, Sub() Call showAboutSplash()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
         AddHandler ribbon.ConfigServer.ExecuteEvent, Sub() VisualStudio.LinuxServerList.DockState = DockState.DockLeft
+        AddHandler ribbon.Console.ExecuteEvent, Sub() VisualStudio.AddDocument(SingletonHolder(Of RsharpDevConsole).Instance)
 
         ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.NotAvailable
         ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"

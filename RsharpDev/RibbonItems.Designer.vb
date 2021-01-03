@@ -17,7 +17,7 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _About As RibbonButton, _License As RibbonButton, _Config As RibbonButton, _Close As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
+    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _About As RibbonButton, _License As RibbonButton, _Config As RibbonButton, _Close As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _Console As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdRecents As UInteger = 15
@@ -38,6 +38,7 @@ Partial Class RibbonItems
         Public Const cmdConfigServer As UInteger = 23
         Public Const cmdRunScript As UInteger = 18
         Public Const cmdRunRemote As UInteger = 19
+        Public Const cmdConsole As UInteger = 27
         Public Const cmdGroupAdvanced As UInteger = 1004
         Public Const cmdButtonSwitchToSimple As UInteger = 1012
         Public Const cmdButtonDropA As UInteger = 1008
@@ -216,6 +217,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property Console As RibbonButton
+        Get
+            Return _Console
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _Console = value
+        End Set
+    End Property
+
     Public Property GroupAdvanced As RibbonGroup
         Get
             Return _GroupAdvanced
@@ -282,6 +292,7 @@ Partial Class RibbonItems
         ConfigServer = New RibbonButton(ribbon, Cmd.cmdConfigServer)
         RunScript = New RibbonButton(ribbon, Cmd.cmdRunScript)
         RunRemote = New RibbonButton(ribbon, Cmd.cmdRunRemote)
+        Console = New RibbonButton(ribbon, Cmd.cmdConsole)
         GroupAdvanced = New RibbonGroup(ribbon, Cmd.cmdGroupAdvanced)
         ButtonSwitchToSimple = New RibbonButton(ribbon, Cmd.cmdButtonSwitchToSimple)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)

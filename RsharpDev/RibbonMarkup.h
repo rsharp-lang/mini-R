@@ -109,6 +109,13 @@
 #define cmdConfig_TooltipDescription_RESID 60008
 #define cmdConfig_SmallImages_192__RESID 60009
 #define cmdConfig_LargeImages_192__RESID 60010
-#define InternalCmd2_LabelTitle_RESID 60011
-#define InternalCmd6_LabelTitle_RESID 60012
-#define InternalCmd8_LabelTitle_RESID 60013
+#define cmdConsole 27 
+#define cmdConsole_LabelTitle_RESID 60011
+#define cmdConsole_LabelDescription_RESID 60012
+#define cmdConsole_TooltipTitle_RESID 60013
+#define cmdConsole_TooltipDescription_RESID 60014
+#define cmdConsole_SmallImages_192__RESID 60015
+#define cmdConsole_LargeImages_192__RESID 60016
+#define InternalCmd2_LabelTitle_RESID 60017
+#define InternalCmd6_LabelTitle_RESID 60018
+#define InternalCmd8_LabelTitle_RESID 60019

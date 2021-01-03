@@ -148,6 +148,12 @@
     <Compile Include="WinForms\Dialogs\AddLinuxServer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\RsharpDevConsole.Designer.vb">
+      <DependentUpon>RsharpDevConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Pages\PackageConfiguration.Designer.vb">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
     </Compile>
@@ -172,10 +178,10 @@
     <Compile Include="WinForms\SplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForms\RsharpDevLocalConsole.Designer.vb">
-      <DependentUpon>RsharpDevLocalConsole.vb</DependentUpon>
+    <Compile Include="WinForms\RsharpDevServerConsole.Designer.vb">
+      <DependentUpon>RsharpDevServerConsole.vb</DependentUpon>
     </Compile>
-    <Compile Include="WinForms\RsharpDevLocalConsole.vb">
+    <Compile Include="WinForms\RsharpDevServerConsole.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinForms\RsharpDevAbout.Designer.vb">
@@ -262,11 +268,14 @@
     <EmbeddedResource Include="WinForms\RsharpDevAbout.resx">
       <DependentUpon>RsharpDevAbout.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\RsharpDevConsole.resx">
+      <DependentUpon>RsharpDevConsole.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevEditor.resx">
       <DependentUpon>RsharpDevEditor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\RsharpDevLocalConsole.resx">
-      <DependentUpon>RsharpDevLocalConsole.vb</DependentUpon>
+    <EmbeddedResource Include="WinForms\RsharpDevServerConsole.resx">
+      <DependentUpon>RsharpDevServerConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevMain.resx">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>
@@ -436,6 +445,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\console\console\console.vbproj">
+      <Project>{b17ef2af-f2de-4036-9e2a-5fa10f8116c7}</Project>
+      <Name>console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>

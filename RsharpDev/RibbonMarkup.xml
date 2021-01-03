@@ -270,6 +270,14 @@
         <Image MinDPI="192">Resources/applications-system.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdConsole" Id="27" LabelTitle="Console" LabelDescription="R# Console" TooltipTitle="R# Console" TooltipDescription="R# Console">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -322,12 +330,13 @@
             <Button CommandName="cmdButtonOpen" />
             <Button CommandName="cmdButtonSave" />
           </Group>
-          <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="TwoButtons">
+          <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdConfigServer" />
             <SplitButton>
               <Button CommandName="cmdRunScript" />
               <Button CommandName="cmdRunRemote" />
             </SplitButton>
+            <Button CommandName="cmdConsole" />
           </Group>
           <Group CommandName="cmdGroupAdvanced" ApplicationModes="1" SizeDefinition="FourButtons">
             <Button CommandName="cmdButtonSwitchToSimple" />

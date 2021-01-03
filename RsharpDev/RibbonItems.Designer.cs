@@ -36,6 +36,7 @@ using RibbonLib.Interop;
             public const uint cmdConfigServer = 23;
             public const uint cmdRunScript = 18;
             public const uint cmdRunRemote = 19;
+            public const uint cmdConsole = 27;
             public const uint cmdGroupAdvanced = 1004;
             public const uint cmdButtonSwitchToSimple = 1012;
             public const uint cmdButtonDropA = 1008;
@@ -64,6 +65,7 @@ using RibbonLib.Interop;
         public RibbonButton ConfigServer { get; private set; }
         public RibbonButton RunScript { get; private set; }
         public RibbonButton RunRemote { get; private set; }
+        public RibbonButton Console { get; private set; }
         public RibbonGroup GroupAdvanced { get; private set; }
         public RibbonButton ButtonSwitchToSimple { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
@@ -93,6 +95,7 @@ using RibbonLib.Interop;
             ConfigServer = new RibbonButton(ribbon, Cmd.cmdConfigServer);
             RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);
             RunRemote = new RibbonButton(ribbon, Cmd.cmdRunRemote);
+            Console = new RibbonButton(ribbon, Cmd.cmdConsole);
             GroupAdvanced = new RibbonGroup(ribbon, Cmd.cmdGroupAdvanced);
             ButtonSwitchToSimple = new RibbonButton(ribbon, Cmd.cmdButtonSwitchToSimple);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
