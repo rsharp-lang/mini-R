@@ -168,6 +168,12 @@
     <Compile Include="WinForms\Dialogs\ConfigApp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Dialogs\CreateSolutionWizard.Designer.vb">
+      <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Dialogs\CreateSolutionWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Pages\RecentFiles.Designer.vb">
       <DependentUpon>RecentFiles.vb</DependentUpon>
     </Compile>
@@ -293,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Dialogs\ConfigApp.resx">
       <DependentUpon>ConfigApp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Dialogs\CreateSolutionWizard.resx">
+      <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
