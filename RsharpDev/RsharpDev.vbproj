@@ -264,6 +264,12 @@
     <Compile Include="WinForms\ToolWindows\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Viewer\ViewDataFrame.Designer.vb">
+      <DependentUpon>ViewDataFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Viewer\ViewDataFrame.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Viewer\ViewPkgModule.Designer.vb">
       <DependentUpon>ViewPkgModule.vb</DependentUpon>
     </Compile>
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ToolWindows\ToolWinSolution.resx">
       <DependentUpon>ToolWinSolution.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Viewer\ViewDataFrame.resx">
+      <DependentUpon>ViewDataFrame.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Viewer\ViewHtml.resx">
       <DependentUpon>ViewHtml.vb</DependentUpon>
@@ -522,6 +531,10 @@
     <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\Docker\Docker.vbproj">
       <Project>{b028826a-e615-4f26-b192-b9b0a997696a}</Project>
       <Name>Docker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
+      <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
