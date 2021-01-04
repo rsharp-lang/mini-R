@@ -309,6 +309,9 @@
     <EmbeddedResource Include="WinForms\Dialogs\CreateSolutionWizard.resx">
       <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Pages\FileItem.resx">
+      <DependentUpon>FileItem.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
     </EmbeddedResource>

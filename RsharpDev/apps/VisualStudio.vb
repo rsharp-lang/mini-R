@@ -26,6 +26,8 @@ Module VisualStudio
 
     Friend ReadOnly vsWindow As New List(Of IApplyVsTheme)
 
+    Friend RefreshRecentList As Action
+
     Sub InitializeUI()
         SolutionView.Show(MyApplication.RStudio.DockPanel1)
         SolutionView.DockState = DockState.DockRightAutoHide

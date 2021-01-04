@@ -12,6 +12,8 @@ Namespace Config
         <XmlElement>
         Public Property server As LinuxServer()
 
+        Public Property recentFiles As String()
+
         Public Shared ReadOnly Property FileLocation As String
             Get
                 Return App.ProductProgramData & "/config.ini.xml"

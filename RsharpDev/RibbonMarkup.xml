@@ -215,73 +215,117 @@
         <String Id="59">Solution Information</String>
       </Command.LabelTitle>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/applications-utilities.bmp</Image>
+        <Image Id="60" MinDPI="192">Resources/applications-utilities.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/applications-utilities.bmp</Image>
+        <Image Id="61" MinDPI="192">Resources/applications-utilities.bmp</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdSolutionTab" Id="22">
       <Command.LabelTitle>
-        <String Id="60">Solution</String>
+        <String Id="62">Solution</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdConfigServer" Id="23">
       <Command.LabelTitle>
-        <String Id="61">Config Server</String>
+        <String Id="63">Config Server</String>
       </Command.LabelTitle>
       <Command.LabelDescription>
-        <String Id="62">Config the remote linux server for run current script</String>
+        <String Id="64">Config the remote linux server for run current script</String>
       </Command.LabelDescription>
       <Command.SmallImages>
-        <Image Id="63" MinDPI="192">Resources/baobab.bmp</Image>
+        <Image Id="65" MinDPI="192">Resources/baobab.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image Id="64" MinDPI="192">Resources/baobab.bmp</Image>
+        <Image Id="66" MinDPI="192">Resources/baobab.bmp</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdClose" Id="24">
       <Command.LabelTitle>
-        <String Id="65">Exit Application</String>
+        <String Id="67">Exit Application</String>
       </Command.LabelTitle>
       <Command.LabelDescription>
-        <String Id="66">Exit Application</String>
+        <String Id="68">Exit Application</String>
       </Command.LabelDescription>
       <Command.TooltipTitle>
-        <String Id="67">Exit Application</String>
+        <String Id="69">Exit Application</String>
       </Command.TooltipTitle>
       <Command.TooltipDescription>
-        <String Id="68">Exit Application</String>
+        <String Id="70">Exit Application</String>
       </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image Id="69" MinDPI="192">Resources/application-exit.bmp</Image>
+        <Image Id="71" MinDPI="192">Resources/application-exit.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image Id="70" MinDPI="192">Resources/application-exit.bmp</Image>
+        <Image Id="72" MinDPI="192">Resources/application-exit.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdLicense" Id="25" LabelTitle="View License" LabelDescription="View License">
+    <Command Name="cmdLicense" Id="25">
+      <Command.LabelTitle>
+        <String Id="73">View License</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="74">View License</String>
+      </Command.LabelDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
+        <Image Id="75" MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
+        <Image Id="76" MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdConfig" Id="26" LabelTitle="Settings" LabelDescription="Application Settings" TooltipTitle="Application Settings" TooltipDescription="Application Settings">
+    <Command Name="cmdConfig" Id="26">
+      <Command.LabelTitle>
+        <String Id="77">Settings</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="78">Application Settings</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="79">Application Settings</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="80">Application Settings</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/applications-system.bmp</Image>
+        <Image Id="81" MinDPI="192">Resources/applications-system.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/applications-system.bmp</Image>
+        <Image Id="82" MinDPI="192">Resources/applications-system.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdConsole" Id="27" LabelTitle="Console" LabelDescription="R# Console" TooltipTitle="R# Console" TooltipDescription="R# Console">
+    <Command Name="cmdConsole" Id="27">
+      <Command.LabelTitle>
+        <String Id="83">Console</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="84">R# Console</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="85">R# Console</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="86">R# Console</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Resources/Terminal.bmp</Image>
+        <Image Id="87" MinDPI="192">Resources/Terminal.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Resources/Terminal.bmp</Image>
+        <Image Id="88" MinDPI="192">Resources/Terminal.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdStartPage" Id="28">
+      <Command.LabelTitle>
+        <String Id="89">Start Page</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="90">Show Start Page</String>
+      </Command.LabelDescription>
+      <Command.SmallImages>
+        <Image Id="91" MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image Id="92" MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
       </Command.LargeImages>
     </Command>
   </Application.Commands>
@@ -290,7 +334,7 @@
       <Ribbon.ApplicationMenu>
         <ApplicationMenu>
           <ApplicationMenu.RecentItems>
-            <RecentItems CommandName="cmdRecents" />
+            <RecentItems />
           </ApplicationMenu.RecentItems>
           <MenuGroup>
             <Button CommandName="cmdButtonNew" />
@@ -331,10 +375,11 @@
       </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain" ApplicationModes="0,1">
-          <Group CommandName="cmdGroupCommon" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
+          <Group CommandName="cmdGroupCommon" ApplicationModes="0,1" SizeDefinition="FourButtons">
             <Button CommandName="cmdButtonNew" />
             <Button CommandName="cmdButtonOpen" />
             <Button CommandName="cmdButtonSave" />
+            <Button CommandName="cmdStartPage" />
           </Group>
           <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdConfigServer" />
