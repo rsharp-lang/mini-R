@@ -22,6 +22,11 @@ Public Module DescriptionTooltip
         REngine = engine
     End Sub
 
+    ''' <summary>
+    ''' symbol|function|lambda
+    ''' </summary>
+    ''' <param name="script"></param>
+    ''' <returns></returns>
     Public Iterator Function GetSymbols(script As String) As IEnumerable(Of NamedValue(Of String))
         Dim program As Program
 
