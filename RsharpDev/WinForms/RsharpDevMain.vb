@@ -23,6 +23,7 @@ Partial Public Class RsharpDevMain : Inherits Form
         AddHandler ribbon.ViewProperty.ExecuteEvent, Sub() Call VisualStudio.OpenSolution()
         AddHandler ribbon.Config.ExecuteEvent, Sub() Call New ConfigApp().ShowDialog()
         AddHandler ribbon.StartPage.ExecuteEvent, Sub() Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
+        AddHandler ribbon.Close.ExecuteEvent, Sub() Call Me.Close()
 
         ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.NotAvailable
         ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"

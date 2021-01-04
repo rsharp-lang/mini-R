@@ -8,6 +8,8 @@ Public Class RecentFiles
     End Sub
 
     Public Sub LoadList()
+        Call FlowLayoutPanel1.Controls.Clear()
+
         For Each file As NamedValue In Program.Config.recentFiles.SafeQuery
             Dim item As New FileItem
 
