@@ -23,7 +23,7 @@ Partial Class ToolWinServers
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("All Servers")
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("All Servers")
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ToolWinServers))
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
@@ -37,17 +37,17 @@ Partial Class ToolWinServers
         'TreeView1
         '
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeView1.ImageIndex = 0
         Me.TreeView1.ImageList = Me.ImageList1
         Me.TreeView1.Location = New System.Drawing.Point(0, 25)
         Me.TreeView1.Name = "TreeView1"
-        TreeNode2.ImageIndex = 0
-        TreeNode2.Name = "Node0"
-        TreeNode2.Text = "All Servers"
-        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode2})
+        TreeNode1.ImageIndex = 0
+        TreeNode1.Name = "Node0"
+        TreeNode1.Text = "All Servers"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1})
         Me.TreeView1.SelectedImageIndex = 0
         Me.TreeView1.Size = New System.Drawing.Size(499, 503)
-        Me.TreeView1.StateImageList = Me.ImageList1
         Me.TreeView1.TabIndex = 1
         '
         'ImageList1
@@ -57,6 +57,7 @@ Partial Class ToolWinServers
         Me.ImageList1.Images.SetKeyName(0, "folder_Closed_32xLG.png")
         Me.ImageList1.Images.SetKeyName(1, "folder_Open_32xLG.png")
         Me.ImageList1.Images.SetKeyName(2, "server_Remote_32xLG.png")
+        Me.ImageList1.Images.SetKeyName(3, "StatusAnnotations_Warning_32xLG_color.png")
         '
         'ToolStrip1
         '

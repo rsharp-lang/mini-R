@@ -65,16 +65,22 @@ Module VisualStudio
             .Title = "Open a R# package project or Script File"
         }
             If file.ShowDialog = DialogResult.OK Then
-                If file.FileName.ExtensionSuffix("Rproj") Then
-                    Call Program.LoadSolution(Rproj:=file.FileName)
-                Else
-                    Call AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(file.FileName))
-                End If
-
-                Program.Config.AddRecent(file.FileName)
-                Program.Save()
+                Call OpenFile(file.FileName)
             End If
         End Using
+    End Sub
+
+    Public Sub OpenFile(fileName As String)
+        If fileName.ExtensionSuffix("Rproj") Then
+            Call Program.LoadSolution(Rproj:=fileName)
+        Else
+            Call AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(fileName))
+        End If
+
+        Program.Config.AddRecent(fileName)
+        Program.Save()
+
+        Call VisualStudio.RefreshRecentList()
     End Sub
 
     Public Sub AddDocument(doc As DockContent, Optional after As Action(Of DockContent) = Nothing)

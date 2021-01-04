@@ -14,7 +14,7 @@ Public Class StartPage
            .Title = "Open a R# package project"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Call Program.LoadSolution(Rproj:=file.FileName)
+                Call VisualStudio.OpenFile(file.FileName)
             End If
         End Using
     End Sub

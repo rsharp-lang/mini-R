@@ -327,6 +327,9 @@
     <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Pages\RecentFiles.resx">
+      <DependentUpon>RecentFiles.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Pages\StartPage.resx">
       <DependentUpon>StartPage.vb</DependentUpon>
     </EmbeddedResource>
@@ -494,6 +497,7 @@
     <None Include="..\dist\plink.exe" />
     <None Include="..\dist\pscp.exe" />
     <None Include="Resources\vs_icon\AddMark_10580.png" />
+    <None Include="Resources\Rproj.png" />
     <Content Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml">

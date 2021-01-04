@@ -11,10 +11,28 @@ Public Class RecentFiles
         For Each file As NamedValue In Program.Config.recentFiles.SafeQuery
             Dim item As New FileItem
 
-            item.PictureBox1.BackgroundImage = My.Resources.R_sharp
+            If file.name.ExtensionSuffix("Rproj") Then
+                item.PictureBox1.BackgroundImage = My.Resources.Rproj
+            Else
+                item.PictureBox1.BackgroundImage = My.Resources.R_sharp
+            End If
+
             item.Label1.Text = file.name.FileName
             item.LinkLabel1.Text = file.name.ParentPath
-            item.Label2.Text = Date.Parse(file.text)
+
+            With Date.Parse(file.text)
+                item.Label2.Text = $"{ .Year}/{ .Month}/{ .Day}"
+            End With
+
+            FlowLayoutPanel1.Controls.Add(item)
+        Next
+    End Sub
+
+    Private Sub FlowLayoutPanel1_Resize(sender As Object, e As EventArgs) Handles FlowLayoutPanel1.Resize
+        Dim w = FlowLayoutPanel1.Width * 0.9
+
+        For Each item As Control In FlowLayoutPanel1.Controls
+            item.Width = w
         Next
     End Sub
 End Class
