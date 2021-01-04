@@ -4,6 +4,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 Public Class ToolWinSolution
 
     Private Sub ToolWinSolution_Load(sender As Object, e As EventArgs) Handles Me.Load
+        DoubleBuffered = True
         TabText = "Solution Explorer"
         TreeView1.Nodes(Scan0).Nodes.Clear()
 

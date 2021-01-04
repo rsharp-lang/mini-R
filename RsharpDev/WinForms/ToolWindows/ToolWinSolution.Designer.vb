@@ -83,10 +83,8 @@ Partial Class ToolWinSolution
         Me.TreeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TreeView1.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TreeView1.FullRowSelect = True
         Me.TreeView1.ImageIndex = 0
         Me.TreeView1.ImageList = Me.ImageList1
-        Me.TreeView1.LabelEdit = True
         Me.TreeView1.Location = New System.Drawing.Point(0, 25)
         Me.TreeView1.Name = "TreeView1"
         TreeNode1.ImageIndex = 2

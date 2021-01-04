@@ -6,9 +6,9 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Module VisualStudio
 
-    Public ReadOnly Property SolutionView As New ToolWinSolution
-    Public ReadOnly Property LinuxServerList As New ToolWinServers
-    Public ReadOnly Property Output As New ToolOutput
+    Public ReadOnly Property SolutionView As ToolWinSolution = SingletonHolder(Of ToolWinSolution).Instance
+    Public ReadOnly Property LinuxServerList As ToolWinServers = SingletonHolder(Of ToolWinServers).Instance
+    Public ReadOnly Property Output As ToolOutput = SingletonHolder(Of ToolOutput).Instance
 
     Public Const FolderClose As Integer = 2
 
@@ -70,6 +70,9 @@ Module VisualStudio
                 Else
                     Call AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(file.FileName))
                 End If
+
+                Program.Config.AddRecent(file.FileName)
+                Program.Save()
             End If
         End Using
     End Sub
