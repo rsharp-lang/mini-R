@@ -372,6 +372,9 @@
     <EmbeddedResource Include="WinForms\Viewer\ViewJSON.resx">
       <DependentUpon>ViewJSON.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Viewer\ViewPkgModule.resx">
+      <DependentUpon>ViewPkgModule.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Viewer\ViewText.resx">
       <DependentUpon>ViewText.vb</DependentUpon>
     </EmbeddedResource>
