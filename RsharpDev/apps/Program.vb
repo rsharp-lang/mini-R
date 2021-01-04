@@ -67,7 +67,7 @@ Friend NotInheritable Class Program
                 For Each item In DescriptionTooltip.GetSymbols(file.ReadAllText)
                     With fileNode.Nodes.Add(item.Name)
                         If item.Value = "symbol" Then
-                            .ImageIndex = 0
+                            .ImageIndex = 12
                         Else
                             .ImageIndex = 11
                         End If
@@ -81,6 +81,10 @@ Friend NotInheritable Class Program
                 fileNode.ImageIndex = 9
             ElseIf fileName.ExtensionSuffix("dll") Then
                 fileNode.ImageIndex = 10
+            ElseIf fileName.ExtensionSuffix("png", "jpg", "bitmap", "gif") Then
+                fileNode.ImageIndex = 14
+            ElseIf fileName.ExtensionSuffix("sh", "bat", "cmd") Then
+                fileNode.ImageIndex = 13
             Else
                 fileNode.ImageIndex = 1
             End If

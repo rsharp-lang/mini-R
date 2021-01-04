@@ -49,40 +49,40 @@ Partial Class ToolWinSolution
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.ToolStripMenuItem1, Me.BuildToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(106, 54)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(102, 54)
         '
         'NewToolStripMenuItem
         '
         Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ScriptToolStripMenuItem})
         Me.NewToolStripMenuItem.Image = Global.My.Resources.Resources.New32
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(105, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.NewToolStripMenuItem.Text = "Add"
         '
         'ScriptToolStripMenuItem
         '
         Me.ScriptToolStripMenuItem.Image = Global.My.Resources.Resources.script_32xLG
         Me.ScriptToolStripMenuItem.Name = "ScriptToolStripMenuItem"
-        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
+        Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(104, 22)
         Me.ScriptToolStripMenuItem.Text = "Script"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(102, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(98, 6)
         '
         'BuildToolStripMenuItem
         '
         Me.BuildToolStripMenuItem.Image = Global.My.Resources.Resources.build_Selection_32xLG
         Me.BuildToolStripMenuItem.Name = "BuildToolStripMenuItem"
-        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(105, 22)
+        Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.BuildToolStripMenuItem.Text = "Build"
         '
         'TreeView1
         '
         Me.TreeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeView1.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TreeView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeView1.ImageIndex = 0
         Me.TreeView1.ImageList = Me.ImageList1
         Me.TreeView1.Location = New System.Drawing.Point(0, 25)
@@ -129,7 +129,10 @@ Partial Class ToolWinSolution
         Me.ImageList1.Images.SetKeyName(8, "Office_Excel_Application_32xMD.png")
         Me.ImageList1.Images.SetKeyName(9, "code.ico")
         Me.ImageList1.Images.SetKeyName(10, "Partition_32xLG.png")
-        Me.ImageList1.Images.SetKeyName(11, "509a32d79a32b5ed4076cbad152736d1.png")
+        Me.ImageList1.Images.SetKeyName(11, "Namespace-Protected_657.png")
+        Me.ImageList1.Images.SetKeyName(12, "Field-Protected_544.png")
+        Me.ImageList1.Images.SetKeyName(13, "XSXDSchema_ElementIcon_32x32.png")
+        Me.ImageList1.Images.SetKeyName(14, "Image_24x.png")
         '
         'ToolStrip1
         '
@@ -160,7 +163,7 @@ Partial Class ToolWinSolution
         '
         'ToolWinSolution
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(471, 585)
         Me.Controls.Add(Me.TreeView1)
