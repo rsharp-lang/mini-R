@@ -49,4 +49,16 @@ Public Class ToolWinSolution
             Call VisualStudio.AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(TreeView1.SelectedNode.Tag))
         End If
     End Sub
+
+    Private Sub TreeView1_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterCollapse
+        If e.Node.Tag Is Nothing Then
+            e.Node.ImageIndex = 2
+        End If
+    End Sub
+
+    Private Sub TreeView1_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterExpand
+        If e.Node.Tag Is Nothing Then
+            e.Node.ImageIndex = 3
+        End If
+    End Sub
 End Class

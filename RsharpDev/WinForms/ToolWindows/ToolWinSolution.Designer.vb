@@ -133,6 +133,7 @@ Partial Class ToolWinSolution
         Me.ImageList1.Images.SetKeyName(12, "Field-Protected_544.png")
         Me.ImageList1.Images.SetKeyName(13, "XSXDSchema_ElementIcon_32x32.png")
         Me.ImageList1.Images.SetKeyName(14, "Image_24x.png")
+        Me.ImageList1.Images.SetKeyName(15, "Rproj.png")
         '
         'ToolStrip1
         '

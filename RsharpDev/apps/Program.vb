@@ -85,6 +85,8 @@ Friend NotInheritable Class Program
                 fileNode.ImageIndex = 14
             ElseIf fileName.ExtensionSuffix("sh", "bat", "cmd") Then
                 fileNode.ImageIndex = 13
+            ElseIf fileName.ExtensionSuffix("Rproj") Then
+                fileNode.ImageIndex = 15
             Else
                 fileNode.ImageIndex = 1
             End If
