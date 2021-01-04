@@ -168,6 +168,12 @@
     <Compile Include="WinForms\Dialogs\ConfigApp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Pages\RecentFiles.Designer.vb">
+      <DependentUpon>RecentFiles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\RecentFiles.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WinForms\RsharpDevConsole.Designer.vb">
       <DependentUpon>RsharpDevConsole.vb</DependentUpon>
     </Compile>
