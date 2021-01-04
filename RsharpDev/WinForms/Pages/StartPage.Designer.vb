@@ -29,18 +29,26 @@ Partial Class StartPage
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.RecentFiles1 = New RecentFiles()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("微软雅黑", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.SteelBlue
-        Me.Label1.Location = New System.Drawing.Point(316, 56)
+        Me.Label1.Location = New System.Drawing.Point(214, 46)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(609, 83)
+        Me.Label1.Size = New System.Drawing.Size(459, 62)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "R# Develop Studio"
         '
@@ -48,10 +56,10 @@ Partial Class StartPage
         '
         Me.PictureBox1.BackgroundImage = Global.My.Resources.Resources.R_sharp
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(31, 56)
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 13)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(277, 345)
+        Me.PictureBox1.Size = New System.Drawing.Size(223, 220)
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
         '
@@ -59,7 +67,7 @@ Partial Class StartPage
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.LinkColor = System.Drawing.Color.SteelBlue
-        Me.LinkLabel1.Location = New System.Drawing.Point(331, 230)
+        Me.LinkLabel1.Location = New System.Drawing.Point(52, 260)
         Me.LinkLabel1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(136, 19)
@@ -71,7 +79,7 @@ Partial Class StartPage
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.LinkColor = System.Drawing.Color.SteelBlue
-        Me.LinkLabel2.Location = New System.Drawing.Point(331, 267)
+        Me.LinkLabel2.Location = New System.Drawing.Point(52, 293)
         Me.LinkLabel2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(98, 19)
@@ -79,22 +87,83 @@ Partial Class StartPage
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "Open Solution"
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImage = Global.My.Resources.Resources.AddMark_10580
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox2.Location = New System.Drawing.Point(29, 263)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox2.TabIndex = 4
+        Me.PictureBox2.TabStop = False
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.BackgroundImage = Global.My.Resources.Resources.folder_Open_32xLG
+        Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox3.Location = New System.Drawing.Point(29, 293)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox3.TabIndex = 5
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.BackgroundImage = Global.My.Resources.Resources.document_open_recent
+        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox4.Location = New System.Drawing.Point(225, 123)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(86, 63)
+        Me.PictureBox4.TabIndex = 7
+        Me.PictureBox4.TabStop = False
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei UI", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.SteelBlue
+        Me.Label2.Location = New System.Drawing.Point(317, 148)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(181, 38)
+        Me.Label2.TabIndex = 8
+        Me.Label2.Text = "Recent Files"
+        '
+        'RecentFiles1
+        '
+        Me.RecentFiles1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RecentFiles1.BackColor = System.Drawing.Color.White
+        Me.RecentFiles1.Location = New System.Drawing.Point(225, 203)
+        Me.RecentFiles1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.RecentFiles1.Name = "RecentFiles1"
+        Me.RecentFiles1.Size = New System.Drawing.Size(728, 351)
+        Me.RecentFiles1.TabIndex = 6
+        '
         'StartPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1190, 657)
+        Me.ClientSize = New System.Drawing.Size(966, 568)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.PictureBox4)
+        Me.Controls.Add(Me.PictureBox3)
+        Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.LinkLabel2)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.RecentFiles1)
         Me.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "StartPage"
         Me.Text = "Start"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -104,4 +173,9 @@ Partial Class StartPage
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents LinkLabel2 As LinkLabel
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents RecentFiles1 As RecentFiles
+    Friend WithEvents PictureBox4 As PictureBox
+    Friend WithEvents Label2 As Label
 End Class

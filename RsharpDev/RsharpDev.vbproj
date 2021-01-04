@@ -168,6 +168,24 @@
     <Compile Include="WinForms\Dialogs\ConfigApp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Dialogs\CreateSolutionWizard.Designer.vb">
+      <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Dialogs\CreateSolutionWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\Pages\RecentFiles.Designer.vb">
+      <DependentUpon>RecentFiles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\RecentFiles.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForms\Pages\FileItem.Designer.vb">
+      <DependentUpon>FileItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Pages\FileItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WinForms\RsharpDevConsole.Designer.vb">
       <DependentUpon>RsharpDevConsole.vb</DependentUpon>
     </Compile>
@@ -246,6 +264,12 @@
     <Compile Include="WinForms\ToolWindows\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Viewer\ViewPkgModule.Designer.vb">
+      <DependentUpon>ViewPkgModule.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Viewer\ViewPkgModule.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Viewer\ViewJSON.Designer.vb">
       <DependentUpon>ViewJSON.vb</DependentUpon>
     </Compile>
@@ -287,6 +311,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Dialogs\ConfigApp.resx">
       <DependentUpon>ConfigApp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Dialogs\CreateSolutionWizard.resx">
+      <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Pages\FileItem.resx">
+      <DependentUpon>FileItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\Pages\PackageConfiguration.resx">
       <DependentUpon>PackageConfiguration.vb</DependentUpon>

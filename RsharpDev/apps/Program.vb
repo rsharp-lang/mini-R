@@ -65,8 +65,22 @@ Friend NotInheritable Class Program
                 fileNode.ImageIndex = 4
 
                 For Each item In DescriptionTooltip.GetSymbols(file.ReadAllText)
-                    fileNode.Nodes.Add(item.Name)
+                    With fileNode.Nodes.Add(item.Name)
+                        If item.Value = "symbol" Then
+                            .ImageIndex = 0
+                        Else
+                            .ImageIndex = 11
+                        End If
+
+                        .SelectedImageIndex = .ImageIndex
+                    End With
                 Next
+            ElseIf fileName.ExtensionSuffix("csv", "xls", "xlsx") Then
+                fileNode.ImageIndex = 8
+            ElseIf fileName.ExtensionSuffix("xml", "html", "htm") Then
+                fileNode.ImageIndex = 9
+            ElseIf fileName.ExtensionSuffix("dll") Then
+                fileNode.ImageIndex = 10
             Else
                 fileNode.ImageIndex = 1
             End If

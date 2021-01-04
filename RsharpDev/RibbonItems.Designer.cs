@@ -13,13 +13,11 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
         {
-            public const uint cmdRecents = 15;
             public const uint cmdButtonNew = 1005;
             public const uint cmdButtonOpen = 1006;
             public const uint cmdButtonSave = 1007;
@@ -33,6 +31,7 @@ namespace RibbonLib.Controls
             public const uint cmdViewProperty = 21;
             public const uint cmdTabMain = 1001;
             public const uint cmdGroupCommon = 1002;
+            public const uint cmdStartPage = 28;
             public const uint cmdGroupSimple = 1003;
             public const uint cmdConfigServer = 23;
             public const uint cmdRunScript = 18;
@@ -48,7 +47,6 @@ namespace RibbonLib.Controls
         // ContextPopup CommandName
 
         public Ribbon Ribbon { get; private set; }
-        public RibbonRecentItems Recents { get; private set; }
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpen { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
@@ -62,6 +60,7 @@ namespace RibbonLib.Controls
         public RibbonButton ViewProperty { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupCommon { get; private set; }
+        public RibbonButton StartPage { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
         public RibbonButton ConfigServer { get; private set; }
         public RibbonButton RunScript { get; private set; }
@@ -78,7 +77,6 @@ namespace RibbonLib.Controls
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
             this.Ribbon = ribbon;
-            Recents = new RibbonRecentItems(ribbon, Cmd.cmdRecents);
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
@@ -92,6 +90,7 @@ namespace RibbonLib.Controls
             ViewProperty = new RibbonButton(ribbon, Cmd.cmdViewProperty);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
+            StartPage = new RibbonButton(ribbon, Cmd.cmdStartPage);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
             ConfigServer = new RibbonButton(ribbon, Cmd.cmdConfigServer);
             RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);
@@ -105,4 +104,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

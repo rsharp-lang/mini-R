@@ -50,7 +50,7 @@ Partial Public Class RsharpDevMain
         Me._ribbon.ResourceIdentifier = Nothing
         Me._ribbon.ResourceName = "RibbonMarkup.ribbon"
         Me._ribbon.ShortcutTableResourceName = Nothing
-        Me._ribbon.Size = New System.Drawing.Size(1280, 100)
+        Me._ribbon.Size = New System.Drawing.Size(1035, 100)
         Me._ribbon.TabIndex = 5
         '
         'VisualStudioToolStripExtender1
@@ -62,14 +62,14 @@ Partial Public Class RsharpDevMain
         Me.DockPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DockPanel1.Location = New System.Drawing.Point(0, 100)
         Me.DockPanel1.Name = "DockPanel1"
-        Me.DockPanel1.Size = New System.Drawing.Size(1280, 695)
+        Me.DockPanel1.Size = New System.Drawing.Size(1035, 529)
         Me.DockPanel1.TabIndex = 6
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 795)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 629)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1280, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1035, 22)
         Me.StatusStrip1.TabIndex = 7
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -80,7 +80,7 @@ Partial Public Class RsharpDevMain
         '
         'RsharpDevMain
         '
-        Me.ClientSize = New System.Drawing.Size(1280, 817)
+        Me.ClientSize = New System.Drawing.Size(1035, 651)
         Me.Controls.Add(Me.DockPanel1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me._ribbon)
