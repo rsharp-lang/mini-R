@@ -16,14 +16,24 @@ Public Class ViewDataFrame : Implements Viewer
     End Property
 
     Public Function View(file As String) As DockContent Implements Viewer.View
-        Dim table As DataFrame = DataFrame.Load(file)
+        Dim table As DataFrame = DataFrame.Load(file).MeasureTypeSchema
+        Dim col As DataGridViewTextBoxColumn
 
         For Each name As String In table.HeadTitles
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = name.Trim(""""c, " "c), .[ReadOnly] = True})
+            col = New DataGridViewTextBoxColumn With {
+                .HeaderText = name.Trim(""""c, " "c),
+                .[ReadOnly] = True
+            }
+
+            If table.GetFieldType(table.GetOrdinal(name)) Is GetType(Double) Then
+                col.DefaultCellStyle.Format = "G3"
+            End If
+
+            DataGridView1.Columns.Add(col)
         Next
 
-        For Each row As RowObject In table.Rows
-            DataGridView1.Rows.Add(row.Select(Function(str) CObj(str)).ToArray)
+        For Each row As Object() In table.EnumerateRowObjects
+            Call DataGridView1.Rows.Add(row)
         Next
 
         Text = file.FileName
