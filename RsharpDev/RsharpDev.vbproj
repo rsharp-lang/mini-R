@@ -264,6 +264,12 @@
     <Compile Include="WinForms\ToolWindows\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinForms\Viewer\ViewPkgModule.Designer.vb">
+      <DependentUpon>ViewPkgModule.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Viewer\ViewPkgModule.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinForms\Viewer\ViewJSON.Designer.vb">
       <DependentUpon>ViewJSON.vb</DependentUpon>
     </Compile>

@@ -45,7 +45,7 @@ Partial Class StartPage
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("微软雅黑", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.SteelBlue
-        Me.Label1.Location = New System.Drawing.Point(211, 12)
+        Me.Label1.Location = New System.Drawing.Point(214, 46)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(459, 62)
@@ -133,7 +133,7 @@ Partial Class StartPage
         Me.RecentFiles1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RecentFiles1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.RecentFiles1.BackColor = System.Drawing.Color.White
         Me.RecentFiles1.Location = New System.Drawing.Point(225, 203)
         Me.RecentFiles1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.RecentFiles1.Name = "RecentFiles1"

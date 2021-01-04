@@ -17,10 +17,9 @@ Partial Class RibbonItems
 
     ' ContextPopup CommandName
 
-    Private _Ribbon As Ribbon, _Recents As RibbonRecentItems, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _About As RibbonButton, _License As RibbonButton, _Config As RibbonButton, _Close As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _Console As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
+    Private _Ribbon As Ribbon, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _About As RibbonButton, _License As RibbonButton, _Config As RibbonButton, _Close As RibbonButton, _Help As RibbonHelpButton, _SoluationTabGroup As RibbonTabGroup, _SolutionTab As RibbonTab, _ViewProperty As RibbonButton, _TabMain As RibbonTab, _GroupCommon As RibbonGroup, _StartPage As RibbonButton, _GroupSimple As RibbonGroup, _ConfigServer As RibbonButton, _RunScript As RibbonButton, _RunRemote As RibbonButton, _Console As RibbonButton, _GroupAdvanced As RibbonGroup, _ButtonSwitchToSimple As RibbonButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton
 
     Private NotInheritable Class Cmd
-        Public Const cmdRecents As UInteger = 15
         Public Const cmdButtonNew As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1006
         Public Const cmdButtonSave As UInteger = 1007
@@ -34,6 +33,7 @@ Partial Class RibbonItems
         Public Const cmdViewProperty As UInteger = 21
         Public Const cmdTabMain As UInteger = 1001
         Public Const cmdGroupCommon As UInteger = 1002
+        Public Const cmdStartPage As UInteger = 28
         Public Const cmdGroupSimple As UInteger = 1003
         Public Const cmdConfigServer As UInteger = 23
         Public Const cmdRunScript As UInteger = 18
@@ -52,15 +52,6 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As Ribbon)
             _Ribbon = value
-        End Set
-    End Property
-
-    Public Property Recents As RibbonRecentItems
-        Get
-            Return _Recents
-        End Get
-        Private Set(ByVal value As RibbonRecentItems)
-            _Recents = value
         End Set
     End Property
 
@@ -181,6 +172,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property StartPage As RibbonButton
+        Get
+            Return _StartPage
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _StartPage = value
+        End Set
+    End Property
+
     Public Property GroupSimple As RibbonGroup
         Get
             Return _GroupSimple
@@ -274,7 +274,6 @@ Partial Class RibbonItems
     Public Sub New(ByVal ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         Me.Ribbon = ribbon
-        Recents = New RibbonRecentItems(ribbon, Cmd.cmdRecents)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpen = New RibbonButton(ribbon, Cmd.cmdButtonOpen)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
@@ -288,6 +287,7 @@ Partial Class RibbonItems
         ViewProperty = New RibbonButton(ribbon, Cmd.cmdViewProperty)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         GroupCommon = New RibbonGroup(ribbon, Cmd.cmdGroupCommon)
+        StartPage = New RibbonButton(ribbon, Cmd.cmdStartPage)
         GroupSimple = New RibbonGroup(ribbon, Cmd.cmdGroupSimple)
         ConfigServer = New RibbonButton(ribbon, Cmd.cmdConfigServer)
         RunScript = New RibbonButton(ribbon, Cmd.cmdRunScript)
