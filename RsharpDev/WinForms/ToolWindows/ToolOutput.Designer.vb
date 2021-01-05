@@ -26,12 +26,13 @@ Partial Class ToolOutput
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
         Me.txtBuild = New System.Windows.Forms.TextBox()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripComboBox1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripComboBox1, Me.ToolStripButton1})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(800, 25)
@@ -61,6 +62,15 @@ Partial Class ToolOutput
         Me.txtBuild.Size = New System.Drawing.Size(800, 425)
         Me.txtBuild.TabIndex = 1
         '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.My.Resources.Resources.application_exit
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton1.Text = "Clear Output"
+        '
         'ToolOutput
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -81,4 +91,5 @@ Partial Class ToolOutput
     Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
     Friend WithEvents txtBuild As TextBox
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class
