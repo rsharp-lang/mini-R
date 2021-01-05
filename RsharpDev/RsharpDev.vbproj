@@ -156,6 +156,7 @@
     <Compile Include="apps\Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
+    <Compile Include="Rscript.vb" />
     <Compile Include="WinForms\Dialogs\AddLinuxServer.Designer.vb">
       <DependentUpon>AddLinuxServer.vb</DependentUpon>
     </Compile>
