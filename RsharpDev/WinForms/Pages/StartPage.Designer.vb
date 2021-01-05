@@ -134,7 +134,6 @@ Partial Class StartPage
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RecentFiles1.BackColor = System.Drawing.Color.White
-        Me.RecentFiles1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.RecentFiles1.Location = New System.Drawing.Point(245, 203)
         Me.RecentFiles1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.RecentFiles1.Name = "RecentFiles1"
