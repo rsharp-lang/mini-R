@@ -10,6 +10,10 @@ Public Class ToolOutput : Implements IApplyVsTheme
         Call VisualStudio.vsWindow.Add(Me)
     End Sub
 
+    Public Sub AppendLine(line As String)
+        Call Me.Invoke(Sub() Call txtBuild.AppendText(line & vbCrLf))
+    End Sub
+
     Public Overrides Sub ApplyVsTheme() Implements IApplyVsTheme.ApplyVsTheme
         VisualStudioToolStripExtender1.ApplyVsTheme(ToolStrip1)
     End Sub

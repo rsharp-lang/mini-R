@@ -16,6 +16,12 @@ Public Class Solution
         End Get
     End Property
 
+    Public ReadOnly Property ProjectFolder As String
+        Get
+            Return FilePath.ParentPath
+        End Get
+    End Property
+
     Public Function LoadInformation() As DESCRIPTION
         Return DESCRIPTION.Parse($"{FilePath.ParentPath}/DESCRIPTION")
     End Function

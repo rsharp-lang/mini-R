@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.My
+﻿Imports System.Threading
+Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ToolWinSolution
@@ -62,5 +64,26 @@ Public Class ToolWinSolution
         If e.Node.Tag Is Nothing Then
             e.Node.ImageIndex = 3
         End If
+    End Sub
+
+    ''' <summary>
+    ''' build package
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Dim Rscript = CLI.Rscript.FromEnvironment(App.HOME)
+        Dim commandlineArguments As String = Rscript.GetCompileCommandLine(src:=Program.Solution.ProjectFolder)
+
+        VisualStudio.Output.DockState = DockState.DockBottom
+
+        Call New Thread(
+            Sub()
+                Call PipelineProcess.ExecSub(
+                    app:=Rscript.Path,
+                    args:=commandlineArguments,
+                    onReadLine:=AddressOf VisualStudio.Output.AppendLine
+                )
+            End Sub).Start()
     End Sub
 End Class
