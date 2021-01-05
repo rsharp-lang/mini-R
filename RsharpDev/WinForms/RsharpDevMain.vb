@@ -46,6 +46,18 @@ Partial Public Class RsharpDevMain : Inherits Form
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
     End Sub
 
+    Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing)
+        If icon Is Nothing Then
+            icon = My.Resources.preferences_system_notifications
+        End If
+
+        Call Me.Invoke(
+            Sub()
+                ToolStripStatusLabel1.Image = icon
+                ToolStripStatusLabel1.Text = message
+            End Sub)
+    End Sub
+
     ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()
 
     Private Sub InitializeVsUI()

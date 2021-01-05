@@ -41,6 +41,8 @@ Partial Public Class RsharpDevMain
         Me.DockPanel1 = New WeifenLuo.WinFormsUI.Docking.DockPanel()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         '_ribbon
@@ -67,6 +69,7 @@ Partial Public Class RsharpDevMain
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 629)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1035, 22)
@@ -78,6 +81,13 @@ Partial Public Class RsharpDevMain
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Image = Global.My.Resources.Resources.preferences_system_notifications
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(55, 17)
+        Me.ToolStripStatusLabel1.Text = "Ready"
+        '
         'RsharpDevMain
         '
         Me.ClientSize = New System.Drawing.Size(1035, 651)
@@ -88,6 +98,8 @@ Partial Public Class RsharpDevMain
         Me.Name = "RsharpDevMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "R# Develop Studio"
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -111,5 +123,6 @@ Partial Public Class RsharpDevMain
     Friend WithEvents DockPanel1 As WeifenLuo.WinFormsUI.Docking.DockPanel
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 End Class
 

@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.My
+Imports My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ToolWinSolution
@@ -72,6 +73,13 @@ Public Class ToolWinSolution
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        If Program.Solution Is Nothing Then
+            MyApplication.RStudio.ShowStatusMsg("No solution for build package...", My.Resources.StatusAnnotations_Warning_32xLG)
+            Return
+        Else
+            MyApplication.RStudio.ShowStatusMsg($"Build package '{Program.Solution.LoadInformation.Package}'...", My.Resources.build_Selection_32xLG)
+        End If
+
         Dim Rscript = CLI.Rscript.FromEnvironment(App.HOME)
         Dim commandlineArguments As String = Rscript.GetCompileCommandLine(src:=Program.Solution.ProjectFolder)
 
@@ -84,6 +92,7 @@ Public Class ToolWinSolution
                     args:=commandlineArguments,
                     onReadLine:=AddressOf VisualStudio.Output.AppendLine
                 )
+                Call MyApplication.RStudio.ShowStatusMsg("Ready")
             End Sub).Start()
     End Sub
 End Class
