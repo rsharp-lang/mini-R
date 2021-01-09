@@ -21,6 +21,12 @@ Public Class Editor
         End Get
     End Property
 
+    Public ReadOnly Property ScriptText As String
+        Get
+            Return FastColoredTextBox1.Text
+        End Get
+    End Property
+
     Private Sub Editor_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim syntaxHighlighter As New SyntaxHighlighter(FastColoredTextBox1)
 
