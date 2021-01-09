@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DescriptionTooltip.vb" />
+    <Compile Include="Editor\ColorStyle.vb" />
     <Compile Include="Solution.vb" />
     <Compile Include="ServerConnection.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -102,15 +103,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Editor.Designer.vb">
+    <Compile Include="Editor\Editor.Designer.vb">
       <DependentUpon>Editor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Editor.vb">
+    <Compile Include="Editor\Editor.vb">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Editor.resx">
+    <EmbeddedResource Include="Editor\Editor.resx">
       <DependentUpon>Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -70,7 +70,7 @@ Public Class Editor
     ''' </summary>
     Dim orange As New TextStyle(Brushes.OrangeRed, Nothing, FontStyle.Bold)
     Dim link As New TextStyle(Brushes.Blue, Brushes.AliceBlue, FontStyle.Underline Or FontStyle.Bold)
-    Dim colorCode As New TextStyle(Brushes.Red, Brushes.LightGray, fontStyle:=FontStyle.Bold Or FontStyle.Italic Or FontStyle.Underline)
+    Dim colorCode As New ColorStyle
     Dim pipeLine As New TextStyle(Brushes.Red, Brushes.LightGray, FontStyle.Underline)
     Dim interpolate As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Italic)
     Dim funcCall As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Regular)
