@@ -156,9 +156,11 @@ Public Class Editor
         e.ChangedRange.SetFoldingMarkers("""", """")
         e.ChangedRange.SetFoldingMarkers("#region", "#endregion")
 
-        e.ChangedRange.ClearStyle(blue, green, red, endSymbol)
+        e.ChangedRange.ClearStyle(blue, green, red, endSymbol, link, colorCode, purple, pipeLine, interpolate, funcCall, orange)
         e.ChangedRange.SetStyle(link, "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?")
         e.ChangedRange.SetStyle(colorCode, htmlcolor)
+        e.ChangedRange.SetStyle(green, "#.*")
+        e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
 
         e.ChangedRange.SetStyle(blue, keywords)
         e.ChangedRange.SetStyle(blue, keyword2)
@@ -167,13 +169,10 @@ Public Class Editor
         e.ChangedRange.SetStyle(blue, functionKeyword)
         e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
-        e.ChangedRange.SetStyle(orange, numbers)
         e.ChangedRange.SetStyle(pipeLine, "[:]>")
         e.ChangedRange.SetStyle(interpolate, stringInterpolate)
         e.ChangedRange.SetStyle(funcCall, callFunc)
-
-        e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
-        e.ChangedRange.SetStyle(green, "#.*")
+        e.ChangedRange.SetStyle(orange, numbers)
     End Sub
 
     Private Function CharIsHyperlink(place As Place) As Boolean
