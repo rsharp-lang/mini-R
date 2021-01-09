@@ -11,6 +11,8 @@ Public Class Editor
     Implements ISaveHandle
     Implements IFileReference
 
+    Public Event OnFocus()
+
     Public Property FilePath As String Implements IFileReference.FilePath
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
@@ -209,5 +211,17 @@ Public Class Editor
             Dim url = FastColoredTextBox1.GetRange(p, p).GetFragment("[\S]").Text
             Process.Start(url)
         End If
+    End Sub
+
+    Private Sub DocumentMap1_GotFocus(sender As Object, e As EventArgs) Handles DocumentMap1.GotFocus
+        RaiseEvent OnFocus()
+    End Sub
+
+    Private Sub FastColoredTextBox1_GotFocus(sender As Object, e As EventArgs) Handles FastColoredTextBox1.GotFocus
+        RaiseEvent OnFocus()
+    End Sub
+
+    Private Sub Editor_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
+        RaiseEvent OnFocus()
     End Sub
 End Class
