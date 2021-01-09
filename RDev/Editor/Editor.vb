@@ -76,7 +76,6 @@ Public Class Editor
     Dim funcCall As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Regular)
 
     Dim callFunc As String = "[^\s]+\s*\("
-    Dim htmlcolor As String = "[#][0-9a-fA-F]{6}"
     Dim stringInterpolate As String = "[$]\{.+?\}"
 
     Dim buildInfunction As String = "\s?(" & {
@@ -158,8 +157,9 @@ Public Class Editor
 
         e.ChangedRange.ClearStyle(blue, green, red, endSymbol, link, colorCode, purple, pipeLine, interpolate, funcCall, orange)
         e.ChangedRange.SetStyle(link, "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?")
-        e.ChangedRange.SetStyle(colorCode, htmlcolor)
+        e.ChangedRange.SetStyle(colorCode, ColorStyle.htmlcolor)
         e.ChangedRange.SetStyle(green, "#.*")
+        e.ChangedRange.SetStyle(interpolate, stringInterpolate)
         e.ChangedRange.SetStyle(red, "([""].*[""])|(['].*['])|([`].*[`])")
 
         e.ChangedRange.SetStyle(blue, keywords)
@@ -170,7 +170,6 @@ Public Class Editor
         e.ChangedRange.SetStyle(purple, buildInfunction)
         e.ChangedRange.SetStyle(endSymbol, ";")
         e.ChangedRange.SetStyle(pipeLine, "[:]>")
-        e.ChangedRange.SetStyle(interpolate, stringInterpolate)
         e.ChangedRange.SetStyle(funcCall, callFunc)
         e.ChangedRange.SetStyle(orange, numbers)
     End Sub
