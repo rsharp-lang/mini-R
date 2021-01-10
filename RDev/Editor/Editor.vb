@@ -209,6 +209,13 @@ Public Class Editor
 
         If (CharIsHyperlink(p)) Then
             Dim url = FastColoredTextBox1.GetRange(p, p).GetFragment("[\S]").Text
+
+            ' bugs fixed of string interpolation like ${""}
+            If url.StartsWith("${") Then
+                url = url.GetStackValue("{", "}")
+                url = url.Trim(""""c, "'"c, "`"c).Trim
+            End If
+
             Process.Start(url)
         End If
     End Sub
