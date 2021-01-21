@@ -29,6 +29,10 @@ Public Class Editor
         End Get
     End Property
 
+    Public Event EditCode()
+
+    Public ReadOnly Property IsEdited As Boolean
+
     Private Sub Editor_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim syntaxHighlighter As New SyntaxHighlighter(FastColoredTextBox1)
 
@@ -180,6 +184,9 @@ Public Class Editor
         e.ChangedRange.SetStyle(pipeLine, "[:]>")
         e.ChangedRange.SetStyle(funcCall, callFunc)
         e.ChangedRange.SetStyle(orange, numbers)
+
+        _IsEdited = True
+        RaiseEvent EditCode()
     End Sub
 
     Private Function CharIsHyperlink(place As Place) As Boolean
