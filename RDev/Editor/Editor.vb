@@ -271,7 +271,7 @@ Public Class Editor
         If Not symbolJump.IsNullOrEmpty Then
             Dim symbolLine As Integer = symbolJump(any.ToString(ToolStripComboBox1.SelectedItem))
 
-            FastColoredTextBox1.GotoPrevBookmark(symbolLine)
+            FastColoredTextBox1.YtoLineIndex(symbolLine)
         End If
     End Sub
 End Class
