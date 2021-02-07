@@ -48,9 +48,17 @@ Public Module DescriptionTooltip
                     }
                 Next
             ElseIf TypeOf line Is DeclareNewFunction Then
-                Yield New NamedValue(Of String) With {.Name = DirectCast(line, DeclareNewFunction).funcName, .Value = "function"}
+                Yield New NamedValue(Of String) With {
+                    .Name = DirectCast(line, DeclareNewFunction).funcName,
+                    .Value = "function",
+                    .Description = DirectCast(line, DeclareNewFunction).stackFrame.Line
+                }
             ElseIf TypeOf line Is DeclareLambdaFunction Then
-                Yield New NamedValue(Of String) With {.Name = DirectCast(line, DeclareLambdaFunction).name, .Value = "lambda"}
+                Yield New NamedValue(Of String) With {
+                    .Name = DirectCast(line, DeclareLambdaFunction).name,
+                    .Value = "lambda",
+                    .Description = DirectCast(line, DeclareLambdaFunction).stackFrame.Line
+                }
             End If
         Next
     End Function

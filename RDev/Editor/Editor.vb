@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class Editor
     Implements ISaveHandle
@@ -161,8 +162,6 @@ Public Class Editor
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub FastColoredTextBox1_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FastColoredTextBox1.TextChanged
-        Static i As Integer
-
         ' clear folding markers of changed range
         e.ChangedRange.ClearFoldingMarkers()
         ' set folding markers
@@ -194,18 +193,25 @@ Public Class Editor
 
         RaiseEvent EditCode()
 
-        i += 0
+        Dim text As String = Strings.Trim(e.ChangedRange.Text)
 
-        If i > 10 Then
-            i = RefreshSymbolList()
+        If text.IndexOf(ASCII.CR) > -1 OrElse text.IndexOf(ASCII.LF) > -1 Then
+            Call RefreshSymbolList()
         End If
     End Sub
+
+    Dim symbolJump As New Dictionary(Of String, Integer)
 
     Private Function RefreshSymbolList() As Integer
         Call ToolStripComboBox1.Items.Clear()
 
         For Each item As NamedValue(Of String) In DescriptionTooltip.GetSymbols(FastColoredTextBox1.Text)
             Call ToolStripComboBox1.Items.Add(item.Name)
+
+            If Not symbolJump.ContainsKey(item.Name) Then
+                Call symbolJump.Add(item.Name, Integer.Parse(item.Description))
+                Call FastColoredTextBox1.BookmarkLine(symbolJump(item.Name) - 1)
+            End If
         Next
 
         Return 0
@@ -259,5 +265,13 @@ Public Class Editor
 
     Private Sub Editor_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
         RaiseEvent OnFocus()
+    End Sub
+
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        If Not symbolJump.IsNullOrEmpty Then
+            Dim symbolLine As Integer = symbolJump(any.ToString(ToolStripComboBox1.SelectedItem))
+
+            FastColoredTextBox1.GotoPrevBookmark(symbolLine)
+        End If
     End Sub
 End Class
