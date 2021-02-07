@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Windows.Forms
 Imports FastColoredTextBoxNS
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
@@ -47,6 +48,8 @@ Public Class Editor
         End If
 
         FastColoredTextBox1.Text = script
+
+        Call RefreshSymbolList()
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
@@ -158,6 +161,8 @@ Public Class Editor
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub FastColoredTextBox1_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FastColoredTextBox1.TextChanged
+        Static i As Integer
+
         ' clear folding markers of changed range
         e.ChangedRange.ClearFoldingMarkers()
         ' set folding markers
@@ -186,8 +191,25 @@ Public Class Editor
         e.ChangedRange.SetStyle(orange, numbers)
 
         _IsEdited = True
+
         RaiseEvent EditCode()
+
+        i += 0
+
+        If i > 10 Then
+            i = RefreshSymbolList()
+        End If
     End Sub
+
+    Private Function RefreshSymbolList() As Integer
+        Call ToolStripComboBox1.Items.Clear()
+
+        For Each item As NamedValue(Of String) In DescriptionTooltip.GetSymbols(FastColoredTextBox1.Text)
+            Call ToolStripComboBox1.Items.Add(item.Name)
+        Next
+
+        Return 0
+    End Function
 
     Private Function CharIsHyperlink(place As Place) As Boolean
         Dim mask = FastColoredTextBox1.GetStyleIndexMask(New Style() {link})

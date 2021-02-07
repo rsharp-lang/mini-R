@@ -38,8 +38,14 @@ Public Module DescriptionTooltip
 
         For Each line As Expression In program
             If TypeOf line Is DeclareNewSymbol Then
-                For Each name As String In DirectCast(line, DeclareNewSymbol).names
-                    Yield New NamedValue(Of String) With {.Name = name, .Value = "symbol"}
+                Dim newSymbol As DeclareNewSymbol = DirectCast(line, DeclareNewSymbol)
+
+                For Each name As String In newSymbol.names
+                    Yield New NamedValue(Of String) With {
+                        .Name = name,
+                        .Value = "symbol",
+                        .Description = newSymbol.stackFrame.Line
+                    }
                 Next
             ElseIf TypeOf line Is DeclareNewFunction Then
                 Yield New NamedValue(Of String) With {.Name = DirectCast(line, DeclareNewFunction).funcName, .Value = "function"}
