@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.Rsharp.Language.TokenIcer
 Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class Editor
@@ -90,24 +91,21 @@ Public Class Editor
     Dim pipeLine As New TextStyle(Brushes.Red, Brushes.LightGray, FontStyle.Underline)
     Dim interpolate As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Italic)
     Dim funcCall As New TextStyle(Brushes.Black, Brushes.AliceBlue, FontStyle.Regular)
+    Dim symbolStyle As New TextStyle(Brushes.Black, Nothing, FontStyle.Regular)
 
     Dim callFunc As String = "[^\s]+\s*\("
     Dim stringInterpolate As String = "[$]\{.+?\}"
 
     Dim buildInfunction As String = "\s?(" & {
-        "list", "stop", "print"
+        "list", "stop", "print", "c", "warning", "auto"
     }.Select(Function(a) $"({a})") _
      .JoinBy("|") & ")\s*\("
 
     Dim startKeyword As String = "(let|const|imports|using)\s"
-    Dim keywords As String = "\s(" & {
-        "as", "integer",
-        "from",
-        "in"
-    }.Select(Function(a) $"({a})").JoinBy("|") & ")\s"
+    Dim keywords As String = "\s(" & Scanner.GetRKeywords.Select(Function(a) $"({a})").JoinBy("|") & ")\s"
 
     Dim numbers As String = "[-]?\d*(\.\d+)?([Ee][-]?\d+)?"
-    Dim functionKeyword As String = "\s(function|if|for|require)\s*\("
+    Dim functionKeyword As String = "\s(function|if|for|require|library)\s*\("
     Dim keyword2 As String = "\s(" & {
         "double", "boolean", "string", "integer",
         "else"
@@ -187,6 +185,7 @@ Public Class Editor
         e.ChangedRange.SetStyle(endSymbol, ";")
         e.ChangedRange.SetStyle(pipeLine, "[:]>")
         e.ChangedRange.SetStyle(funcCall, callFunc)
+        e.ChangedRange.SetStyle(symbolStyle, Scanner.RSymbol)
         e.ChangedRange.SetStyle(orange, numbers)
 
         _IsEdited = True
