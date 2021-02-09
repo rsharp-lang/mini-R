@@ -3,9 +3,11 @@ Imports System.Text
 Imports System.Windows.Forms
 Imports FastColoredTextBoxNS
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class Editor
     Implements ISaveHandle
@@ -47,6 +49,8 @@ Public Class Editor
         End If
 
         FastColoredTextBox1.Text = script
+
+        Call RefreshSymbolList()
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
@@ -186,8 +190,32 @@ Public Class Editor
         e.ChangedRange.SetStyle(orange, numbers)
 
         _IsEdited = True
+
         RaiseEvent EditCode()
+
+        Dim text As String = Strings.Trim(e.ChangedRange.Text)
+
+        If text.IndexOf(ASCII.CR) > -1 OrElse text.IndexOf(ASCII.LF) > -1 Then
+            Call RefreshSymbolList()
+        End If
     End Sub
+
+    Dim symbolJump As New Dictionary(Of String, Integer)
+
+    Private Function RefreshSymbolList() As Integer
+        Call ToolStripComboBox1.Items.Clear()
+
+        For Each item As NamedValue(Of String) In DescriptionTooltip.GetSymbols(FastColoredTextBox1.Text)
+            Call ToolStripComboBox1.Items.Add(item.Name)
+
+            If Not symbolJump.ContainsKey(item.Name) Then
+                Call symbolJump.Add(item.Name, Integer.Parse(item.Description))
+                Call FastColoredTextBox1.BookmarkLine(symbolJump(item.Name) - 1)
+            End If
+        Next
+
+        Return 0
+    End Function
 
     Private Function CharIsHyperlink(place As Place) As Boolean
         Dim mask = FastColoredTextBox1.GetStyleIndexMask(New Style() {link})
@@ -237,5 +265,13 @@ Public Class Editor
 
     Private Sub Editor_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
         RaiseEvent OnFocus()
+    End Sub
+
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        If Not symbolJump.IsNullOrEmpty Then
+            Dim symbolLine As Integer = symbolJump(any.ToString(ToolStripComboBox1.SelectedItem))
+
+            FastColoredTextBox1.YtoLineIndex(symbolLine)
+        End If
     End Sub
 End Class

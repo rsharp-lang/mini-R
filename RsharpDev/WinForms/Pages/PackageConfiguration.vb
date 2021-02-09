@@ -11,11 +11,14 @@ Public Class PackageConfiguration
         txtType.Text = info.Type
         txtTitle.Text = info.Title
         txtVersion.Text = info.Version
-        txtDate.Value = Date.Parse(info.Date)
         txtAuthor.Text = info.Author
         txtMaintainer.Text = info.Maintainer
         txtDescription.Text = info.Description
         txtLincese.Text = info.License
+
+        If Not info.Date.StringEmpty Then
+            txtDate.Value = Date.Parse(info.Date)
+        End If
 
         Text = $"Solution '{info.Package}'"
     End Sub
