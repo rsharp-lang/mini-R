@@ -36,6 +36,10 @@ Public Module DescriptionTooltip
             Return
         End Try
 
+        If program Is Nothing Then
+            Return
+        End If
+
         For Each line As Expression In program
             If TypeOf line Is DeclareNewSymbol Then
                 Dim newSymbol As DeclareNewSymbol = DirectCast(line, DeclareNewSymbol)
