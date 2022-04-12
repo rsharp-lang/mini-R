@@ -38,6 +38,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1</DefineConstants>
+    <OutputPath>D:\mini-R\App\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
