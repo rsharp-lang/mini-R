@@ -8,6 +8,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Public Class FormInspector
 
     ReadOnly R As RInterpreter = RInterpreter.Rsharp
+    ReadOnly viewer As New Dictionary(Of Type, Control)
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Using file As New OpenFileDialog With {.Filter = "Any kinds(*.*)|*.*"}
@@ -16,6 +17,22 @@ Public Class FormInspector
             End If
         End Using
     End Sub
+
+    Private Overloads Function Show(Of T As Control)() As T
+        Dim type As Type = GetType(T)
+
+        For Each item In viewer
+            item.Value.Visible = False
+            item.Value.Dock = DockStyle.None
+        Next
+
+        If Not viewer.ContainsKey(Type) Then
+            viewer(Type).Visible = True
+            viewer(Type).Dock = DockStyle.Fill
+        End If
+
+        Return viewer.TryGetValue(Type)
+    End Function
 
     Private Sub LoadFile(path As String)
         TreeView1.Nodes.Clear()
@@ -93,7 +110,7 @@ Public Class FormInspector
     Private Sub ViewValue(value As Object, tree As TreeNode)
         If value Is Nothing Then
             ' do nothing 
-            TextBox1.Text = ""
+            Show(Of TextBox).Text = ""
         ElseIf value.GetType.IsArray Then
             Dim array As Array = REnv.TryCastGenericArray(DirectCast(value, Array), R.globalEnvir)
             Dim type As Type = array.GetType.GetElementType
@@ -110,7 +127,7 @@ Public Class FormInspector
                 Call tree.Expand()
             Else
                 ' view array 
-                TextBox1.Text = DirectCast(value, Array) _
+                Show(Of TextBox).Text = DirectCast(value, Array) _
                     .AsObjectEnumerator _
                     .Select(Function(o) any.ToString(o)) _
                     .JoinBy(vbCrLf)
@@ -127,6 +144,46 @@ Public Class FormInspector
             End If
         Else
             Call ViewValue(e.Node.Tag, e.Node)
+        End If
+    End Sub
+
+    Private Sub ViewAsDataFrameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewAsDataFrameToolStripMenuItem.Click
+        Dim node As TreeNode = Nothing
+
+        Try
+            node = TreeView1.SelectedNode
+        Catch ex As Exception
+
+        End Try
+
+        If node Is Nothing Then
+            Return
+        End If
+
+        Dim value As Object = node.Tag
+
+        If value Is Nothing Then
+            Return
+        ElseIf TypeOf value Is list OrElse TypeOf value Is dataframe Then
+            Dim df = R.Evaluate("as.data.frame(x);", ("x", value))
+
+            If Program.isException(df) OrElse Not TypeOf df Is dataframe Then
+                Return
+            Else
+                Dim tableData As dataframe = DirectCast(df, dataframe)
+                Dim view As DataGridView = Show(Of DataGridView)()
+
+                view.Rows.Clear()
+                view.Columns.Clear()
+
+                For Each col In tableData.colnames
+                    Call view.Columns.Add(col, col)
+                Next
+
+                For Each row In tableData.forEachRow
+                    Call view.Rows.Add(row.value)
+                Next
+            End If
         End If
     End Sub
 End Class

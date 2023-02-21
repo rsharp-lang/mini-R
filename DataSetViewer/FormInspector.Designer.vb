@@ -30,12 +30,17 @@ Partial Class FormInspector
         SplitContainer1 = New SplitContainer()
         TreeView1 = New TreeView()
         ImageList1 = New ImageList(components)
+        DataGridView1 = New DataGridView()
         TextBox1 = New TextBox()
+        ContextMenuStrip1 = New ContextMenuStrip(components)
+        ViewAsDataFrameToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
         SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        ContextMenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -68,6 +73,7 @@ Partial Class FormInspector
         ' 
         ' SplitContainer1.Panel2
         ' 
+        SplitContainer1.Panel2.Controls.Add(DataGridView1)
         SplitContainer1.Panel2.Controls.Add(TextBox1)
         SplitContainer1.Size = New Size(800, 426)
         SplitContainer1.SplitterDistance = 266
@@ -75,6 +81,7 @@ Partial Class FormInspector
         ' 
         ' TreeView1
         ' 
+        TreeView1.ContextMenuStrip = ContextMenuStrip1
         TreeView1.Dock = DockStyle.Fill
         TreeView1.ImageIndex = 0
         TreeView1.ImageList = ImageList1
@@ -92,16 +99,35 @@ Partial Class FormInspector
         ImageList1.Images.SetKeyName(0, "application-x-object.png")
         ImageList1.Images.SetKeyName(1, "folder-documents.png")
         ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(92, 219)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.RowTemplate.Height = 25
+        DataGridView1.Size = New Size(240, 150)
+        DataGridView1.TabIndex = 1
+        ' 
         ' TextBox1
         ' 
-        TextBox1.Dock = DockStyle.Fill
-        TextBox1.Location = New Point(0, 0)
+        TextBox1.Location = New Point(137, 36)
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
         TextBox1.ScrollBars = ScrollBars.Both
-        TextBox1.Size = New Size(530, 426)
+        TextBox1.Size = New Size(224, 127)
         TextBox1.TabIndex = 0
         ' 
+        ' ContextMenuStrip1
+        ' 
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ViewAsDataFrameToolStripMenuItem})
+        ContextMenuStrip1.Name = "ContextMenuStrip1"
+        ContextMenuStrip1.Size = New Size(176, 26)
+        ' 
+        ' ViewAsDataFrameToolStripMenuItem
+        ' 
+        ViewAsDataFrameToolStripMenuItem.Name = "ViewAsDataFrameToolStripMenuItem"
+        ViewAsDataFrameToolStripMenuItem.Size = New Size(180, 22)
+        ViewAsDataFrameToolStripMenuItem.Text = "View As DataFrame"' 
         ' FormInspector
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -119,6 +145,8 @@ Partial Class FormInspector
         SplitContainer1.Panel2.PerformLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
         SplitContainer1.ResumeLayout(False)
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        ContextMenuStrip1.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -130,4 +158,7 @@ Partial Class FormInspector
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ViewAsDataFrameToolStripMenuItem As ToolStripMenuItem
 End Class
