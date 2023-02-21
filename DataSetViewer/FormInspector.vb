@@ -1,6 +1,7 @@
-﻿Imports SMRUCC.Rsharp.Interpreter
-Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Blocks
+﻿Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class FormInspector
 
@@ -9,14 +10,14 @@ Public Class FormInspector
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Using file As New OpenFileDialog With {.Filter = "Any kinds(*.*)|*.*"}
             If file.ShowDialog = DialogResult.OK Then
-                Text = $"Inspect[{file.FileName}]"
                 LoadFile(file.FileName)
             End If
         End Using
     End Sub
 
     Private Sub LoadFile(path As String)
-        Call TreeView1.Nodes.Clear()
+        TreeView1.Nodes.Clear()
+        Text = $"Inspect[{path.FileName}]"
 
         Try
             Dim value As Object = R.Evaluate($"readRDS('{path}');")
@@ -36,8 +37,6 @@ Public Class FormInspector
         Dim type As Type = x.GetType
 
         Select Case type
-            Case GetType(vector), GetType(Array)
-
             Case GetType(list)
                 Dim listSet As list = DirectCast(x, list)
 
@@ -77,19 +76,26 @@ Public Class FormInspector
 
     End Sub
 
+    Private Sub ViewValue(value As Object)
+        If value Is Nothing Then
+            ' do nothing 
+            TextBox1.Text = ""
+        ElseIf value.GetType.IsArray Then
+            ' view array 
+            TextBox1.Text = DirectCast(value, Array) _
+                .AsObjectEnumerator _
+                .Select(Function(o) any.ToString(o)) _
+                .JoinBy(vbCrLf)
+        Else
+
+        End If
+    End Sub
+
     Private Sub TreeView1_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseDoubleClick
         If e.Node.ImageIndex = Icons.Folder Then
             Call LoadData(e.Node.Tag, e.Node)
         Else
-            Dim value As Object = e.Node.Tag
-
-            If value Is Nothing Then
-                ' do nothing 
-            ElseIf value.GetType.IsArray Then
-                ' view array 
-            Else
-
-            End If
+            Call ViewValue(e.Node.Tag)
         End If
     End Sub
 End Class

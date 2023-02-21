@@ -30,9 +30,11 @@ Partial Class FormInspector
         SplitContainer1 = New SplitContainer()
         TreeView1 = New TreeView()
         ImageList1 = New ImageList(components)
+        TextBox1 = New TextBox()
         MenuStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
+        SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -63,6 +65,10 @@ Partial Class FormInspector
         ' SplitContainer1.Panel1
         ' 
         SplitContainer1.Panel1.Controls.Add(TreeView1)
+        ' 
+        ' SplitContainer1.Panel2
+        ' 
+        SplitContainer1.Panel2.Controls.Add(TextBox1)
         SplitContainer1.Size = New Size(800, 426)
         SplitContainer1.SplitterDistance = 266
         SplitContainer1.TabIndex = 1
@@ -86,6 +92,16 @@ Partial Class FormInspector
         ImageList1.Images.SetKeyName(0, "application-x-object.png")
         ImageList1.Images.SetKeyName(1, "folder-documents.png")
         ' 
+        ' TextBox1
+        ' 
+        TextBox1.Dock = DockStyle.Fill
+        TextBox1.Location = New Point(0, 0)
+        TextBox1.Multiline = True
+        TextBox1.Name = "TextBox1"
+        TextBox1.ScrollBars = ScrollBars.Both
+        TextBox1.Size = New Size(530, 426)
+        TextBox1.TabIndex = 0
+        ' 
         ' FormInspector
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -99,6 +115,8 @@ Partial Class FormInspector
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         SplitContainer1.Panel1.ResumeLayout(False)
+        SplitContainer1.Panel2.ResumeLayout(False)
+        SplitContainer1.Panel2.PerformLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
         SplitContainer1.ResumeLayout(False)
         ResumeLayout(False)
@@ -111,4 +129,5 @@ Partial Class FormInspector
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents TextBox1 As TextBox
 End Class
