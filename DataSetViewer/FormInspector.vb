@@ -1,7 +1,9 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports any = Microsoft.VisualBasic.Scripting
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 Public Class FormInspector
 
@@ -88,26 +90,43 @@ Public Class FormInspector
 
     End Sub
 
-    Private Sub ViewValue(value As Object)
+    Private Sub ViewValue(value As Object, tree As TreeNode)
         If value Is Nothing Then
             ' do nothing 
             TextBox1.Text = ""
         ElseIf value.GetType.IsArray Then
-            ' view array 
-            TextBox1.Text = DirectCast(value, Array) _
-                .AsObjectEnumerator _
-                .Select(Function(o) any.ToString(o)) _
-                .JoinBy(vbCrLf)
+            Dim array As Array = REnv.TryCastGenericArray(DirectCast(value, Array), R.globalEnvir)
+            Dim type As Type = array.GetType.GetElementType
+
+            If type Is Nothing OrElse Not DataFramework.IsPrimitive(type) Then
+                ' load tree
+                tree.ImageIndex = Icons.Folder
+                tree.SelectedImageIndex = Icons.Folder
+
+                For i As Integer = 0 To array.Length - 1
+                    Call LoadData(array.GetValue(i), tree)
+                Next
+
+                Call tree.Expand()
+            Else
+                ' view array 
+                TextBox1.Text = DirectCast(value, Array) _
+                    .AsObjectEnumerator _
+                    .Select(Function(o) any.ToString(o)) _
+                    .JoinBy(vbCrLf)
+            End If
         ElseIf value.GetType Is GetType(vector) Then
-            Call ViewValue(DirectCast(value, vector).data)
+            Call ViewValue(DirectCast(value, vector).data, tree)
         End If
     End Sub
 
     Private Sub TreeView1_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseDoubleClick
         If e.Node.ImageIndex = Icons.Folder Then
-            Call LoadData(e.Node.Tag, e.Node)
+            If e.Node.Nodes.Count = 0 Then
+                Call LoadData(e.Node.Tag, e.Node)
+            End If
         Else
-            Call ViewValue(e.Node.Tag)
+            Call ViewValue(e.Node.Tag, e.Node)
         End If
     End Sub
 End Class
