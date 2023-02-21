@@ -230,13 +230,13 @@ Public Class FormInspector
 
     Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
         If TypeOf current Is DataGridView Then
-            Using file As New SaveFileDialog With {.FileName = "Excel Table(*.csv)|*.csv"}
+            Using file As New SaveFileDialog With {.Filter = "Excel Table(*.csv)|*.csv"}
                 If file.ShowDialog = DialogResult.OK Then
                     Call R.Evaluate($"write.csv(x, file = '{file.FileName}');", ("x", Me.df))
                 End If
             End Using
         ElseIf TypeOf current Is TextBox Then
-            Using file As New SaveFileDialog With {.FileName = "Plain Text(*.txt)|*.txt"}
+            Using file As New SaveFileDialog With {.Filter = "Plain Text(*.txt)|*.txt"}
                 If file.ShowDialog = DialogResult.OK Then
                     Call R.Evaluate($"writeLines(x, con = '{file.FileName}');", ("x", TextBox1.Text))
                 End If
