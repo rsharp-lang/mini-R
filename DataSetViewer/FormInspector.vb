@@ -10,6 +10,9 @@ Public Class FormInspector
     ReadOnly R As RInterpreter = RInterpreter.Rsharp
     ReadOnly viewer As New Dictionary(Of Type, Control)
 
+    Dim df As dataframe
+    Dim current As Control
+
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Using file As New OpenFileDialog With {.Filter = "Any kinds(*.*)|*.*"}
             If file.ShowDialog = DialogResult.OK Then
@@ -31,7 +34,9 @@ Public Class FormInspector
             viewer(type).Dock = DockStyle.Fill
         End If
 
-        Return viewer.TryGetValue(type)
+        Call viewer.TryGetValue(type, current)
+
+        Return current
     End Function
 
     Private Sub LoadFile(path As String)
@@ -203,6 +208,8 @@ Public Class FormInspector
                 For Each row In tableData.forEachRow
                     Call view.Rows.Add(row.value)
                 Next
+
+                Me.df = df
             End If
         End If
     End Sub
@@ -218,6 +225,24 @@ Public Class FormInspector
 
         If Not node Is Nothing Then
             Call ViewAsDataFrame(node.Tag, "t(as.data.frame(x));")
+        End If
+    End Sub
+
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+        If TypeOf current Is DataGridView Then
+            Using file As New SaveFileDialog With {.FileName = "Excel Table(*.csv)|*.csv"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call R.Evaluate($"write.csv(x, file = '{file.FileName}');", ("x", Me.df))
+                End If
+            End Using
+        ElseIf TypeOf current Is TextBox Then
+            Using file As New SaveFileDialog With {.FileName = "Plain Text(*.txt)|*.txt"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call R.Evaluate($"writeLines(x, con = '{file.FileName}');", ("x", TextBox1.Text))
+                End If
+            End Using
+        Else
+
         End If
     End Sub
 End Class
