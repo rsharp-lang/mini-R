@@ -104,7 +104,7 @@ Public Class FormInspector
                 tree.SelectedImageIndex = Icons.Folder
 
                 For i As Integer = 0 To array.Length - 1
-                    Call LoadData(array.GetValue(i), tree)
+                    Call LoadData(array.GetValue(i), tree.Nodes.Add($"[{i + 1}]"))
                 Next
 
                 Call tree.Expand()
