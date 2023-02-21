@@ -86,8 +86,8 @@ Public Class FormInspector
                 .AsObjectEnumerator _
                 .Select(Function(o) any.ToString(o)) _
                 .JoinBy(vbCrLf)
-        Else
-
+        ElseIf value.GetType Is GetType(vector) Then
+            Call ViewValue(DirectCast(value, vector).data)
         End If
     End Sub
 
