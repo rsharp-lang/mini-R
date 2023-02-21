@@ -55,6 +55,16 @@ Public Class FormInspector
     Private Sub FormInspector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call LoadFile("F:\Metlin.cache")
     End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+
+    End Sub
+
+    Private Sub TreeView1_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseDoubleClick
+        If e.Node.ImageIndex = Icons.Folder Then
+            Call LoadData(e.Node.Tag, e.Node)
+        End If
+    End Sub
 End Class
 
 Public Enum Icons
