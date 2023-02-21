@@ -26,12 +26,12 @@ Public Class FormInspector
             item.Value.Dock = DockStyle.None
         Next
 
-        If Not viewer.ContainsKey(Type) Then
-            viewer(Type).Visible = True
-            viewer(Type).Dock = DockStyle.Fill
+        If Not viewer.ContainsKey(type) Then
+            viewer(type).Visible = True
+            viewer(type).Dock = DockStyle.Fill
         End If
 
-        Return viewer.TryGetValue(Type)
+        Return viewer.TryGetValue(type)
     End Function
 
     Private Sub LoadFile(path As String)
@@ -171,7 +171,18 @@ Public Class FormInspector
 
         If value Is Nothing Then
             Return
-        ElseIf TypeOf value Is list OrElse TypeOf value Is dataframe Then
+        ElseIf TypeOf value Is vector Then
+            Dim list As New list
+            Dim v As Array = DirectCast(value, vector).data
+
+            For i As Integer = 0 To v.Length - 1
+                list.add(i + 1, v.GetValue(i))
+            Next
+
+            value = list
+        End If
+
+        If TypeOf value Is list OrElse TypeOf value Is dataframe Then
             Dim df = R.Evaluate("as.data.frame(x);", ("x", value))
 
             If Program.isException(df) OrElse Not TypeOf df Is dataframe Then
