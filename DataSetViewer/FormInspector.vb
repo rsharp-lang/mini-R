@@ -165,12 +165,12 @@ Public Class FormInspector
 
         End Try
 
-        If node Is Nothing Then
-            Return
+        If Not node Is Nothing Then
+            Call ViewAsDataFrame(node.Tag, "as.data.frame(x);")
         End If
+    End Sub
 
-        Dim value As Object = node.Tag
-
+    Private Sub ViewAsDataFrame(value As Object, exp As String)
         If value Is Nothing Then
             Return
         ElseIf TypeOf value Is vector Then
@@ -185,7 +185,7 @@ Public Class FormInspector
         End If
 
         If TypeOf value Is list OrElse TypeOf value Is dataframe Then
-            Dim df = R.Evaluate("as.data.frame(x);", ("x", value))
+            Dim df = R.Evaluate(exp, ("x", value))
 
             If Program.isException(df) OrElse Not TypeOf df Is dataframe Then
                 Return
@@ -204,6 +204,20 @@ Public Class FormInspector
                     Call view.Rows.Add(row.value)
                 Next
             End If
+        End If
+    End Sub
+
+    Private Sub TransposeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TransposeToolStripMenuItem.Click
+        Dim node As TreeNode = Nothing
+
+        Try
+            node = TreeView1.SelectedNode
+        Catch ex As Exception
+
+        End Try
+
+        If Not node Is Nothing Then
+            Call ViewAsDataFrame(node.Tag, "t(as.data.frame(x));")
         End If
     End Sub
 End Class

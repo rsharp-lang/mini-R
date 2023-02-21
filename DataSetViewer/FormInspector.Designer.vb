@@ -29,18 +29,19 @@ Partial Class FormInspector
         OpenToolStripMenuItem = New ToolStripMenuItem()
         SplitContainer1 = New SplitContainer()
         TreeView1 = New TreeView()
+        ContextMenuStrip1 = New ContextMenuStrip(components)
+        ViewAsDataFrameToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
         DataGridView1 = New DataGridView()
         TextBox1 = New TextBox()
-        ContextMenuStrip1 = New ContextMenuStrip(components)
-        ViewAsDataFrameToolStripMenuItem = New ToolStripMenuItem()
+        TransposeToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
         SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         ContextMenuStrip1.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -91,6 +92,18 @@ Partial Class FormInspector
         TreeView1.Size = New Size(266, 426)
         TreeView1.TabIndex = 0
         ' 
+        ' ContextMenuStrip1
+        ' 
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ViewAsDataFrameToolStripMenuItem})
+        ContextMenuStrip1.Name = "ContextMenuStrip1"
+        ContextMenuStrip1.Size = New Size(181, 48)
+        ' 
+        ' ViewAsDataFrameToolStripMenuItem
+        ' 
+        ViewAsDataFrameToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {TransposeToolStripMenuItem})
+        ViewAsDataFrameToolStripMenuItem.Name = "ViewAsDataFrameToolStripMenuItem"
+        ViewAsDataFrameToolStripMenuItem.Size = New Size(180, 22)
+        ViewAsDataFrameToolStripMenuItem.Text = "View As DataFrame"' 
         ' ImageList1
         ' 
         ImageList1.ColorDepth = ColorDepth.Depth8Bit
@@ -117,17 +130,11 @@ Partial Class FormInspector
         TextBox1.Size = New Size(224, 127)
         TextBox1.TabIndex = 0
         ' 
-        ' ContextMenuStrip1
+        ' TransposeToolStripMenuItem
         ' 
-        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ViewAsDataFrameToolStripMenuItem})
-        ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(176, 26)
-        ' 
-        ' ViewAsDataFrameToolStripMenuItem
-        ' 
-        ViewAsDataFrameToolStripMenuItem.Name = "ViewAsDataFrameToolStripMenuItem"
-        ViewAsDataFrameToolStripMenuItem.Size = New Size(180, 22)
-        ViewAsDataFrameToolStripMenuItem.Text = "View As DataFrame"' 
+        TransposeToolStripMenuItem.Name = "TransposeToolStripMenuItem"
+        TransposeToolStripMenuItem.Size = New Size(180, 22)
+        TransposeToolStripMenuItem.Text = "Transpose"' 
         ' FormInspector
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -145,8 +152,8 @@ Partial Class FormInspector
         SplitContainer1.Panel2.PerformLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
         SplitContainer1.ResumeLayout(False)
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ContextMenuStrip1.ResumeLayout(False)
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -161,4 +168,5 @@ Partial Class FormInspector
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ViewAsDataFrameToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TransposeToolStripMenuItem As ToolStripMenuItem
 End Class
