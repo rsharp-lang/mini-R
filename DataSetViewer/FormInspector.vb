@@ -99,7 +99,14 @@ Public Class FormInspector
         End Select
     End Sub
 
+    Private Sub AddViewer(Of T As Control)(v As T)
+        Call viewer.Add(GetType(T), v)
+    End Sub
+
     Private Sub FormInspector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Call AddViewer(TextBox1)
+        Call AddViewer(DataGridView1)
+
         Call LoadFile("F:\Metlin.cache")
     End Sub
 
