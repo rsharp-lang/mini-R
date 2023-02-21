@@ -26,7 +26,7 @@ Public Class FormInspector
             item.Value.Dock = DockStyle.None
         Next
 
-        If Not viewer.ContainsKey(type) Then
+        If viewer.ContainsKey(type) Then
             viewer(type).Visible = True
             viewer(type).Dock = DockStyle.Fill
         End If
@@ -100,7 +100,9 @@ Public Class FormInspector
     End Sub
 
     Private Sub AddViewer(Of T As Control)(v As T)
-        Call viewer.Add(GetType(T), v)
+        viewer.Add(GetType(T), v)
+        v.Visible = True
+        v.Dock = DockStyle.None
     End Sub
 
     Private Sub FormInspector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
