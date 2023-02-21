@@ -1,4 +1,5 @@
 ﻿Imports SMRUCC.Rsharp.Interpreter
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Blocks
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
 Public Class FormInspector
@@ -35,7 +36,8 @@ Public Class FormInspector
         Dim type As Type = x.GetType
 
         Select Case type
-            Case GetType(vector)
+            Case GetType(vector), GetType(Array)
+
             Case GetType(list)
                 Dim listSet As list = DirectCast(x, list)
 
@@ -48,7 +50,22 @@ Public Class FormInspector
                     node.SelectedImageIndex = node.ImageIndex
                     node.Tag = data
                 Next
+
+                Call tree.Expand()
             Case GetType(dataframe)
+                Dim df As dataframe = DirectCast(x, dataframe)
+
+                ' is a folder of vectors
+                For Each name As String In df.colnames
+                    Dim data As Array = df(name)
+                    Dim node = tree.Nodes.Add(name)
+
+                    node.ImageIndex = Icons.xFile
+                    node.SelectedImageIndex = Icons.xFile
+                    node.Tag = data
+                Next
+
+                Call tree.Expand()
         End Select
     End Sub
 
@@ -63,6 +80,16 @@ Public Class FormInspector
     Private Sub TreeView1_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseDoubleClick
         If e.Node.ImageIndex = Icons.Folder Then
             Call LoadData(e.Node.Tag, e.Node)
+        Else
+            Dim value As Object = e.Node.Tag
+
+            If value Is Nothing Then
+                ' do nothing 
+            ElseIf value.GetType.IsArray Then
+                ' view array 
+            Else
+
+            End If
         End If
     End Sub
 End Class
