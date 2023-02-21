@@ -33,6 +33,18 @@ Public Class FormInspector
         End Try
     End Sub
 
+    Private Shared Function getName(name As String, x As Object) As String
+        If x Is Nothing Then
+            Return "null"
+        ElseIf TypeOf x Is list Then
+            Return $"{name} [{DirectCast(x, list).length} elements]"
+        ElseIf TypeOf x Is dataframe Then
+            Return $"{name} [{DirectCast(x, dataframe).nrows}x{DirectCast(x, dataframe).ncols}]"
+        Else
+            Return name
+        End If
+    End Function
+
     Private Sub LoadData(x As Object, tree As TreeNode)
         Dim type As Type = x.GetType
 
@@ -43,7 +55,7 @@ Public Class FormInspector
                 ' is a folder
                 For Each name As String In listSet.getNames
                     Dim data = listSet.getByName(name)
-                    Dim node = tree.Nodes.Add(name)
+                    Dim node = tree.Nodes.Add(getName(name, data))
 
                     node.ImageIndex = If(TypeOf data Is list OrElse TypeOf data Is dataframe, Icons.Folder, Icons.xFile)
                     node.SelectedImageIndex = node.ImageIndex
@@ -57,7 +69,7 @@ Public Class FormInspector
                 ' is a folder of vectors
                 For Each name As String In df.colnames
                     Dim data As Array = df(name)
-                    Dim node = tree.Nodes.Add(name)
+                    Dim node = tree.Nodes.Add($"{name}<{data.Length}>")
 
                     node.ImageIndex = Icons.xFile
                     node.SelectedImageIndex = Icons.xFile
