@@ -22,11 +22,14 @@ Partial Class FormInspector
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(FormInspector))
         MenuStrip1 = New MenuStrip()
         FileToolStripMenuItem = New ToolStripMenuItem()
         OpenToolStripMenuItem = New ToolStripMenuItem()
         SplitContainer1 = New SplitContainer()
         TreeView1 = New TreeView()
+        ImageList1 = New ImageList(components)
         MenuStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
@@ -50,7 +53,7 @@ Partial Class FormInspector
         ' OpenToolStripMenuItem
         ' 
         OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        OpenToolStripMenuItem.Size = New Size(180, 22)
+        OpenToolStripMenuItem.Size = New Size(103, 22)
         OpenToolStripMenuItem.Text = "Open"' 
         ' SplitContainer1
         ' 
@@ -67,10 +70,21 @@ Partial Class FormInspector
         ' TreeView1
         ' 
         TreeView1.Dock = DockStyle.Fill
+        TreeView1.ImageIndex = 0
+        TreeView1.ImageList = ImageList1
         TreeView1.Location = New Point(0, 0)
         TreeView1.Name = "TreeView1"
+        TreeView1.SelectedImageIndex = 0
         TreeView1.Size = New Size(266, 426)
         TreeView1.TabIndex = 0
+        ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth8Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "application-x-object.png")
+        ImageList1.Images.SetKeyName(1, "folder-documents.png")
         ' 
         ' FormInspector
         ' 
@@ -96,4 +110,5 @@ Partial Class FormInspector
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents ImageList1 As ImageList
 End Class
