@@ -232,6 +232,10 @@
       <Project>{920e5968-ef1d-489c-9a9d-4a5543fd6ab5}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\console\console\console.NET5.vbproj">
+      <Project>{d12d440b-abb8-4ea9-9349-fb4ab58ad267}</Project>
+      <Name>console.NET5</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
