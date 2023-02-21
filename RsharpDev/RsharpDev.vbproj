@@ -528,6 +528,14 @@
       <Project>{0fe351ab-a585-4c86-80d8-7ec25c5715eb}</Project>
       <Name>Rsharp-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\CloudKit\Centos\Centos.NET5.vbproj">
+      <Project>{dcb72059-17be-4e37-988b-d3af31e6c7e0}</Project>
+      <Name>Centos.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\CloudKit\Docker\Docker.NET5.vbproj">
+      <Project>{77461b93-17fb-4eeb-8233-4d735561bf7e}</Project>
+      <Name>Docker.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
       <Project>{cfc0500a-366f-48ba-bf85-5e46c138f858}</Project>
       <Name>dataframework-netcore5</Name>
@@ -564,9 +572,9 @@
       <Project>{d12d440b-abb8-4ea9-9349-fb4ab58ad267}</Project>
       <Name>console.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RDev\RDev.vbproj">
-      <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
-      <Name>RDev</Name>
+    <ProjectReference Include="..\RDev\RDev.NET5.vbproj">
+      <Project>{3b50a888-d864-4f56-8a3e-9547b672b447}</Project>
+      <Name>RDev.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems" Label="Shared" />
