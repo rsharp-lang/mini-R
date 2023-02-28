@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -7,11 +8,16 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 
 Public Class FormInspector
 
-    ReadOnly R As RInterpreter = RInterpreter.Rsharp
-    ReadOnly viewer As New Dictionary(Of Type, Control)
+    Dim R As RInterpreter = RInterpreter.Rsharp
+    Dim viewer As New Dictionary(Of Type, Control)
 
     Dim df As dataframe
     Dim current As Control
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub SetREngine(r As RInterpreter)
+        Me.R = r
+    End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Using file As New OpenFileDialog With {.Filter = "Any kinds(*.*)|*.*"}
@@ -41,11 +47,11 @@ Public Class FormInspector
 
     Private Sub LoadFile(path As String)
         TreeView1.Nodes.Clear()
-        Text = $"Inspect[{path.FileName}]"
+        Text = $"Inspect[{path.GetFullPath}]"
 
         Try
             Dim value As Object = R.Evaluate($"readRDS('{path}');")
-            Dim root = TreeView1.Nodes.Add(path.FileName)
+            Dim root = TreeView1.Nodes.Add({path.FileName}.makeNames.First)
 
             If value Is Nothing Then
                 MessageBox.Show("No data could be loaded!", "readRDS", MessageBoxButtons.OK, MessageBoxIcon.Error)

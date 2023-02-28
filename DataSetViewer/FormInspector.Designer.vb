@@ -27,6 +27,7 @@ Partial Class FormInspector
         MenuStrip1 = New MenuStrip()
         FileToolStripMenuItem = New ToolStripMenuItem()
         OpenToolStripMenuItem = New ToolStripMenuItem()
+        ExportToolStripMenuItem = New ToolStripMenuItem()
         SplitContainer1 = New SplitContainer()
         TreeView1 = New TreeView()
         ContextMenuStrip1 = New ContextMenuStrip(components)
@@ -35,7 +36,6 @@ Partial Class FormInspector
         ImageList1 = New ImageList(components)
         DataGridView1 = New DataGridView()
         TextBox1 = New TextBox()
-        ExportToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
@@ -62,8 +62,13 @@ Partial Class FormInspector
         ' OpenToolStripMenuItem
         ' 
         OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        OpenToolStripMenuItem.Size = New Size(180, 22)
+        OpenToolStripMenuItem.Size = New Size(108, 22)
         OpenToolStripMenuItem.Text = "Open"' 
+        ' ExportToolStripMenuItem
+        ' 
+        ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
+        ExportToolStripMenuItem.Size = New Size(108, 22)
+        ExportToolStripMenuItem.Text = "Export"' 
         ' SplitContainer1
         ' 
         SplitContainer1.Dock = DockStyle.Fill
@@ -75,14 +80,15 @@ Partial Class FormInspector
         ' 
         ' SplitContainer1.Panel2
         ' 
-        SplitContainer1.Panel2.Controls.Add(DataGridView1)
         SplitContainer1.Panel2.Controls.Add(TextBox1)
+        SplitContainer1.Panel2.Controls.Add(DataGridView1)
         SplitContainer1.Size = New Size(800, 426)
         SplitContainer1.SplitterDistance = 266
         SplitContainer1.TabIndex = 1
         ' 
         ' TreeView1
         ' 
+        TreeView1.BorderStyle = BorderStyle.FixedSingle
         TreeView1.ContextMenuStrip = ContextMenuStrip1
         TreeView1.Dock = DockStyle.Fill
         TreeView1.ImageIndex = 0
@@ -121,7 +127,7 @@ Partial Class FormInspector
         ' DataGridView1
         ' 
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(92, 219)
+        DataGridView1.Location = New Point(96, 228)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.RowTemplate.Height = 25
         DataGridView1.Size = New Size(240, 150)
@@ -129,18 +135,16 @@ Partial Class FormInspector
         ' 
         ' TextBox1
         ' 
-        TextBox1.Location = New Point(137, 36)
+        TextBox1.BorderStyle = BorderStyle.FixedSingle
+        TextBox1.Dock = DockStyle.Fill
+        TextBox1.Font = New Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBox1.Location = New Point(0, 0)
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
         TextBox1.ScrollBars = ScrollBars.Both
-        TextBox1.Size = New Size(224, 127)
+        TextBox1.Size = New Size(530, 426)
         TextBox1.TabIndex = 0
         ' 
-        ' ExportToolStripMenuItem
-        ' 
-        ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        ExportToolStripMenuItem.Size = New Size(180, 22)
-        ExportToolStripMenuItem.Text = "Export"' 
         ' FormInspector
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
