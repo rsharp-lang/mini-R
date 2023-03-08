@@ -120,7 +120,7 @@ Public Class FormInspector
         Call AddViewer(TextBox1)
         Call AddViewer(DataGridView1)
 
-        Call LoadFile("F:\Metlin.cache")
+        ' Call LoadFile("F:\Metlin.cache")
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
