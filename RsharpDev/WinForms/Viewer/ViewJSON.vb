@@ -43,7 +43,7 @@ Public Class ViewJSON : Implements Viewer
                 loadJson(item.Value, obj.Nodes.Add(item.Name))
             Next
         ElseIf TypeOf json Is JsonValue Then
-            tree.Nodes.Add(DirectCast(json, JsonValue).GetStripString)
+            tree.Nodes.Add(DirectCast(json, JsonValue).GetStripString(decodeMetachar:=True))
         End If
     End Sub
 

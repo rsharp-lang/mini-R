@@ -144,7 +144,7 @@ Public Module DescriptionTooltip
             Dim method As RMethodInfo = func
             Dim text As String = method.GetPrintContent.Replace("``", "")
             Dim help As New StringBuilder
-            Dim docs As ProjectMember = REngine.globalEnvir.packages.packageDocs.GetAnnotations(method.GetRawDeclares)
+            Dim docs As ProjectMember = REngine.globalEnvir.packages.packageDocs.GetAnnotations(method.GetNetCoreCLRDeclaration)
 
             If Not docs Is Nothing Then
                 Using writer As New StringWriter(help)
