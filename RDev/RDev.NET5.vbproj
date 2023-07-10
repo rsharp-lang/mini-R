@@ -70,7 +70,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\CloudKit\Centos\Centos.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj" />
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
