@@ -37,6 +37,7 @@ Partial Class Form1
         ComparesToolStripMenuItem = New ToolStripMenuItem()
         ToolStripMenuItem1 = New ToolStripSeparator()
         ExportJSONToolStripMenuItem = New ToolStripMenuItem()
+        TextBox1 = New TextBox()
         MenuStrip1.SuspendLayout()
         GroupBox1.SuspendLayout()
         ContextMenuStrip1.SuspendLayout()
@@ -66,6 +67,7 @@ Partial Class Form1
         ' 
         ' GroupBox1
         ' 
+        GroupBox1.Controls.Add(TextBox1)
         GroupBox1.Controls.Add(ListBox2)
         GroupBox1.Controls.Add(ListBox1)
         GroupBox1.Controls.Add(Label3)
@@ -83,24 +85,24 @@ Partial Class Form1
         ' 
         ListBox2.FormattingEnabled = True
         ListBox2.ItemHeight = 15
-        ListBox2.Location = New Point(471, 62)
+        ListBox2.Location = New Point(361, 62)
         ListBox2.Name = "ListBox2"
-        ListBox2.Size = New Size(187, 319)
+        ListBox2.Size = New Size(162, 319)
         ListBox2.TabIndex = 5
         ' 
         ' ListBox1
         ' 
         ListBox1.FormattingEnabled = True
         ListBox1.ItemHeight = 15
-        ListBox1.Location = New Point(207, 62)
+        ListBox1.Location = New Point(183, 62)
         ListBox1.Name = "ListBox1"
-        ListBox1.Size = New Size(187, 319)
+        ListBox1.Size = New Size(158, 319)
         ListBox1.TabIndex = 4
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(471, 33)
+        Label3.Location = New Point(361, 33)
         Label3.Name = "Label3"
         Label3.Size = New Size(40, 15)
         Label3.TabIndex = 3
@@ -109,7 +111,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(216, 34)
+        Label2.Location = New Point(183, 33)
         Label2.Name = "Label2"
         Label2.Size = New Size(51, 15)
         Label2.TabIndex = 2
@@ -156,6 +158,14 @@ Partial Class Form1
         ExportJSONToolStripMenuItem.Size = New Size(139, 22)
         ExportJSONToolStripMenuItem.Text = "Export JSON"
         ' 
+        ' TextBox1
+        ' 
+        TextBox1.Location = New Point(552, 62)
+        TextBox1.Multiline = True
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(204, 319)
+        TextBox1.TabIndex = 6
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -189,4 +199,5 @@ Partial Class Form1
     Friend WithEvents ComparesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents ExportJSONToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TextBox1 As TextBox
 End Class
