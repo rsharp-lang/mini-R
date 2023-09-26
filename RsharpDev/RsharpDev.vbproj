@@ -560,12 +560,12 @@
       <Project>{0fe351ab-a585-4c86-80d8-7ec25c5715eb}</Project>
       <Name>Rsharp-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\CloudKit\Centos\Centos.NET5.vbproj">
-      <Project>{dcb72059-17be-4e37-988b-d3af31e6c7e0}</Project>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj">
+      <Project>{7ab86387-aa80-44ab-9a96-1318b846ee19}</Project>
       <Name>Centos.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\CloudKit\Docker\Docker.NET5.vbproj">
-      <Project>{77461b93-17fb-4eeb-8233-4d735561bf7e}</Project>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj">
+      <Project>{b31b8470-2472-46eb-80b8-dce6355ba580}</Project>
       <Name>Docker.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
