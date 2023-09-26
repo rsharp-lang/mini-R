@@ -1,8 +1,5 @@
 ﻿Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -28,7 +25,8 @@ Public Class Form1
                 For i As Integer = 0 To samples(0).features.Length - 1
                     v = samples.Select(Function(si) si.features(i)).ToArray
                     d = New SampleDistribution(v, estimateQuantile:=False)
-                    features.Add(d)
+
+                    Call features.Add(d)
                 Next
 
                 Text = $"[{file.FileName}]"
