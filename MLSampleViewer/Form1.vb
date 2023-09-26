@@ -1,4 +1,7 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -68,7 +71,25 @@ Public Class Form1
             check2 = CheckedListBox1.Items(clist(1))
 
             ' draw compares
+            Dim a, b As List(Of (x#, value#))
+            Dim offset = check1.features.Length + 2
 
+            a = New List(Of (x As Double, value As Double))
+            b = New List(Of (x As Double, value As Double))
+
+            For i As Integer = 0 To check1.features.Length - 1
+                a.Add((CDbl(i + 1), check1.features(i)))
+                b.Add((CDbl(i + 1), check2.features(i)))
+            Next
+            For i As Integer = 0 To check1.labels.SafeQuery.Count - 1
+                a.Add((CDbl(i + offset), check1.labels(i)))
+                b.Add((CDbl(i + offset), check2.labels(i)))
+            Next
+
+            Dim img As Image = a.ToArray.PlotAlignment(b.ToArray).AsGDIImage
+            Dim temp As String = TempFileSystem.GetAppSysTempFile(".png")
+
+            Call Process.Start(temp)
         End If
     End Sub
 End Class
