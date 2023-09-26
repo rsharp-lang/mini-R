@@ -17,6 +17,8 @@ Public Class Form1
                 For Each sample As SampleData In samples
                     CheckedListBox1.Items.Add(sample)
                 Next
+
+                Text = $"[{file.FileName}]"
             End If
         End Using
     End Sub
@@ -61,35 +63,41 @@ Public Class Form1
     End Sub
 
     Private Sub ComparesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComparesToolStripMenuItem.Click
-        Dim check1, check2 As SampleData
         Dim clist = CheckedListBox1.CheckedIndices.ToArray(Of Integer)
 
         If clist.Length < 2 Then
             MessageBox.Show("You must select 2 data sample at least!")
         Else
-            check1 = CheckedListBox1.Items(clist(0))
-            check2 = CheckedListBox1.Items(clist(1))
+            Dim viewer As New Form2
+            Dim memoryData As New System.Data.DataSet
+            Dim df As DataTable = memoryData.tables.add("memoryData")
+            Dim sampleSet As New List(Of SampleData)
+            Dim r As DataRow
 
-            ' draw compares
-            Dim a, b As List(Of (x#, value#))
-            Dim offset = check1.features.Length + 2
-
-            a = New List(Of (x As Double, value As Double))
-            b = New List(Of (x As Double, value As Double))
-
-            For i As Integer = 0 To check1.features.Length - 1
-                a.Add((CDbl(i + 1), check1.features(i)))
-                b.Add((CDbl(i + 1), check2.features(i)))
-            Next
-            For i As Integer = 0 To check1.labels.SafeQuery.Count - 1
-                a.Add((CDbl(i + offset), check1.labels(i)))
-                b.Add((CDbl(i + offset), check2.labels(i)))
+            For Each i As Integer In clist
+                sampleSet.Add(CheckedListBox1.Items(i))
+                df.Columns.Add(sampleSet.Last.id, GetType(Double))
             Next
 
-            Dim img As Image = a.ToArray.PlotAlignment(b.ToArray).AsGDIImage
-            Dim temp As String = TempFileSystem.GetAppSysTempFile(".png")
+            For i As Integer = 0 To sampleSet(0).features.Length - 1
+                r = df.Rows.Add()
 
-            Call Process.Start(temp)
+                For j As Integer = 0 To sampleSet.Count - 1
+                    r.Item(j) = sampleSet(j).features(i)
+                Next
+            Next
+
+            For i As Integer = 0 To sampleSet(0).labels.SafeQuery.Count - 1
+                r = df.Rows.Add
+
+                For j As Integer = 0 To sampleSet.Count - 1
+                    r.Item(j) = sampleSet(j).labels(i)
+                Next
+            Next
+
+            viewer.DataGridView1.DataSource = memoryData
+            viewer.DataGridView1.DataMember = df.TableName
+            viewer.ShowDialog()
         End If
     End Sub
 End Class
