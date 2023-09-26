@@ -27,6 +27,7 @@ Partial Class Form1
         FileToolStripMenuItem = New ToolStripMenuItem()
         OpenToolStripMenuItem = New ToolStripMenuItem()
         GroupBox1 = New GroupBox()
+        TextBox1 = New TextBox()
         ListBox2 = New ListBox()
         ListBox1 = New ListBox()
         Label3 = New Label()
@@ -37,10 +38,14 @@ Partial Class Form1
         ComparesToolStripMenuItem = New ToolStripMenuItem()
         ToolStripMenuItem1 = New ToolStripSeparator()
         ExportJSONToolStripMenuItem = New ToolStripMenuItem()
-        TextBox1 = New TextBox()
+        SplitContainer1 = New SplitContainer()
         MenuStrip1.SuspendLayout()
         GroupBox1.SuspendLayout()
         ContextMenuStrip1.SuspendLayout()
+        CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
+        SplitContainer1.Panel1.SuspendLayout()
+        SplitContainer1.Panel2.SuspendLayout()
+        SplitContainer1.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -48,7 +53,7 @@ Partial Class Form1
         MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(800, 24)
+        MenuStrip1.Size = New Size(986, 24)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -67,42 +72,48 @@ Partial Class Form1
         ' 
         ' GroupBox1
         ' 
-        GroupBox1.Controls.Add(TextBox1)
-        GroupBox1.Controls.Add(ListBox2)
-        GroupBox1.Controls.Add(ListBox1)
-        GroupBox1.Controls.Add(Label3)
-        GroupBox1.Controls.Add(Label2)
-        GroupBox1.Controls.Add(Label1)
-        GroupBox1.Controls.Add(CheckedListBox1)
-        GroupBox1.Location = New Point(12, 27)
+        GroupBox1.Controls.Add(SplitContainer1)
+        GroupBox1.Dock = DockStyle.Fill
+        GroupBox1.Location = New Point(0, 24)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(776, 411)
+        GroupBox1.Size = New Size(986, 540)
         GroupBox1.TabIndex = 1
         GroupBox1.TabStop = False
-        GroupBox1.Text = "GroupBox1"
+        GroupBox1.Text = "Sample Viewer"
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        TextBox1.Location = New Point(347, 32)
+        TextBox1.Multiline = True
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(294, 477)
+        TextBox1.TabIndex = 6
         ' 
         ' ListBox2
         ' 
+        ListBox2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         ListBox2.FormattingEnabled = True
         ListBox2.ItemHeight = 15
-        ListBox2.Location = New Point(361, 62)
+        ListBox2.Location = New Point(179, 32)
         ListBox2.Name = "ListBox2"
-        ListBox2.Size = New Size(162, 319)
+        ListBox2.Size = New Size(162, 469)
         ListBox2.TabIndex = 5
         ' 
         ' ListBox1
         ' 
+        ListBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         ListBox1.FormattingEnabled = True
         ListBox1.ItemHeight = 15
-        ListBox1.Location = New Point(183, 62)
+        ListBox1.Location = New Point(15, 32)
         ListBox1.Name = "ListBox1"
-        ListBox1.Size = New Size(158, 319)
+        ListBox1.Size = New Size(158, 469)
         ListBox1.TabIndex = 4
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(361, 33)
+        Label3.Location = New Point(179, 9)
         Label3.Name = "Label3"
         Label3.Size = New Size(40, 15)
         Label3.TabIndex = 3
@@ -111,7 +122,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(183, 33)
+        Label2.Location = New Point(15, 9)
         Label2.Name = "Label2"
         Label2.Size = New Size(51, 15)
         Label2.TabIndex = 2
@@ -120,7 +131,7 @@ Partial Class Form1
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(18, 33)
+        Label1.Location = New Point(8, 9)
         Label1.Name = "Label1"
         Label1.Size = New Size(51, 15)
         Label1.TabIndex = 1
@@ -128,11 +139,12 @@ Partial Class Form1
         ' 
         ' CheckedListBox1
         ' 
+        CheckedListBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         CheckedListBox1.ContextMenuStrip = ContextMenuStrip1
         CheckedListBox1.FormattingEnabled = True
-        CheckedListBox1.Location = New Point(18, 62)
+        CheckedListBox1.Location = New Point(6, 32)
         CheckedListBox1.Name = "CheckedListBox1"
-        CheckedListBox1.Size = New Size(139, 328)
+        CheckedListBox1.Size = New Size(314, 472)
         CheckedListBox1.TabIndex = 0
         ' 
         ' ContextMenuStrip1
@@ -158,19 +170,33 @@ Partial Class Form1
         ExportJSONToolStripMenuItem.Size = New Size(139, 22)
         ExportJSONToolStripMenuItem.Text = "Export JSON"
         ' 
-        ' TextBox1
+        ' SplitContainer1
         ' 
-        TextBox1.Location = New Point(552, 62)
-        TextBox1.Multiline = True
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(204, 319)
-        TextBox1.TabIndex = 6
+        SplitContainer1.Dock = DockStyle.Fill
+        SplitContainer1.Location = New Point(3, 19)
+        SplitContainer1.Name = "SplitContainer1"
+        ' 
+        ' SplitContainer1.Panel1
+        ' 
+        SplitContainer1.Panel1.Controls.Add(Label1)
+        SplitContainer1.Panel1.Controls.Add(CheckedListBox1)
+        ' 
+        ' SplitContainer1.Panel2
+        ' 
+        SplitContainer1.Panel2.Controls.Add(Label2)
+        SplitContainer1.Panel2.Controls.Add(TextBox1)
+        SplitContainer1.Panel2.Controls.Add(Label3)
+        SplitContainer1.Panel2.Controls.Add(ListBox2)
+        SplitContainer1.Panel2.Controls.Add(ListBox1)
+        SplitContainer1.Size = New Size(980, 518)
+        SplitContainer1.SplitterDistance = 326
+        SplitContainer1.TabIndex = 7
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(986, 564)
         Controls.Add(GroupBox1)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
@@ -179,8 +205,13 @@ Partial Class Form1
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         GroupBox1.ResumeLayout(False)
-        GroupBox1.PerformLayout()
         ContextMenuStrip1.ResumeLayout(False)
+        SplitContainer1.Panel1.ResumeLayout(False)
+        SplitContainer1.Panel1.PerformLayout()
+        SplitContainer1.Panel2.ResumeLayout(False)
+        SplitContainer1.Panel2.PerformLayout()
+        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
+        SplitContainer1.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -200,4 +231,5 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents ExportJSONToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents SplitContainer1 As SplitContainer
 End Class
