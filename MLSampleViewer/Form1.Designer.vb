@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         MenuStrip1 = New MenuStrip()
         FileToolStripMenuItem = New ToolStripMenuItem()
         OpenToolStripMenuItem = New ToolStripMenuItem()
@@ -32,8 +33,13 @@ Partial Class Form1
         Label2 = New Label()
         Label1 = New Label()
         CheckedListBox1 = New CheckedListBox()
+        ContextMenuStrip1 = New ContextMenuStrip(components)
+        ComparesToolStripMenuItem = New ToolStripMenuItem()
+        ToolStripMenuItem1 = New ToolStripSeparator()
+        ExportJSONToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         GroupBox1.SuspendLayout()
+        ContextMenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -120,11 +126,35 @@ Partial Class Form1
         ' 
         ' CheckedListBox1
         ' 
+        CheckedListBox1.ContextMenuStrip = ContextMenuStrip1
         CheckedListBox1.FormattingEnabled = True
         CheckedListBox1.Location = New Point(18, 62)
         CheckedListBox1.Name = "CheckedListBox1"
         CheckedListBox1.Size = New Size(139, 328)
         CheckedListBox1.TabIndex = 0
+        ' 
+        ' ContextMenuStrip1
+        ' 
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ComparesToolStripMenuItem, ToolStripMenuItem1, ExportJSONToolStripMenuItem})
+        ContextMenuStrip1.Name = "ContextMenuStrip1"
+        ContextMenuStrip1.Size = New Size(140, 54)
+        ' 
+        ' ComparesToolStripMenuItem
+        ' 
+        ComparesToolStripMenuItem.Name = "ComparesToolStripMenuItem"
+        ComparesToolStripMenuItem.Size = New Size(139, 22)
+        ComparesToolStripMenuItem.Text = "Compares"
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(136, 6)
+        ' 
+        ' ExportJSONToolStripMenuItem
+        ' 
+        ExportJSONToolStripMenuItem.Name = "ExportJSONToolStripMenuItem"
+        ExportJSONToolStripMenuItem.Size = New Size(139, 22)
+        ExportJSONToolStripMenuItem.Text = "Export JSON"
         ' 
         ' Form1
         ' 
@@ -140,6 +170,7 @@ Partial Class Form1
         MenuStrip1.PerformLayout()
         GroupBox1.ResumeLayout(False)
         GroupBox1.PerformLayout()
+        ContextMenuStrip1.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -154,4 +185,8 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents ListBox2 As ListBox
     Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ComparesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ExportJSONToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Form1
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
@@ -35,6 +36,39 @@ Public Class Form1
             For Each y As Double In item.labels.SafeQuery
                 ListBox2.Items.Add(y)
             Next
+        End If
+    End Sub
+
+    Private Sub ExportJSONToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportJSONToolStripMenuItem.Click
+        Dim data As New List(Of SampleData)
+
+        For Each i As Integer In CheckedListBox1.CheckedIndices
+            data.Add(CheckedListBox1.Items(i))
+        Next
+
+        If data.Count = 0 Then
+            MessageBox.Show("No data selected!")
+        Else
+            Using file As New SaveFileDialog With {.Filter = "json data(*.json)|*.json"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call data.ToArray.GetJson.SaveTo(file.FileName)
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub ComparesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComparesToolStripMenuItem.Click
+        Dim check1, check2 As SampleData
+        Dim clist = CheckedListBox1.CheckedIndices.ToArray(Of Integer)
+
+        If clist.Length < 2 Then
+            MessageBox.Show("You must select 2 data sample at least!")
+        Else
+            check1 = CheckedListBox1.Items(clist(0))
+            check2 = CheckedListBox1.Items(clist(1))
+
+            ' draw compares
+
         End If
     End Sub
 End Class
