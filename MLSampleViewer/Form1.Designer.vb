@@ -26,12 +26,12 @@ Partial Class Form1
         FileToolStripMenuItem = New ToolStripMenuItem()
         OpenToolStripMenuItem = New ToolStripMenuItem()
         GroupBox1 = New GroupBox()
-        CheckedListBox1 = New CheckedListBox()
-        Label1 = New Label()
-        Label2 = New Label()
-        Label3 = New Label()
-        ListBox1 = New ListBox()
         ListBox2 = New ListBox()
+        ListBox1 = New ListBox()
+        Label3 = New Label()
+        Label2 = New Label()
+        Label1 = New Label()
+        CheckedListBox1 = New CheckedListBox()
         MenuStrip1.SuspendLayout()
         GroupBox1.SuspendLayout()
         SuspendLayout()
@@ -55,7 +55,7 @@ Partial Class Form1
         ' OpenToolStripMenuItem
         ' 
         OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        OpenToolStripMenuItem.Size = New Size(180, 22)
+        OpenToolStripMenuItem.Size = New Size(103, 22)
         OpenToolStripMenuItem.Text = "Open"
         ' 
         ' GroupBox1
@@ -73,40 +73,14 @@ Partial Class Form1
         GroupBox1.TabStop = False
         GroupBox1.Text = "GroupBox1"
         ' 
-        ' CheckedListBox1
+        ' ListBox2
         ' 
-        CheckedListBox1.FormattingEnabled = True
-        CheckedListBox1.Location = New Point(18, 62)
-        CheckedListBox1.Name = "CheckedListBox1"
-        CheckedListBox1.Size = New Size(139, 328)
-        CheckedListBox1.TabIndex = 0
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(18, 33)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(51, 15)
-        Label1.TabIndex = 1
-        Label1.Text = "Samples"
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(216, 34)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(51, 15)
-        Label2.TabIndex = 2
-        Label2.Text = "Features"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(471, 33)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(40, 15)
-        Label3.TabIndex = 3
-        Label3.Text = "Labels"
+        ListBox2.FormattingEnabled = True
+        ListBox2.ItemHeight = 15
+        ListBox2.Location = New Point(471, 62)
+        ListBox2.Name = "ListBox2"
+        ListBox2.Size = New Size(187, 319)
+        ListBox2.TabIndex = 5
         ' 
         ' ListBox1
         ' 
@@ -117,14 +91,40 @@ Partial Class Form1
         ListBox1.Size = New Size(187, 319)
         ListBox1.TabIndex = 4
         ' 
-        ' ListBox2
+        ' Label3
         ' 
-        ListBox2.FormattingEnabled = True
-        ListBox2.ItemHeight = 15
-        ListBox2.Location = New Point(471, 62)
-        ListBox2.Name = "ListBox2"
-        ListBox2.Size = New Size(187, 319)
-        ListBox2.TabIndex = 5
+        Label3.AutoSize = True
+        Label3.Location = New Point(471, 33)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(40, 15)
+        Label3.TabIndex = 3
+        Label3.Text = "Labels"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(216, 34)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(51, 15)
+        Label2.TabIndex = 2
+        Label2.Text = "Features"
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Location = New Point(18, 33)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(51, 15)
+        Label1.TabIndex = 1
+        Label1.Text = "Samples"
+        ' 
+        ' CheckedListBox1
+        ' 
+        CheckedListBox1.FormattingEnabled = True
+        CheckedListBox1.Location = New Point(18, 62)
+        CheckedListBox1.Name = "CheckedListBox1"
+        CheckedListBox1.Size = New Size(139, 328)
+        CheckedListBox1.TabIndex = 0
         ' 
         ' Form1
         ' 
