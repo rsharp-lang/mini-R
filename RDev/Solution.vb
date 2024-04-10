@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.Rsharp.Development
 Imports SMRUCC.Rsharp.Development.Package.File
 
 Public Class Solution
@@ -23,7 +24,7 @@ Public Class Solution
     End Property
 
     Public Function LoadInformation() As DESCRIPTION
-        Return DESCRIPTION.Parse($"{FilePath.ParentPath}/DESCRIPTION")
+        Return Package.File.DESCRIPTION.Parse($"{FilePath.ParentPath}/DESCRIPTION")
     End Function
 
     Public Shared Function LoadRproj(file As String) As Solution
