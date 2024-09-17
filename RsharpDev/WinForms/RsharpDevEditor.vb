@@ -1,10 +1,7 @@
 ﻿Imports System.Text
-Imports FastColoredTextBoxNS
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
-Imports RDev
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class RsharpDevEditor : Inherits DockContent
@@ -49,5 +46,9 @@ Public Class RsharpDevEditor : Inherits DockContent
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
+    End Function
+
+    Public Function Save(file As IO.Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+        Throw New NotImplementedException()
     End Function
 End Class

@@ -189,7 +189,7 @@ Public Class FormInspector
             Dim v As Array = DirectCast(value, vector).data
 
             For i As Integer = 0 To v.Length - 1
-                list.add(i + 1, v.GetValue(i))
+                list.add(i + 1, value:=v.GetValue(i))
             Next
 
             value = list
