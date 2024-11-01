@@ -173,9 +173,9 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 "from",
                 "const",
                 "as",
-                "string",
-                "integer",
-                "boolean"
+                "string",                
+                "boolean",
+                "c"
             ],
             special: ["\\n", "\\r", "\\t", "\\b", "\\a", "\\f", "\\v", "\\'", '\\"', "\\\\"],
             brackets: [
