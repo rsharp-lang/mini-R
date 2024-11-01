@@ -7,8 +7,6 @@ module rstudio.tooltip {
         if (!word) {
             return null;
         } else {
-            console.log(model);
-            console.log(position);
             return new Promise((resolve, reject) => {
                 resolveTooltip(word, position, resolve);
             });

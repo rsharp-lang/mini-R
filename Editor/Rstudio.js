@@ -52,8 +52,6 @@ var rstudio;
                 return null;
             }
             else {
-                console.log(model);
-                console.log(position);
                 return new Promise((resolve, reject) => {
                     resolveTooltip(word, position, resolve);
                 });
