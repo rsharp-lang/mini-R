@@ -40,8 +40,13 @@ module rstudio.tooltip {
         }
     }
 
-    export const imports_keyword = `<h1>Loading/Attaching of the .NET clr package module</h1>
-    <p>similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.</p>`;
+    function tooltip(title: string, text: string) {
+        return `<h3>${title}</h3><p>${text}</p>`;
+    }
+
+    export const imports_keyword = tooltip(
+        'Loading/attaching of the .NET clr package module',
+        'similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.');
 
     export const keywords = {
         "imports": imports_keyword

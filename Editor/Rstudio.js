@@ -30,7 +30,7 @@ require(['vs/editor/editor.main'], function () {
 var rstudio;
 (function (rstudio) {
     var tooltip;
-    (function (tooltip) {
+    (function (tooltip_1) {
         function create_tooltip(model, position) {
             // 获取光标位置的单词
             var word = model.getWordAtPosition(position);
@@ -55,19 +55,22 @@ var rstudio;
                 return hover;
             }
         }
-        tooltip.create_tooltip = create_tooltip;
+        tooltip_1.create_tooltip = create_tooltip;
         function contentHtml(word) {
-            if (word in tooltip.keywords) {
-                return tooltip.keywords[word];
+            if (word in tooltip_1.keywords) {
+                return tooltip_1.keywords[word];
             }
             else {
                 return null;
             }
         }
-        tooltip.contentHtml = contentHtml;
-        tooltip.imports_keyword = "<h1>Loading/Attaching of the .NET clr package module</h1>\n    <p>similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.</p>";
-        tooltip.keywords = {
-            "imports": tooltip.imports_keyword
+        tooltip_1.contentHtml = contentHtml;
+        function tooltip(title, text) {
+            return "<h3>".concat(title, "</h3><p>").concat(text, "</p>");
+        }
+        tooltip_1.imports_keyword = tooltip('Loading/attaching of the .NET clr package module', 'similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.');
+        tooltip_1.keywords = {
+            "imports": tooltip_1.imports_keyword
         };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));
