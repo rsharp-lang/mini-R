@@ -7,6 +7,7 @@ declare namespace rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): {
         range: monaco.Range;
         contents: {
+            supportHtml: boolean;
             value: string;
         }[];
     };

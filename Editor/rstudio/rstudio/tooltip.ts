@@ -18,7 +18,10 @@ module rstudio.tooltip {
                 word.endColumn
             ),
             contents: [
-                { value: hoverContent }
+                {
+                    supportHtml: true,
+                    value: hoverContent
+                }
             ]
         };
 

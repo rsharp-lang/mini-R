@@ -42,7 +42,10 @@ var rstudio;
             var hover = {
                 range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
                 contents: [
-                    { value: hoverContent }
+                    {
+                        supportHtml: true,
+                        value: hoverContent
+                    }
                 ]
             };
             if (!hoverContent) {
