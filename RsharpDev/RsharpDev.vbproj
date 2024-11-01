@@ -38,6 +38,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -144,6 +146,15 @@
     <Reference Include="Microsoft.VisualStudio.WinForm.TextEditor">
       <HintPath>..\dist\Microsoft.VisualStudio.WinForm.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Ribbon">
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
@@ -205,6 +216,12 @@
       <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
     </Compile>
     <Compile Include="WinForms\Dialogs\CreateSolutionWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevVscode.Designer.vb">
+      <DependentUpon>RsharpDevVscode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevVscode.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinForms\Pages\RecentFiles.Designer.vb">
@@ -381,6 +398,9 @@
     <EmbeddedResource Include="WinForms\RsharpDevMain.resx">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\RsharpDevVscode.resx">
+      <DependentUpon>RsharpDevVscode.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
@@ -427,6 +447,7 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon">
       <DependentUpon>RibbonMarkup.xml</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="RibbonMarkup.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -625,4 +646,11 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>
