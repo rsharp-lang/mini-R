@@ -30,8 +30,8 @@ namespace lsp {
      * @param symbol the symbol name for get the information
     */
     export function get_symbol_info(document: string, offset: Position, symbol: string) {
-        return fetch(url("/lsp/get/symbol", document)).then((response) => {
-
+        return fetch(url("/lsp/get/symbol", document) + `&symbol=${symbol}`).then((response) => {
+            return response.text();
         });
     }
 

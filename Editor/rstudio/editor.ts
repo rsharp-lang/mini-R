@@ -42,13 +42,17 @@ str(list(
         auto_commit();
     }
 
+    export function hashkey(): string {
+        return key;
+    }
+
     /**
      * auto commit the script updates to server
     */
     function auto_commit() {
         editor.onDidChangeModelContent((event) => {
             // save to server
-            lsp.put_script(editor.getValue(), key);
+            lsp.put_script(getCodeText(), key);
         });
 
         // initialize of the server environment

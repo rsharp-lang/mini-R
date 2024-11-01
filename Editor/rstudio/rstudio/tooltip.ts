@@ -7,41 +7,40 @@ module rstudio.tooltip {
         if (!word) {
             return null;
         } else {
-            return new Promise((resolve, reject) => {
-                resolveTooltip(word, position, resolve);
-            });
+            return resolveTooltip(word, position);
         }
     }
 
-    function resolveTooltip(word: monaco.editor.IWordAtPosition, position: monaco.Position, resolve: <T>(value: T) => void) {
+    function resolveTooltip(word: monaco.editor.IWordAtPosition, position: monaco.Position) {
         // 根据单词显示自定义提示
-        const hoverContent = contentHtml(word.word);
-        const htmlContent = {
-            supportHtml: true,
-            value: hoverContent
-        };
-        const hover = {
-            range: new monaco.Range(
-                position.lineNumber,
-                word.startColumn,
-                position.lineNumber,
-                word.endColumn
-            ),
-            contents: [htmlContent]
-        };
+        return contentHtml(word.word).then(str => {
+            const htmlContent = {
+                supportHtml: true,
+                value: str
+            };
+            const hover = {
+                range: new monaco.Range(
+                    position.lineNumber,
+                    word.startColumn,
+                    position.lineNumber,
+                    word.endColumn
+                ),
+                contents: [htmlContent]
+            };
 
-        if (!hoverContent) {
-            resolve(null);
-        } else {
-            resolve(hover);
-        }
+            if (!str) {
+                return null;
+            } else {
+                return hover;
+            }
+        });
     }
 
-    export function contentHtml(word: string): string {
+    export function contentHtml(word: string): Promise<string> {
         if (word in keywords) {
-            return keywords[word];
+            return Promise.resolve<string>(keywords[word]);
         } else {
-            return null;
+            return lsp.get_symbol_info(rstudio.hashkey(), null, word);
         }
     }
 

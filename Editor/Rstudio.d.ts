@@ -3,6 +3,7 @@
 declare module rstudio {
     function getCodeText(): string;
     function create(): void;
+    function hashkey(): string;
     function setup(): void;
 }
 declare namespace lsp {
@@ -206,7 +207,7 @@ declare namespace lsp {
      * @param offset the position offset on the script document
      * @param symbol the symbol name for get the information
     */
-    function get_symbol_info(document: string, offset: Position, symbol: string): Promise<void>;
+    function get_symbol_info(document: string, offset: Position, symbol: string): Promise<string>;
     /**
      * put script text into server memory
      *
@@ -229,7 +230,7 @@ declare namespace rstudio.intellisense {
 }
 declare module rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any;
-    function contentHtml(word: string): string;
+    function contentHtml(word: string): Promise<string>;
     const imports_keyword: string;
     const return_keyword: string;
     const list_keyword: string;

@@ -39,13 +39,17 @@ str(list(
         auto_commit();
     }
     rstudio.create = create;
+    function hashkey() {
+        return key;
+    }
+    rstudio.hashkey = hashkey;
     /**
      * auto commit the script updates to server
     */
     function auto_commit() {
         editor.onDidChangeModelContent((event) => {
             // save to server
-            lsp.put_script(editor.getValue(), key);
+            lsp.put_script(getCodeText(), key);
         });
         // initialize of the server environment
         lsp.put_script(demo_r, key);
@@ -169,7 +173,8 @@ var lsp;
      * @param symbol the symbol name for get the information
     */
     function get_symbol_info(document, offset, symbol) {
-        return fetch(url("/lsp/get/symbol", document)).then((response) => {
+        return fetch(url("/lsp/get/symbol", document) + `&symbol=${symbol}`).then((response) => {
+            return response.text();
         });
     }
     lsp.get_symbol_info = get_symbol_info;
@@ -246,36 +251,35 @@ var rstudio;
                 return null;
             }
             else {
-                return new Promise((resolve, reject) => {
-                    resolveTooltip(word, position, resolve);
-                });
+                return resolveTooltip(word, position);
             }
         }
         tooltip_1.create_tooltip = create_tooltip;
-        function resolveTooltip(word, position, resolve) {
+        function resolveTooltip(word, position) {
             // 根据单词显示自定义提示
-            const hoverContent = contentHtml(word.word);
-            const htmlContent = {
-                supportHtml: true,
-                value: hoverContent
-            };
-            const hover = {
-                range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
-                contents: [htmlContent]
-            };
-            if (!hoverContent) {
-                resolve(null);
-            }
-            else {
-                resolve(hover);
-            }
+            return contentHtml(word.word).then(str => {
+                const htmlContent = {
+                    supportHtml: true,
+                    value: str
+                };
+                const hover = {
+                    range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+                    contents: [htmlContent]
+                };
+                if (!str) {
+                    return null;
+                }
+                else {
+                    return hover;
+                }
+            });
         }
         function contentHtml(word) {
             if (word in tooltip_1.keywords) {
-                return tooltip_1.keywords[word];
+                return Promise.resolve(tooltip_1.keywords[word]);
             }
             else {
-                return null;
+                return lsp.get_symbol_info(rstudio.hashkey(), null, word);
             }
         }
         tooltip_1.contentHtml = contentHtml;
