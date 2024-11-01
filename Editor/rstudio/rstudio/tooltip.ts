@@ -6,10 +6,20 @@ module rstudio.tooltip {
 
         if (!word) {
             return null;
+        } else {
+            return new Promise((resolve, reject) => {
+                resolveTooltip(word, position, resolve);
+            });
         }
+    }
 
+    function resolveTooltip(word: monaco.editor.IWordAtPosition, position: monaco.Position, resolve: (value: any) => void) {
         // 根据单词显示自定义提示
         const hoverContent = contentHtml(word.word);
+        const htmlContent = {
+            supportHtml: true,
+            value: hoverContent
+        };
         const hover = {
             range: new monaco.Range(
                 position.lineNumber,
@@ -17,18 +27,13 @@ module rstudio.tooltip {
                 position.lineNumber,
                 word.endColumn
             ),
-            contents: [
-                {
-                    supportHtml: true,
-                    value: hoverContent
-                }
-            ]
+            contents: [htmlContent]
         };
 
         if (!hoverContent) {
-            return null;
+            resolve(null);
         } else {
-            return hover;
+            resolve(hover);
         }
     }
 

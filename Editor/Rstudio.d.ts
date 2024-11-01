@@ -4,13 +4,7 @@ declare namespace rstudio {
     function setup(): void;
 }
 declare namespace rstudio.tooltip {
-    function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): {
-        range: monaco.Range;
-        contents: {
-            supportHtml: boolean;
-            value: string;
-        }[];
-    };
+    function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): Promise<unknown>;
     function contentHtml(word: string): string;
     const imports_keyword: string;
     const return_keyword: string;
