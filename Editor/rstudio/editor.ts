@@ -5,7 +5,7 @@ module rstudio {
     */
     let editor: monaco.editor.IStandaloneCodeEditor;
     let demo_r = `    
-imports "aaa" from "bbb";
+imports "JSON" from "base";
         
 let f(x) = console.log("Hello world!");
 let hello_world = function(x) {
@@ -13,7 +13,11 @@ let hello_world = function(x) {
 };
 
 print(c(1,2,3,4,5));
-
+str(list(
+    a = 123,
+    b = [TRUE, TRUE, FALSE],
+    c = "XXX"
+));
 `;
 
     export function create() {

@@ -5,7 +5,7 @@ var rstudio;
     */
     let editor;
     let demo_r = `    
-imports "aaa" from "bbb";
+imports "JSON" from "base";
         
 let f(x) = console.log("Hello world!");
 let hello_world = function(x) {
@@ -13,7 +13,11 @@ let hello_world = function(x) {
 };
 
 print(c(1,2,3,4,5));
-
+str(list(
+    a = 123,
+    b = [TRUE, TRUE, FALSE],
+    c = "XXX"
+));
 `;
     function create() {
         let container = document.getElementById('container');
@@ -48,6 +52,8 @@ var rstudio;
                 return null;
             }
             else {
+                console.log(model);
+                console.log(position);
                 return new Promise((resolve, reject) => {
                     resolveTooltip(word, position, resolve);
                 });
@@ -88,9 +94,17 @@ var rstudio;
         tooltip_1.return_keyword = tooltip('Returns the function value to caller', `If value is missing, NULL is returned. If it is a single expression, the value of the evaluated expression is returned. 
 (The expression is evaluated as soon as return is called, in the evaluation frame of the function and before any on.exit expression is evaluated.)
 If the end of a function is reached without calling return, the value of the last evaluated expression is returned.`);
+        tooltip_1.list_keyword = tooltip("Lists - Generic and Dotted Pairs", `Functions to construct, coerce and check for both kinds of <code>R</code> lists.`);
+        tooltip_1.logical_keyword = tooltip("Logical Vectors", `Create or test for objects of type 'logical', and the basic logical constants.
+TRUE and FALSE are reserved words denoting logical constants in the R language, whereas T and F are global variables whose initial values set to these. 
+All four are logical(1) vectors.
+Logical vectors are coerced to integer vectors in contexts where a numerical value is required, with TRUE being mapped to 1L, FALSE to 0L and NA to NA_integer_.`);
         tooltip_1.keywords = {
             "imports": tooltip_1.imports_keyword,
-            'return': tooltip_1.return_keyword
+            'return': tooltip_1.return_keyword,
+            'list': tooltip_1.list_keyword,
+            'TRUE': tooltip_1.logical_keyword,
+            'FALSE': tooltip_1.logical_keyword
         };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));

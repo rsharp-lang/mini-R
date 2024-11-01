@@ -1,19 +1,21 @@
 module rstudio.tooltip {
 
-    export function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position) {
+    export function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any {
         // 获取光标位置的单词
         const word = model.getWordAtPosition(position);
 
         if (!word) {
             return null;
         } else {
+            console.log(model);
+            console.log(position);
             return new Promise((resolve, reject) => {
                 resolveTooltip(word, position, resolve);
             });
         }
     }
 
-    function resolveTooltip(word: monaco.editor.IWordAtPosition, position: monaco.Position, resolve: (value: any) => void) {
+    function resolveTooltip(word: monaco.editor.IWordAtPosition, position: monaco.Position, resolve: <T>(value: T) => void) {
         // 根据单词显示自定义提示
         const hoverContent = contentHtml(word.word);
         const htmlContent = {
@@ -59,8 +61,22 @@ module rstudio.tooltip {
 (The expression is evaluated as soon as return is called, in the evaluation frame of the function and before any on.exit expression is evaluated.)
 If the end of a function is reached without calling return, the value of the last evaluated expression is returned.`);
 
+    export const list_keyword = tooltip(
+        "Lists - Generic and Dotted Pairs",
+        `Functions to construct, coerce and check for both kinds of <code>R</code> lists.`);
+
+    export const logical_keyword = tooltip(
+        "Logical Vectors",
+        `Create or test for objects of type 'logical', and the basic logical constants.
+TRUE and FALSE are reserved words denoting logical constants in the R language, whereas T and F are global variables whose initial values set to these. 
+All four are logical(1) vectors.
+Logical vectors are coerced to integer vectors in contexts where a numerical value is required, with TRUE being mapped to 1L, FALSE to 0L and NA to NA_integer_.`);
+
     export const keywords = {
         "imports": imports_keyword,
-        'return': return_keyword
+        'return': return_keyword,
+        'list': list_keyword,
+        'TRUE': logical_keyword,
+        'FALSE': logical_keyword
     };
 }
