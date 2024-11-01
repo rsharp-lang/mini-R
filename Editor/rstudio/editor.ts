@@ -38,6 +38,9 @@ str(list(
                 enabled: monaco.editor.ShowLightbulbIconMode.On
             }
         });
+
+        // initialize of the server environment
+        lsp.put_script(demo_r, key);
     }
 
     export function setup() {
