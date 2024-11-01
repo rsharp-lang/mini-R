@@ -1,3 +1,6 @@
 [submodule "console"]
 	path = console
 	url = https://github.com/xieguigang/console.git
+[submodule "lsp"]
+	path = lsp
+	url = https://github.com/rsharp-lang/languageserver.git
