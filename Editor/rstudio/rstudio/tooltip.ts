@@ -58,10 +58,6 @@ module rstudio.tooltip {
 (The expression is evaluated as soon as return is called, in the evaluation frame of the function and before any on.exit expression is evaluated.)
 If the end of a function is reached without calling return, the value of the last evaluated expression is returned.`);
 
-    export const list_keyword = tooltip(
-        "Lists - Generic and Dotted Pairs",
-        `Functions to construct, coerce and check for both kinds of <code>R</code> lists.`);
-
     export const logical_keyword = tooltip(
         "Logical Vectors",
         `Create or test for objects of type 'logical', and the basic logical constants.
@@ -69,11 +65,31 @@ TRUE and FALSE are reserved words denoting logical constants in the R language, 
 All four are logical(1) vectors.
 Logical vectors are coerced to integer vectors in contexts where a numerical value is required, with TRUE being mapped to 1L, FALSE to 0L and NA to NA_integer_.`);
 
+    export const let_keyword = tooltip(
+        "Create new symbol", "Create a new symbol in current environment frame."
+    );
+
+    export const const_keyword = tooltip(
+        "Create new symbol",
+        "Create a new symbol with lock binding(which means the symbol value could not be changed) in current environment frame.");
+
+    export const from_keyword = tooltip(
+        "The .NET clr module source",
+        `The .NET clr package module imports source assembly name, usually be the assembly file base name. 
+        Assembly file name with dll extension suffix or the full file path to the dll assembly file also could be accepted.`);
+
+    export const function_keyword = tooltip(
+        "Define a function",
+        "Define a function in R# runtime, a function is kind of expression collection with parameter accept and value returns to its caller.");
+
     export const keywords = {
         "imports": imports_keyword,
         'return': return_keyword,
-        'list': list_keyword,
         'TRUE': logical_keyword,
-        'FALSE': logical_keyword
+        'FALSE': logical_keyword,
+        "let": let_keyword,
+        "const": const_keyword,
+        "from": from_keyword,
+        "function": function_keyword
     };
 }

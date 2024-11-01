@@ -227,19 +227,27 @@ declare namespace lsp {
 declare namespace rstudio.intellisense {
     function create_intellisense(model: monaco.editor.ITextModel, position: monaco.Position): any;
     const r_keywords: string[];
+    const r_primitive: string[];
+    const r_const: string[];
 }
 declare module rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any;
     function contentHtml(word: string): Promise<string>;
     const imports_keyword: string;
     const return_keyword: string;
-    const list_keyword: string;
     const logical_keyword: string;
+    const let_keyword: string;
+    const const_keyword: string;
+    const from_keyword: string;
+    const function_keyword: string;
     const keywords: {
         imports: string;
         return: string;
-        list: string;
         TRUE: string;
         FALSE: string;
+        let: string;
+        const: string;
+        from: string;
+        function: string;
     };
 }

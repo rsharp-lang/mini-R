@@ -19,6 +19,10 @@ str(list(
     b = [TRUE, TRUE, FALSE],
     c = "XXX"
 ));
+
+const text = http_get("http://a.com");
+
+print(text);
 `;
 
     export function getCodeText() {

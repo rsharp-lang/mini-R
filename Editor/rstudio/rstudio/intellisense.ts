@@ -15,7 +15,15 @@ namespace rstudio.intellisense {
     }
 
     export const r_keywords = [
-        'c', 'require', 'library', 'if', 'for', 'list', 'str', 'print', 'return', 'function', 'let', 'const', 'imports', 'from'
+        'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from'
+    ];
+
+    export const r_primitive = [
+        'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines"
+    ];
+
+    export const r_const = [
+        'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN'
     ];
 
     function createDependencyProposals(range, curWord) {
@@ -28,6 +36,26 @@ namespace rstudio.intellisense {
             keys.push({
                 label: item,
                 kind: monaco.languages.CompletionItemKind.Keyword,
+                documentation: "",
+                insertText: item,
+                range: range
+            });
+        }
+
+        for (const item of r_primitive) {
+            keys.push({
+                label: item,
+                kind: monaco.languages.CompletionItemKind.Function,
+                documentation: "",
+                insertText: item,
+                range: range
+            });
+        }
+
+        for (const item of r_const) {
+            keys.push({
+                label: item,
+                kind: monaco.languages.CompletionItemKind.Constant,
                 documentation: "",
                 insertText: item,
                 range: range

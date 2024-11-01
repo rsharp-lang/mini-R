@@ -19,6 +19,10 @@ str(list(
     b = [TRUE, TRUE, FALSE],
     c = "XXX"
 ));
+
+const text = http_get("http://a.com");
+
+print(text);
 `;
     function getCodeText() {
         return editor.getModel().getValue();
@@ -220,7 +224,13 @@ var rstudio;
         }
         intellisense.create_intellisense = create_intellisense;
         intellisense.r_keywords = [
-            'c', 'require', 'library', 'if', 'for', 'list', 'str', 'print', 'return', 'function', 'let', 'const', 'imports', 'from'
+            'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from'
+        ];
+        intellisense.r_primitive = [
+            'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines"
+        ];
+        intellisense.r_const = [
+            'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN'
         ];
         function createDependencyProposals(range, curWord) {
             // snippets的定义同上
@@ -231,6 +241,24 @@ var rstudio;
                 keys.push({
                     label: item,
                     kind: monaco.languages.CompletionItemKind.Keyword,
+                    documentation: "",
+                    insertText: item,
+                    range: range
+                });
+            }
+            for (const item of intellisense.r_primitive) {
+                keys.push({
+                    label: item,
+                    kind: monaco.languages.CompletionItemKind.Function,
+                    documentation: "",
+                    insertText: item,
+                    range: range
+                });
+            }
+            for (const item of intellisense.r_const) {
+                keys.push({
+                    label: item,
+                    kind: monaco.languages.CompletionItemKind.Constant,
                     documentation: "",
                     insertText: item,
                     range: range
@@ -290,17 +318,24 @@ var rstudio;
         tooltip_1.return_keyword = tooltip('Returns the function value to caller', `If value is missing, NULL is returned. If it is a single expression, the value of the evaluated expression is returned. 
 (The expression is evaluated as soon as return is called, in the evaluation frame of the function and before any on.exit expression is evaluated.)
 If the end of a function is reached without calling return, the value of the last evaluated expression is returned.`);
-        tooltip_1.list_keyword = tooltip("Lists - Generic and Dotted Pairs", `Functions to construct, coerce and check for both kinds of <code>R</code> lists.`);
         tooltip_1.logical_keyword = tooltip("Logical Vectors", `Create or test for objects of type 'logical', and the basic logical constants.
 TRUE and FALSE are reserved words denoting logical constants in the R language, whereas T and F are global variables whose initial values set to these. 
 All four are logical(1) vectors.
 Logical vectors are coerced to integer vectors in contexts where a numerical value is required, with TRUE being mapped to 1L, FALSE to 0L and NA to NA_integer_.`);
+        tooltip_1.let_keyword = tooltip("Create new symbol", "Create a new symbol in current environment frame.");
+        tooltip_1.const_keyword = tooltip("Create new symbol", "Create a new symbol with lock binding(which means the symbol value could not be changed) in current environment frame.");
+        tooltip_1.from_keyword = tooltip("The .NET clr module source", `The .NET clr package module imports source assembly name, usually be the assembly file base name. 
+        Assembly file name with dll extension suffix or the full file path to the dll assembly file also could be accepted.`);
+        tooltip_1.function_keyword = tooltip("Define a function", "Define a function in R# runtime, a function is kind of expression collection with parameter accept and value returns to its caller.");
         tooltip_1.keywords = {
             "imports": tooltip_1.imports_keyword,
             'return': tooltip_1.return_keyword,
-            'list': tooltip_1.list_keyword,
             'TRUE': tooltip_1.logical_keyword,
-            'FALSE': tooltip_1.logical_keyword
+            'FALSE': tooltip_1.logical_keyword,
+            "let": tooltip_1.let_keyword,
+            "const": tooltip_1.const_keyword,
+            "from": tooltip_1.from_keyword,
+            "function": tooltip_1.function_keyword
         };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));
