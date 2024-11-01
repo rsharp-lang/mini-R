@@ -9,7 +9,7 @@ module rstudio.tooltip {
         }
 
         // 根据单词显示自定义提示
-        const hoverContent = `这是关于 "${word.word}" 的自定义提示。`;
+        const hoverContent = contentHtml(word.word);
         const hover = {
             range: new monaco.Range(
                 position.lineNumber,
@@ -22,8 +22,25 @@ module rstudio.tooltip {
             ]
         };
 
-        return hover;
+        if (!hoverContent) {
+            return null;
+        } else {
+            return hover;
+        }
     }
 
-    export const imports_keyword = ``;
+    export function contentHtml(word: string): string {
+        if (word in keywords) {
+            return keywords[word];
+        } else {
+            return null;
+        }
+    }
+
+    export const imports_keyword = `<h1>Loading/Attaching of the .NET clr package module</h1>
+    <p>similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.</p>`;
+
+    export const keywords = {
+        "imports": imports_keyword
+    };
 }

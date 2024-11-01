@@ -38,17 +38,34 @@ var rstudio;
                 return null;
             }
             // 根据单词显示自定义提示
-            var hoverContent = "\u8FD9\u662F\u5173\u4E8E \"".concat(word.word, "\" \u7684\u81EA\u5B9A\u4E49\u63D0\u793A\u3002");
+            var hoverContent = contentHtml(word.word);
             var hover = {
                 range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
                 contents: [
                     { value: hoverContent }
                 ]
             };
-            return hover;
+            if (!hoverContent) {
+                return null;
+            }
+            else {
+                return hover;
+            }
         }
         tooltip.create_tooltip = create_tooltip;
-        tooltip.imports_keyword = "";
+        function contentHtml(word) {
+            if (word in tooltip.keywords) {
+                return tooltip.keywords[word];
+            }
+            else {
+                return null;
+            }
+        }
+        tooltip.contentHtml = contentHtml;
+        tooltip.imports_keyword = "<h1>Loading/Attaching of the .NET clr package module</h1>\n    <p>similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.</p>";
+        tooltip.keywords = {
+            "imports": tooltip.imports_keyword
+        };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));
 //# sourceMappingURL=Rstudio.js.map

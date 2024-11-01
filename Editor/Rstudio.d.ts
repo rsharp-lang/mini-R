@@ -10,5 +10,9 @@ declare namespace rstudio.tooltip {
             value: string;
         }[];
     };
-    const imports_keyword = "";
+    function contentHtml(word: string): string;
+    const imports_keyword = "<h1>Loading/Attaching of the .NET clr package module</h1>\n    <p>similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.</p>";
+    const keywords: {
+        imports: string;
+    };
 }
