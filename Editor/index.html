@@ -25,35 +25,22 @@
         }
 
         #container {
-            border: 1px solid black;
+            border: none;
         }
     </style>
 </head>
 
 <body>
     <div id="container" class="full-screen-div"></div>
+
+    <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
     <script src="./vscode/min/vs/loader.js"></script>
     <script>
-        require.config({ paths: { 'vs': './vscode/min/vs' } });
-
-        window.MonacoEnvironment = {
-            getWorkerUrl: function (workerId, label) {
-                return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-                    self.MonacoEnvironment = {
-                        baseUrl: './vscode/min'
-                    };
-                    importScripts('./vscode/min/vs/base/worker/workerMain.js');`
-                )}`;
-            }
-        };
+        require.config({ paths: { vs: './vscode/min/vs' } });
 
         require(['vs/editor/editor.main'], function () {
-            monaco.editor.create(document.getElementById('container'), {
-                value: [
-                    'function x() {',
-                    '\tconsole.log("Hello world!");',
-                    '}'
-                ].join('\n'),
+            var editor = monaco.editor.create(document.getElementById('container'), {
+                value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
                 language: 'javascript'
             });
         });
