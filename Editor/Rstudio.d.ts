@@ -13,7 +13,9 @@ declare namespace rstudio.tooltip {
     };
     function contentHtml(word: string): string;
     const imports_keyword: string;
+    const return_keyword: string;
     const keywords: {
         imports: string;
+        return: string;
     };
 }

@@ -69,8 +69,10 @@ var rstudio;
             return "<h3>".concat(title, "</h3><p>").concat(text, "</p>");
         }
         tooltip_1.imports_keyword = tooltip('Loading/attaching of the .NET clr package module', 'similar to the <code>library</code> and <code>require</code> load and attach add-on .NET clr package modules.');
+        tooltip_1.return_keyword = tooltip('Returns the function value to caller', "If value is missing, NULL is returned. If it is a single expression, the value of the evaluated expression is returned. \n(The expression is evaluated as soon as return is called, in the evaluation frame of the function and before any on.exit expression is evaluated.)\nIf the end of a function is reached without calling return, the value of the last evaluated expression is returned.");
         tooltip_1.keywords = {
-            "imports": tooltip_1.imports_keyword
+            "imports": tooltip_1.imports_keyword,
+            'return': tooltip_1.return_keyword
         };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));
