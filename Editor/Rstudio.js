@@ -15,22 +15,7 @@ var rstudio;
     rstudio.create = create;
     function setup() {
         monaco.languages.registerHoverProvider('r', {
-            provideHover: function (model, position) {
-                // 获取光标位置的单词
-                var word = model.getWordAtPosition(position);
-                if (!word) {
-                    return null;
-                }
-                // 根据单词显示自定义提示
-                var hoverContent = "\u8FD9\u662F\u5173\u4E8E \"".concat(word.word, "\" \u7684\u81EA\u5B9A\u4E49\u63D0\u793A\u3002");
-                var hover = {
-                    range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
-                    contents: [
-                        { value: hoverContent }
-                    ]
-                };
-                return hover;
-            }
+            provideHover: function (model, position) { return rstudio.tooltip.create_tooltip(model, position); }
         });
     }
     rstudio.setup = setup;
@@ -42,4 +27,28 @@ require(['vs/editor/editor.main'], function () {
     rstudio.setup();
     rstudio.create();
 });
+var rstudio;
+(function (rstudio) {
+    var tooltip;
+    (function (tooltip) {
+        function create_tooltip(model, position) {
+            // 获取光标位置的单词
+            var word = model.getWordAtPosition(position);
+            if (!word) {
+                return null;
+            }
+            // 根据单词显示自定义提示
+            var hoverContent = "\u8FD9\u662F\u5173\u4E8E \"".concat(word.word, "\" \u7684\u81EA\u5B9A\u4E49\u63D0\u793A\u3002");
+            var hover = {
+                range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+                contents: [
+                    { value: hoverContent }
+                ]
+            };
+            return hover;
+        }
+        tooltip.create_tooltip = create_tooltip;
+        tooltip.imports_keyword = "";
+    })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
+})(rstudio || (rstudio = {}));
 //# sourceMappingURL=Rstudio.js.map
