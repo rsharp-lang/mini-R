@@ -3,31 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Monaco Editor Sample</title>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+    <title>R# Editor</title>
 
-        body {
-            overflow: hidden;
-        }
-
-        .full-screen-div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #container {
-            border: none;
-        }
-    </style>
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="./Rstudio.css" />
 </head>
 
 <body>
@@ -35,25 +13,7 @@
 
     <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
     <script src="./vscode/min/vs/loader.js"></script>
-    <script>
-        require.config({ paths: { vs: './vscode/min/vs' } });
-
-        require(['vs/editor/editor.main'], function () {
-            var editor = monaco.editor.create(document.getElementById('container'), {
-                value: [
-                    'imports "aaa" from "bbb";',
-                    '',
-                    'let f(x) = console.log("Hello world!");',
-                    'let hello_world = function(x) {',
-                    '   return `hello ${x}!`;',
-                    '};',
-                    '',
-                    'print(c(1,2,3,4,5));'
-                ].join("\n"),
-                language: 'r'
-            });
-        });
-    </script>
+    <script src="./Rstudio.js"></script>
 </body>
 
 </html>
