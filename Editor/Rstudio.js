@@ -23,13 +23,21 @@ str(list(
         let container = document.getElementById('container');
         editor = monaco.editor.create(container, {
             value: demo_r,
-            language: 'r'
+            language: 'r',
+            automaticLayout: true,
+            glyphMargin: true,
+            lightbulb: {
+                enabled: monaco.editor.ShowLightbulbIconMode.On
+            }
         });
     }
     rstudio.create = create;
     function setup() {
         monaco.languages.registerHoverProvider('r', {
             provideHover: (model, position) => rstudio.tooltip.create_tooltip(model, position)
+        });
+        monaco.languages.registerCompletionItemProvider('r', {
+            provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
         });
     }
     rstudio.setup = setup;
@@ -41,6 +49,20 @@ require(['vs/editor/editor.main'], function () {
     rstudio.setup();
     rstudio.create();
 });
+var rstudio;
+(function (rstudio) {
+    var intellisense;
+    (function (intellisense) {
+        function create_intellisense(model, position) {
+            var suggestions = [
+                { label: 'hello', kind: monaco.languages.CompletionItemKind.Text, documentation: 'A greeting word' },
+                { label: 'world', kind: monaco.languages.CompletionItemKind.Text, documentation: 'The planet we live on' }
+            ];
+            return { suggestions: suggestions };
+        }
+        intellisense.create_intellisense = create_intellisense;
+    })(intellisense = rstudio.intellisense || (rstudio.intellisense = {}));
+})(rstudio || (rstudio = {}));
 var rstudio;
 (function (rstudio) {
     var tooltip;

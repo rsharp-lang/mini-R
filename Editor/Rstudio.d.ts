@@ -3,6 +3,9 @@ declare namespace rstudio {
     function create(): void;
     function setup(): void;
 }
+declare namespace rstudio.intellisense {
+    function create_intellisense(model: monaco.editor.ITextModel, position: monaco.Position): any;
+}
 declare namespace rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any;
     function contentHtml(word: string): string;

@@ -20,18 +20,30 @@ str(list(
 ));
 `;
 
+    export function getCodeText() {
+        return editor.getModel().getValue();
+    }
+
     export function create() {
         let container = document.getElementById('container');
 
         editor = monaco.editor.create(container, {
             value: demo_r,
-            language: 'r'
+            language: 'r',
+            automaticLayout: true,
+            glyphMargin: true,
+            lightbulb: {
+                enabled: monaco.editor.ShowLightbulbIconMode.On
+            }
         });
     }
 
     export function setup() {
         monaco.languages.registerHoverProvider('r', {
             provideHover: (model, position) => rstudio.tooltip.create_tooltip(model, position)
+        });
+        monaco.languages.registerCompletionItemProvider('r', {
+            provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
         });
     }
 }
