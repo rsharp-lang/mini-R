@@ -49,6 +49,26 @@
     <DocumentationFile>Rnotebook.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="rstudio\**" />
+    <Compile Remove="vscode\dev\**" />
+    <Compile Remove="vscode\esm\**" />
+    <Compile Remove="vscode\min-maps\**" />
+    <EmbeddedResource Remove="rstudio\**" />
+    <EmbeddedResource Remove="vscode\dev\**" />
+    <EmbeddedResource Remove="vscode\esm\**" />
+    <EmbeddedResource Remove="vscode\min-maps\**" />
+    <None Remove="rstudio\**" />
+    <None Remove="vscode\dev\**" />
+    <None Remove="vscode\esm\**" />
+    <None Remove="vscode\min-maps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Rstudio.d.ts" />
+    <None Remove="Rstudio.js.map" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
