@@ -40,8 +40,8 @@
 
         require(['vs/editor/editor.main'], function () {
             var editor = monaco.editor.create(document.getElementById('container'), {
-                value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-                language: 'javascript'
+                value: 'let f(x) = console.log("Hello world!");',
+                language: 'r'
             });
         });
     </script>
