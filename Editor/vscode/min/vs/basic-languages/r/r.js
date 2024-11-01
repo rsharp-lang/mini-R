@@ -166,7 +166,16 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 "require",
                 "attach",
                 "detach",
-                "source"
+                "source",
+                "let",
+                "of",
+                "imports",
+                "from",
+                "const",
+                "as",
+                "string",
+                "integer",
+                "boolean"
             ],
             special: ["\\n", "\\r", "\\t", "\\b", "\\a", "\\f", "\\v", "\\'", '\\"', "\\\\"],
             brackets: [
@@ -229,6 +238,7 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 operators: [
                     [/<{1,2}-/, "operator"],
                     [/->{1,2}/, "operator"],
+                    [/[=]>/, "operator"],
                     [/%[^%\s]+%/, "operator"],
                     [/\*\*/, "operator"],
                     [/%%/, "operator"],
@@ -241,7 +251,8 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 // Recognize strings, including those broken across lines
                 strings: [
                     [/'/, "string.escape", "@stringBody"],
-                    [/"/, "string.escape", "@dblStringBody"]
+                    [/"/, "string.escape", "@dblStringBody"],
+                    [/`/, "string.escape", "@interpolateStringBody"]
                 ],
                 stringBody: [
                     [
@@ -267,6 +278,19 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                         }
                     ],
                     [/"/, "string.escape", "@popall"],
+                    [/./, "string"]
+                ],
+                interpolateStringBody: [
+                    [
+                        /\\./,
+                        {
+                            cases: {
+                                "@special": "string",
+                                "@default": "error-token"
+                            }
+                        }
+                    ],
+                    [/`/, "string.escape", "@popall"],
                     [/./, "string"]
                 ]
             }

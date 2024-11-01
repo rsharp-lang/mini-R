@@ -40,7 +40,14 @@
 
         require(['vs/editor/editor.main'], function () {
             var editor = monaco.editor.create(document.getElementById('container'), {
-                value: 'let f(x) = console.log("Hello world!");',
+                value: [
+                    'imports "aaa" from "bbb";',
+                    '',
+                    'let f(x) = console.log("Hello world!");',
+                    'let hello_world = function(x) {',
+                    '   return `hello ${x}!`;',
+                    '};'
+                ].join("\n"),
                 language: 'r'
             });
         });
