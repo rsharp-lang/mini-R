@@ -38,7 +38,7 @@ namespace lsp {
         let data = { doc: script_str };
 
         $ts.post(`/lsp/put/?key=${key}`, data, (response: IMsg<ResponseMessage>) => {
-            
+
         });
     }
 
@@ -49,6 +49,10 @@ namespace lsp {
      * @param path the local file path for save the script file, must be a local full path
     */
     export function commit(key: string, path: string) {
+        let data = { file: path };
 
+        $ts.post(`/lsp/save/?key=${key}`, data, (response: IMsg<ResponseMessage>) => {
+
+        });
     }
 }
