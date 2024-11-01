@@ -16,6 +16,12 @@ namespace lsp {
         character: uinteger;
     }
 
+    export let host: string = "";
+
+    function url(api: string, key: string) {
+        return `${host}${api}/?key=${key}`;
+    }
+
     /**
      * get symbol information
      * 
@@ -24,7 +30,7 @@ namespace lsp {
      * @param symbol the symbol name for get the information
     */
     export function get_symbol_info(document: string, offset: Position, symbol: string) {
-        return fetch(`/lsp/get/symbol`).then((response) => {
+        return fetch(url("/lsp/get/symbol", document)).then((response) => {
 
         });
     }
@@ -37,7 +43,7 @@ namespace lsp {
     export function put_script(script_str: string, key: string) {
         let data = { doc: script_str };
 
-        $ts.post(`/lsp/put/?key=${key}`, data, (response: IMsg<ResponseMessage>) => {
+        $ts.post(url("/lsp/put", key), data, (response: IMsg<ResponseMessage>) => {
 
         });
     }
@@ -51,7 +57,7 @@ namespace lsp {
     export function commit(key: string, path: string) {
         let data = { file: path };
 
-        $ts.post(`/lsp/save/?key=${key}`, data, (response: IMsg<ResponseMessage>) => {
+        $ts.post(url("/lsp/save", key), data, (response: IMsg<ResponseMessage>) => {
 
         });
     }
