@@ -47,6 +47,7 @@ function updateLineNumbers() {
 
     // 更新行号显示
     linenums.innerHTML = lineNumbersHTML;
+    // linenums.style.height = editor.scrollHeight + 'px';
 }
 
 // 当文档加载完毕时，初始化行号
