@@ -36,20 +36,26 @@ str(list(
                 enabled: monaco.editor.ShowLightbulbIconMode.On
             }
         });
+        auto_commit();
+    }
+    rstudio.create = create;
+    /**
+     * auto commit the script updates to server
+    */
+    function auto_commit() {
+        editor.onDidChangeModelContent((event) => {
+            // save to server
+            lsp.put_script(editor.getValue(), key);
+        });
         // initialize of the server environment
         lsp.put_script(demo_r, key);
     }
-    rstudio.create = create;
     function setup() {
         monaco.languages.registerHoverProvider('r', {
             provideHover: (model, position) => rstudio.tooltip.create_tooltip(model, position)
         });
         monaco.languages.registerCompletionItemProvider('r', {
             provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
-        });
-        editor.onDidChangeModelContent((event) => {
-            // save to server
-            lsp.put_script(editor.getValue(), key);
         });
     }
     rstudio.setup = setup;

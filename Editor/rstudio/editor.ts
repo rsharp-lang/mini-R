@@ -39,6 +39,18 @@ str(list(
             }
         });
 
+        auto_commit();
+    }
+
+    /**
+     * auto commit the script updates to server
+    */
+    function auto_commit() {
+        editor.onDidChangeModelContent((event) => {
+            // save to server
+            lsp.put_script(editor.getValue(), key);
+        });
+
         // initialize of the server environment
         lsp.put_script(demo_r, key);
     }
@@ -49,11 +61,6 @@ str(list(
         });
         monaco.languages.registerCompletionItemProvider('r', {
             provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
-        });
-
-        editor.onDidChangeModelContent((event) => {
-            // save to server
-            lsp.put_script(editor.getValue(), key);
         });
     }
 }
