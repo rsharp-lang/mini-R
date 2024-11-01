@@ -1,10 +1,12 @@
 /// <reference path="vscode/monaco.d.ts" />
 declare namespace rstudio {
+    function getCodeText(): string;
     function create(): void;
     function setup(): void;
 }
 declare namespace rstudio.intellisense {
     function create_intellisense(model: monaco.editor.ITextModel, position: monaco.Position): any;
+    const r_keywords: string[];
 }
 declare namespace rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any;

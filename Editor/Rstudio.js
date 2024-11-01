@@ -19,6 +19,10 @@ str(list(
     c = "XXX"
 ));
 `;
+    function getCodeText() {
+        return editor.getModel().getValue();
+    }
+    rstudio.getCodeText = getCodeText;
     function create() {
         let container = document.getElementById('container');
         editor = monaco.editor.create(container, {
@@ -54,13 +58,37 @@ var rstudio;
     var intellisense;
     (function (intellisense) {
         function create_intellisense(model, position) {
-            var suggestions = [
-                { label: 'hello', kind: monaco.languages.CompletionItemKind.Text, documentation: 'A greeting word' },
-                { label: 'world', kind: monaco.languages.CompletionItemKind.Text, documentation: 'The planet we live on' }
-            ];
-            return { suggestions: suggestions };
+            let word = model.getWordUntilPosition(position);
+            let range = {
+                startLineNumber: position.lineNumber,
+                endLineNumber: position.lineNumber,
+                startColumn: word.startColumn,
+                endColumn: word.endColumn
+            };
+            return {
+                suggestions: createDependencyProposals(range, word)
+            };
         }
         intellisense.create_intellisense = create_intellisense;
+        intellisense.r_keywords = [
+            'c', 'require', 'library', 'if', 'for', 'list', 'str', 'print', 'return', 'function', 'let', 'const', 'imports', 'from'
+        ];
+        function createDependencyProposals(range, curWord) {
+            // snippets的定义同上
+            // keys（泛指一切待补全的预定义词汇）的定义：
+            let keys = [];
+            let snippets = [];
+            for (const item of intellisense.r_keywords) {
+                keys.push({
+                    label: item,
+                    kind: monaco.languages.CompletionItemKind.Keyword,
+                    documentation: "",
+                    insertText: item,
+                    range: range
+                });
+            }
+            return snippets.concat(keys);
+        }
     })(intellisense = rstudio.intellisense || (rstudio.intellisense = {}));
 })(rstudio || (rstudio = {}));
 var rstudio;
