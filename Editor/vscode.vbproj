@@ -50,14 +50,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="logs\**" />
     <Compile Remove="rstudio\**" />
     <Compile Remove="vscode\dev\**" />
     <Compile Remove="vscode\esm\**" />
     <Compile Remove="vscode\min-maps\**" />
+    <EmbeddedResource Remove="logs\**" />
     <EmbeddedResource Remove="rstudio\**" />
     <EmbeddedResource Remove="vscode\dev\**" />
     <EmbeddedResource Remove="vscode\esm\**" />
     <EmbeddedResource Remove="vscode\min-maps\**" />
+    <None Remove="logs\**" />
     <None Remove="rstudio\**" />
     <None Remove="vscode\dev\**" />
     <None Remove="vscode\esm\**" />
@@ -66,7 +69,12 @@
 
   <ItemGroup>
     <None Remove="Rstudio.d.ts" />
+    <None Remove="Rstudio.js" />
     <None Remove="Rstudio.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rstudio.js" />
   </ItemGroup>
 
 
