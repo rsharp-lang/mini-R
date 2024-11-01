@@ -21,4 +21,23 @@ namespace lsp {
 
         });
     }
+
+    /**
+     * put script text into server memory
+     * 
+     * @param key a hash key that could be used for make reference of this script text
+    */
+    export function put_script(script_str: string, key: string) {
+
+    }
+
+    /**
+     * commit the script document to the filesystem
+     * 
+     * @param key a reference key that associated with a specific script text inside the server memory
+     * @param path the local file path for save the script file, must be a local full path
+    */
+    export function commit(key: string, path: string) {
+
+    }
 }
