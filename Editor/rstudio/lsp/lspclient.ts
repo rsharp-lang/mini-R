@@ -16,6 +16,13 @@ namespace lsp {
         character: uinteger;
     }
 
+    /**
+     * get symbol information
+     * 
+     * @param document the key that reference to the specific script document inside the server memory
+     * @param offset the position offset on the script document
+     * @param symbol the symbol name for get the information
+    */
     export function get_symbol_info(document: string, offset: Position, symbol: string) {
         return fetch(`/lsp/get/symbol`).then((response) => {
 
@@ -28,7 +35,11 @@ namespace lsp {
      * @param key a hash key that could be used for make reference of this script text
     */
     export function put_script(script_str: string, key: string) {
+        let data = { doc: script_str };
 
+        $ts.post(`/lsp/put/?key=${key}`, data, (response: IMsg<ResponseMessage>) => {
+            
+        });
     }
 
     /**

@@ -4,6 +4,7 @@ module rstudio {
      * the language editor core
     */
     let editor: monaco.editor.IStandaloneCodeEditor;
+    let key: string;
     let demo_r = `    
 imports "JSON" from "base";
         
@@ -25,8 +26,9 @@ str(list(
     }
 
     export function create() {
-        let container = document.getElementById('container');
+        let container = $ts('#container');
 
+        key = md5(demo_r);
         editor = monaco.editor.create(container, {
             value: demo_r,
             language: 'r',
@@ -44,6 +46,11 @@ str(list(
         });
         monaco.languages.registerCompletionItemProvider('r', {
             provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
+        });
+
+        editor.onDidChangeModelContent((event) => {
+            // save to server
+            lsp.put_script(editor.getValue(), key);
         });
     }
 }
