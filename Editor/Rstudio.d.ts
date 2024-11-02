@@ -5,6 +5,7 @@ declare module rstudio {
     function create(): void;
     function create_editor(script: string, lang: 'r' | 'json'): void;
     function hashkey(): string;
+    function jumpToLine(line: number): void;
     function setup(): void;
 }
 interface ILoadModule {

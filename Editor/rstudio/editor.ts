@@ -63,6 +63,13 @@ print(text);
         return key;
     }
 
+    export function jumpToLine(line: number) {
+        if (editor && typeof editor.dispose === 'function') {
+            editor.revealLine(line);
+            editor.setPosition({ lineNumber: line, column: 1 });
+        }
+    }
+
     /**
      * auto commit the script updates to server
     */

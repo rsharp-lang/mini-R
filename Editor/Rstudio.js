@@ -59,6 +59,13 @@ print(text);
         return key;
     }
     rstudio.hashkey = hashkey;
+    function jumpToLine(line) {
+        if (editor && typeof editor.dispose === 'function') {
+            editor.revealLine(line);
+            editor.setPosition({ lineNumber: line, column: 1 });
+        }
+    }
+    rstudio.jumpToLine = jumpToLine;
     /**
      * auto commit the script updates to server
     */
