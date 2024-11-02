@@ -4,19 +4,23 @@
 
 interface ILoadModule {
     (v: string[], load: () => void): void;
+
+    /**
+     * do config of the environment workspace
+    */
     config(config: any);
 }
 
-function run_vscode(script_str: string, lang: 'r' | 'json') {
+function run_vscode(script_file: string, lang: 'r' | 'json') {
     const require: ILoadModule = (<any>window).require;
 
-    
-
-    // run the vscode
-    require.config({ paths: { vs: './vscode/min/vs' } });
-    require(['vs/editor/editor.main'], function () {
-        rstudio.setup();
-        rstudio.create_editor(script_str, lang);
+    lsp.get_file(script_file).then(script_str => {
+        // run the vscode
+        require.config({ paths: { vs: './vscode/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            rstudio.setup();
+            rstudio.create_editor(script_str, lang);
+        });
     });
 }
 

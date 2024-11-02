@@ -79,13 +79,15 @@ print(text);
 /// <reference path="../vscode/monaco.d.ts" />
 /// <reference path="../linq.d.ts" />
 /// <reference path="./editor.ts" />
-function run_vscode(script_str, lang) {
+function run_vscode(script_file, lang) {
     const require = window.require;
-    // run the vscode
-    require.config({ paths: { vs: './vscode/min/vs' } });
-    require(['vs/editor/editor.main'], function () {
-        rstudio.setup();
-        rstudio.create_editor(script_str, lang);
+    lsp.get_file(script_file).then(script_str => {
+        // run the vscode
+        require.config({ paths: { vs: './vscode/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            rstudio.setup();
+            rstudio.create_editor(script_str, lang);
+        });
     });
 }
 // $ts(run_vscode);
@@ -223,6 +225,12 @@ var lsp;
         });
     }
     lsp.commit = commit;
+    function get_file(path) {
+        return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
+            return response.text();
+        });
+    }
+    lsp.get_file = get_file;
 })(lsp || (lsp = {}));
 var rstudio;
 (function (rstudio) {

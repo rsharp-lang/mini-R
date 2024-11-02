@@ -67,4 +67,10 @@ namespace lsp {
 
         });
     }
+
+    export function get_file(path: string) {
+        return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
+            return response.text();
+        });
+    }
 }

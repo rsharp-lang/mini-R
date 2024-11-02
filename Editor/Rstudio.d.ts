@@ -9,9 +9,12 @@ declare module rstudio {
 }
 interface ILoadModule {
     (v: string[], load: () => void): void;
+    /**
+     * do config of the environment workspace
+    */
     config(config: any): any;
 }
-declare function run_vscode(script_str: string, lang: 'r' | 'json'): void;
+declare function run_vscode(script_file: string, lang: 'r' | 'json'): void;
 declare namespace lsp {
     type integer = number;
     export namespace ErrorCodes {
@@ -228,6 +231,7 @@ declare namespace lsp {
      * @param path the local file path for save the script file, must be a local full path
     */
     function commit(key: string, path: string): void;
+    function get_file(path: string): Promise<string>;
 }
 declare namespace lsp {
 }

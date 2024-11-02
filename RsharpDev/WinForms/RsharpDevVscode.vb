@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.Web.WebView2.Core
 Imports WeifenLuo.WinFormsUI.Docking
 Imports My
+Imports RDev
 
 Public Class RsharpDevVscode
     Implements ISaveHandle
@@ -34,7 +35,12 @@ Public Class RsharpDevVscode
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
+        If file.FileExists Then
+            FilePath = file
+            TabText = FilePath.FileName
+        End If
 
+        Return Me
     End Function
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
