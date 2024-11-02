@@ -15,7 +15,7 @@ namespace rstudio.intellisense {
     }
 
     export const r_keywords = [
-        'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from', 'next', 'break', 'while', 'else'
+        'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from', 'next', 'break', 'while', 'else', 'step'
     ];
 
     export const r_primitive = [

@@ -92,6 +92,22 @@ if returns the value of the expression evaluated, or NULL invisibly if none was 
         `These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. They are all reserved words.
 for, while and repeat return NULL invisibly. for sets var to the last used element of seq, or to NULL if it was of length zero.`);
 
+    export const step_keyword = tooltip(
+        "Set the numeric sequence generator steps",
+        `This keyword controls the different of the generated numeric sequence, default step is 1 for the numeric sequence, example as: <code>1:5</code>; 
+        you could use <code>step</code> keyword for produce a sequence with different 0.5: <code>1:5 step 0.5</code>.`
+    );
+
+    export const null_keyword = tooltip(
+        "The Null Object",
+        `NULL represents the null object in R: it is a reserved word. NULL is often returned by expressions and functions whose value is undefined.
+        NULL can be indexed (see Extract) in just about any syntactically legal way: apart from NULL[[]] which is an error, the result is always NULL. 
+        Objects with value NULL can be changed by replacement operators and will be coerced to the type of the right-hand side.
+
+NULL is also used as the empty pairlist: see the examples. Because pairlists are often promoted to lists, you may encounter NULL being promoted to an empty list.
+
+Objects with value NULL cannot have attributes as there is only one null object: attempts to assign them are either an error (attr) or promote the object to an empty list with attribute(s) (attributes and structure).`);
+
     export const keywords = {
         "imports": imports_keyword,
         'return': return_keyword,
@@ -102,6 +118,8 @@ for, while and repeat return NULL invisibly. for sets var to the last used eleme
         "from": from_keyword,
         "function": function_keyword,
         "if": if_keyword,
-        "for": for_keyword
+        "for": for_keyword,
+        "step": step_keyword,
+        "NULL": null_keyword
     };
 }
