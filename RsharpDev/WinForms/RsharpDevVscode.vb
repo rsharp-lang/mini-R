@@ -35,9 +35,6 @@ Public Class RsharpDevVscode
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
         WebView21.CoreWebView2.Navigate(vscode_url)
-        Thread.Sleep(100)
-        ready = True
-        WebView21.ExecuteScriptAsync($"run_vscode('{FilePath}','r');")
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
@@ -60,4 +57,8 @@ Public Class RsharpDevVscode
     Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
 
     End Function
+
+    Private Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
+        WebView21.ExecuteScriptAsync($"run_vscode('{FilePath}','r');")
+    End Sub
 End Class

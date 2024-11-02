@@ -3,7 +3,7 @@ module rstudio {
     /**
      * the language editor core
     */
-    let editor: monaco.editor.IStandaloneCodeEditor;
+    let editor: monaco.editor.IStandaloneCodeEditor = null;
     let key: string;
     let demo_r = `    
 imports "JSON" from "base";
@@ -36,6 +36,11 @@ print(text);
 
     export function create_editor(script: string, lang: 'r' | 'json') {
         let container = $ts('#container');
+
+        if (editor && typeof editor.dispose === 'function') {
+            // 编辑器存在，可以继续摧毁
+            editor.dispose();
+        }
 
         key = md5(script);
         editor = monaco.editor.create(container, {

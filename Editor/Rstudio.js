@@ -3,7 +3,7 @@ var rstudio;
     /**
      * the language editor core
     */
-    let editor;
+    let editor = null;
     let key;
     let demo_r = `    
 imports "JSON" from "base";
@@ -35,6 +35,10 @@ print(text);
     rstudio.create = create;
     function create_editor(script, lang) {
         let container = $ts('#container');
+        if (editor && typeof editor.dispose === 'function') {
+            // 编辑器存在，可以继续摧毁
+            editor.dispose();
+        }
         key = md5(script);
         editor = monaco.editor.create(container, {
             value: script,
@@ -226,6 +230,10 @@ var lsp;
     }
     lsp.commit = commit;
     function get_file(path) {
+        if (!path) {
+            // create new file?
+            return Promise.resolve("");
+        }
         return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
             return response.text();
         });

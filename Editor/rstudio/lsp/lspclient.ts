@@ -69,6 +69,11 @@ namespace lsp {
     }
 
     export function get_file(path: string) {
+        if (!path) {
+            // create new file?
+            return Promise.resolve("");
+        }
+
         return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
             return response.text();
         });
