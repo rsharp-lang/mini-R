@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports Darwinism.HPC.Parallel
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 
@@ -18,7 +19,7 @@ Public NotInheritable Class vscode
         Dim rscript As String = $"{rstudio}/bin/Rscript.exe".GetFullPath
         Dim languageserver As String = $"{rstudio}/R/languageserver.R".GetFullPath
         Dim clr As String = $"{rstudio}/shares/vscode.dll".GetFullPath
-        Dim background As String = $"{rscript.CLIPath} --port {port} --vscode {clr.CLIPath}"
+        Dim background As String = $"{languageserver.CLIPath} --port {port} --vscode {clr.CLIPath}"
 
         Call New Thread(Sub() Call launch(rscript, background, rstudio)).Start()
 
@@ -29,9 +30,13 @@ Public NotInheritable Class vscode
         Call VisualStudio.Output.LogLanguageServer(line)
     End Sub
 
-    Private Shared Sub launch(app As String, arguments As String, workdir As String)
+    Private Shared Sub launch(rscript As String, arguments As String, workdir As String)
+        Using log As New LogFile($"{App.ProductProgramData}/vscode.log")
+            Call log.WriteLine($"{rscript} {arguments}", "launch_vscode_languageserver", MSG_TYPES.DEBUG)
+        End Using
+
         Call PipelineProcess.ExecSub(
-            app:=app,
+            app:=rscript,
             args:=arguments,
             onReadLine:=AddressOf ProcessMessage,
             workdir:=workdir,
