@@ -37,6 +37,7 @@ Public Class RsharpDevVscode
         WebView21.CoreWebView2.Navigate(vscode_url)
         Thread.Sleep(100)
         ready = True
+        View("G:\mzkit\Rscript\Library\MSI_app\test\ggplot_msi_filters.R")
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
