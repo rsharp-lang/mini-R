@@ -34,14 +34,14 @@ print(text);
         create_editor(demo_r, 'r');
     }
 
-    function create_editor(script: string, lang: 'r' | 'json') {
+    export function create_editor(script: string, lang: 'r' | 'json') {
         let container = $ts('#container');
 
         key = md5(script);
         editor = monaco.editor.create(container, {
             value: script,
             language: lang,
-            // automaticLayout: true,
+            automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
                 enabled: monaco.editor.ShowLightbulbIconMode.On

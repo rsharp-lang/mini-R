@@ -39,7 +39,7 @@ print(text);
         editor = monaco.editor.create(container, {
             value: script,
             language: lang,
-            // automaticLayout: true,
+            automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
                 enabled: monaco.editor.ShowLightbulbIconMode.On
@@ -50,6 +50,7 @@ print(text);
         });
         auto_commit();
     }
+    rstudio.create_editor = create_editor;
     function hashkey() {
         return key;
     }
@@ -78,16 +79,16 @@ print(text);
 /// <reference path="../vscode/monaco.d.ts" />
 /// <reference path="../linq.d.ts" />
 /// <reference path="./editor.ts" />
-function run_vscode() {
+function run_vscode(script_str, lang) {
     const require = window.require;
     // run the vscode
     require.config({ paths: { vs: './vscode/min/vs' } });
     require(['vs/editor/editor.main'], function () {
         rstudio.setup();
-        rstudio.create();
+        rstudio.create_editor(script_str, lang);
     });
 }
-$ts(run_vscode);
+// $ts(run_vscode);
 var lsp;
 (function (lsp) {
     let ErrorCodes;

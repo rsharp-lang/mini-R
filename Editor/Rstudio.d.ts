@@ -3,6 +3,7 @@
 declare module rstudio {
     function getCodeText(): string;
     function create(): void;
+    function create_editor(script: string, lang: 'r' | 'json'): void;
     function hashkey(): string;
     function setup(): void;
 }
@@ -10,7 +11,7 @@ interface ILoadModule {
     (v: string[], load: () => void): void;
     config(config: any): any;
 }
-declare function run_vscode(): void;
+declare function run_vscode(script_str: string, lang: 'r' | 'json'): void;
 declare namespace lsp {
     type integer = number;
     export namespace ErrorCodes {
