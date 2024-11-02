@@ -26,7 +26,7 @@ Public NotInheritable Class vscode
     End Function
 
     Private Shared Sub ProcessMessage(line As String)
-
+        Call VisualStudio.Output.LogLanguageServer(line)
     End Sub
 
     Private Shared Sub launch(app As String, arguments As String, workdir As String)
