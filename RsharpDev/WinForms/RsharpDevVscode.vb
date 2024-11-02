@@ -66,6 +66,6 @@ Public Class RsharpDevVscode
     End Function
 
     Private Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
-        WebView21.ExecuteScriptAsync($"run_vscode('{FilePath}','r');")
+        WebView21.ExecuteScriptAsync($"run_vscode('{FilePath.Replace("\", "/")}','r');")
     End Sub
 End Class
