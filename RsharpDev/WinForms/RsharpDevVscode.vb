@@ -30,6 +30,9 @@ Public Class RsharpDevVscode
     End Property
 
     Private Async Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
+        TabText = "New script"
+        Text = TabText
+
         Await WebKit.Init(WebView21)
     End Sub
 
@@ -41,6 +44,10 @@ Public Class RsharpDevVscode
         If file.FileExists Then
             FilePath = file
             TabText = FilePath.FileName
+            Text = TabText
+        ElseIf file.StringEmpty(, True) Then
+            TabText = "New script"
+            Text = TabText
         End If
 
         Return Me
