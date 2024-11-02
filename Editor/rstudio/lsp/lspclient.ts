@@ -35,6 +35,12 @@ namespace lsp {
         });
     }
 
+    export function get_function_symbols(): Promise<string[]> {
+        return fetch(url("/lsp/get/functions", "")).then((response) => {
+            return response.json();
+        });
+    }
+
     /**
      * put script text into server memory
      * 

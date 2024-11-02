@@ -213,6 +213,7 @@ declare namespace lsp {
      * @param symbol the symbol name for get the information
     */
     function get_symbol_info(document: string, offset: Position, symbol: string): Promise<string>;
+    function get_function_symbols(): Promise<string[]>;
     /**
      * put script text into server memory
      *

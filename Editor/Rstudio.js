@@ -189,6 +189,12 @@ var lsp;
         });
     }
     lsp.get_symbol_info = get_symbol_info;
+    function get_function_symbols() {
+        return fetch(url("/lsp/get/functions", "")).then((response) => {
+            return response.json();
+        });
+    }
+    lsp.get_function_symbols = get_function_symbols;
     /**
      * put script text into server memory
      *
@@ -225,9 +231,12 @@ var rstudio;
                 startColumn: word.startColumn,
                 endColumn: word.endColumn
             };
-            return {
-                suggestions: createDependencyProposals(range, word)
-            };
+            let internal = createDependencyProposals(range, word);
+            return fetchSymbols(range, word).then(list => {
+                return {
+                    suggestions: internal.concat(list)
+                };
+            });
         }
         intellisense.create_intellisense = create_intellisense;
         intellisense.r_keywords = [
@@ -239,6 +248,21 @@ var rstudio;
         intellisense.r_const = [
             'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN', 'PI'
         ];
+        function fetchSymbols(range, curWord) {
+            return lsp.get_function_symbols().then((names) => {
+                let funcs = [];
+                for (let f of names) {
+                    funcs.push({
+                        label: f,
+                        kind: monaco.languages.CompletionItemKind.Function,
+                        documentation: "",
+                        insertText: f,
+                        range: range
+                    });
+                }
+                return funcs;
+            });
+        }
         function createDependencyProposals(range, curWord) {
             // snippets的定义同上
             // keys（泛指一切待补全的预定义词汇）的定义：

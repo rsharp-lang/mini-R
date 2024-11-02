@@ -8,10 +8,13 @@ namespace rstudio.intellisense {
             startColumn: word.startColumn,
             endColumn: word.endColumn
         };
+        let internal = createDependencyProposals(range, word);
 
-        return {
-            suggestions: createDependencyProposals(range, word)
-        };
+        return fetchSymbols(range, word).then(list => {
+            return {
+                suggestions: internal.concat(list)
+            };
+        });
     }
 
     export const r_keywords = [
@@ -25,6 +28,24 @@ namespace rstudio.intellisense {
     export const r_const = [
         'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN', 'PI'
     ];
+
+    function fetchSymbols(range, curWord) {
+        return lsp.get_function_symbols().then((names) => {
+            let funcs = [];
+
+            for (let f of names) {
+                funcs.push({
+                    label: f,
+                    kind: monaco.languages.CompletionItemKind.Function,
+                    documentation: "",
+                    insertText: f,
+                    range: range
+                });
+            }
+
+            return funcs;
+        });
+    }
 
     function createDependencyProposals(range, curWord) {
         // snippets的定义同上
