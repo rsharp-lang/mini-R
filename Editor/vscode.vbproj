@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <RootNamespace>vscode</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyName>languageserver</AssemblyName>
+    <AssemblyName>vscode</AssemblyName>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile></DocumentationFile>
@@ -16,37 +16,14 @@
     <Authors>xieguigang</Authors>
     <Company>R# language</Company>
     <Product>R-sharp language</Product>
+    <ApplicationIcon>vs.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <OutputPath>../\assembly\</OutputPath>
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\App\rstudio\shares</OutputPath>
     <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>Rnotebook.xml</DocumentationFile>
+    <DefineTrace>True</DefineTrace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -71,6 +48,10 @@
     <None Remove="Rstudio.d.ts" />
     <None Remove="Rstudio.js" />
     <None Remove="Rstudio.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="vs.ico" />
   </ItemGroup>
 
   <ItemGroup>
