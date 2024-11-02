@@ -39,10 +39,13 @@ print(text);
         editor = monaco.editor.create(container, {
             value: script,
             language: lang,
-            automaticLayout: true,
+            // automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
                 enabled: monaco.editor.ShowLightbulbIconMode.On
+            },
+            minimap: {
+                maxColumn: 120
             }
         });
         auto_commit();
