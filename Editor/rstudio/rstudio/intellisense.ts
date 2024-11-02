@@ -15,15 +15,15 @@ namespace rstudio.intellisense {
     }
 
     export const r_keywords = [
-        'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from'
+        'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from', 'next', 'break', 'while', 'else'
     ];
 
     export const r_primitive = [
-        'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines"
+        'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines", "help", "as.character", "as.numeric", "readBin", "writeBin", "as.logical"
     ];
 
     export const r_const = [
-        'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN'
+        'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN', 'PI'
     ];
 
     function createDependencyProposals(range, curWord) {

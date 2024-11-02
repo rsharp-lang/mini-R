@@ -29,11 +29,16 @@ print(text);
     }
     rstudio.getCodeText = getCodeText;
     function create() {
+        // create demo test
+        create_editor(demo_r, 'r');
+    }
+    rstudio.create = create;
+    function create_editor(script, lang) {
         let container = $ts('#container');
-        key = md5(demo_r);
+        key = md5(script);
         editor = monaco.editor.create(container, {
-            value: demo_r,
-            language: 'r',
+            value: script,
+            language: lang,
             automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
@@ -42,7 +47,6 @@ print(text);
         });
         auto_commit();
     }
-    rstudio.create = create;
     function hashkey() {
         return key;
     }
@@ -71,12 +75,15 @@ print(text);
 /// <reference path="../vscode/monaco.d.ts" />
 /// <reference path="../linq.d.ts" />
 /// <reference path="./editor.ts" />
-// run the vscode
-require.config({ paths: { vs: './vscode/min/vs' } });
-require(['vs/editor/editor.main'], function () {
-    rstudio.setup();
-    rstudio.create();
-});
+function run_vscode() {
+    const require = window.require;
+    // run the vscode
+    require.config({ paths: { vs: './vscode/min/vs' } });
+    require(['vs/editor/editor.main'], function () {
+        rstudio.setup();
+        rstudio.create();
+    });
+}
 var lsp;
 (function (lsp) {
     let ErrorCodes;
@@ -224,13 +231,13 @@ var rstudio;
         }
         intellisense.create_intellisense = create_intellisense;
         intellisense.r_keywords = [
-            'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from'
+            'require', 'library', 'if', 'for', 'return', 'function', 'let', 'const', 'imports', 'from', 'next', 'break', 'while', 'else'
         ];
         intellisense.r_primitive = [
-            'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines"
+            'c', 'list', 'str', 'print', 'example', "is.null", "length", "readLines", "writeLines", "help", "as.character", "as.numeric", "readBin", "writeBin", "as.logical"
         ];
         intellisense.r_const = [
-            'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN'
+            'TRUE', 'FALSE', 'true', 'false', 'NULL', 'NA', 'Inf', 'NaN', 'PI'
         ];
         function createDependencyProposals(range, curWord) {
             // snippets的定义同上
@@ -327,6 +334,10 @@ Logical vectors are coerced to integer vectors in contexts where a numerical val
         tooltip_1.from_keyword = tooltip("The .NET clr module source", `The .NET clr package module imports source assembly name, usually be the assembly file base name. 
         Assembly file name with dll extension suffix or the full file path to the dll assembly file also could be accepted.`);
         tooltip_1.function_keyword = tooltip("Define a function", "Define a function in R# runtime, a function is kind of expression collection with parameter accept and value returns to its caller.");
+        tooltip_1.if_keyword = tooltip("Control Flow", `These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. They are all reserved words.
+if returns the value of the expression evaluated, or NULL invisibly if none was (which may happen if there is no else).`);
+        tooltip_1.for_keyword = tooltip("Control Flow", `These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. They are all reserved words.
+for, while and repeat return NULL invisibly. for sets var to the last used element of seq, or to NULL if it was of length zero.`);
         tooltip_1.keywords = {
             "imports": tooltip_1.imports_keyword,
             'return': tooltip_1.return_keyword,
@@ -335,7 +346,9 @@ Logical vectors are coerced to integer vectors in contexts where a numerical val
             "let": tooltip_1.let_keyword,
             "const": tooltip_1.const_keyword,
             "from": tooltip_1.from_keyword,
-            "function": tooltip_1.function_keyword
+            "function": tooltip_1.function_keyword,
+            "if": tooltip_1.if_keyword,
+            "for": tooltip_1.for_keyword
         };
     })(tooltip = rstudio.tooltip || (rstudio.tooltip = {}));
 })(rstudio || (rstudio = {}));

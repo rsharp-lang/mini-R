@@ -82,6 +82,16 @@ Logical vectors are coerced to integer vectors in contexts where a numerical val
         "Define a function",
         "Define a function in R# runtime, a function is kind of expression collection with parameter accept and value returns to its caller.");
 
+    export const if_keyword = tooltip(
+        "Control Flow",
+        `These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. They are all reserved words.
+if returns the value of the expression evaluated, or NULL invisibly if none was (which may happen if there is no else).`);
+
+    export const for_keyword = tooltip(
+        "Control Flow",
+        `These are the basic control-flow constructs of the R language. They function in much the same way as control statements in any Algol-like language. They are all reserved words.
+for, while and repeat return NULL invisibly. for sets var to the last used element of seq, or to NULL if it was of length zero.`);
+
     export const keywords = {
         "imports": imports_keyword,
         'return': return_keyword,
@@ -90,6 +100,8 @@ Logical vectors are coerced to integer vectors in contexts where a numerical val
         "let": let_keyword,
         "const": const_keyword,
         "from": from_keyword,
-        "function": function_keyword
+        "function": function_keyword,
+        "if": if_keyword,
+        "for": for_keyword
     };
 }

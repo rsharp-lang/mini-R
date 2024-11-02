@@ -6,6 +6,11 @@ declare module rstudio {
     function hashkey(): string;
     function setup(): void;
 }
+interface ILoadModule {
+    (v: string[], load: () => void): void;
+    config(config: any): any;
+}
+declare function run_vscode(): void;
 declare namespace lsp {
     type integer = number;
     export namespace ErrorCodes {
@@ -240,6 +245,8 @@ declare module rstudio.tooltip {
     const const_keyword: string;
     const from_keyword: string;
     const function_keyword: string;
+    const if_keyword: string;
+    const for_keyword: string;
     const keywords: {
         imports: string;
         return: string;
@@ -249,5 +256,7 @@ declare module rstudio.tooltip {
         const: string;
         from: string;
         function: string;
+        if: string;
+        for: string;
     };
 }

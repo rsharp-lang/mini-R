@@ -30,12 +30,17 @@ print(text);
     }
 
     export function create() {
+        // create demo test
+        create_editor(demo_r, 'r');
+    }
+
+    function create_editor(script: string, lang: 'r' | 'json') {
         let container = $ts('#container');
 
-        key = md5(demo_r);
+        key = md5(script);
         editor = monaco.editor.create(container, {
-            value: demo_r,
-            language: 'r',
+            value: script,
+            language: lang,
             automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
