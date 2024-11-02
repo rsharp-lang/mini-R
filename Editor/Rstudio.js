@@ -84,6 +84,7 @@ function run_vscode() {
         rstudio.create();
     });
 }
+$ts(run_vscode);
 var lsp;
 (function (lsp) {
     let ErrorCodes;

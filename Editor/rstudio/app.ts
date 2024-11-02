@@ -18,3 +18,4 @@ function run_vscode() {
     });
 }
 
+$ts(run_vscode);
