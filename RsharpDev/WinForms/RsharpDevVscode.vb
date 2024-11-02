@@ -49,7 +49,7 @@ Public Class RsharpDevVscode
                 Thread.Sleep(10)
             Loop
 
-            WebView21.ExecuteScriptAsync($"run_vscode('{file}','r');").Wait()
+            WebView21.ExecuteScriptAsync($"run_vscode('{file}','r');")
         End If
 
         Return Me
