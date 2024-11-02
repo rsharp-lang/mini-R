@@ -250,6 +250,8 @@ declare module rstudio.tooltip {
     const for_keyword: string;
     const step_keyword: string;
     const null_keyword: string;
+    const require_keyword: string;
+    const library_keyword: string;
     const keywords: {
         imports: string;
         return: string;
@@ -263,5 +265,7 @@ declare module rstudio.tooltip {
         for: string;
         step: string;
         NULL: string;
+        require: string;
+        library: string;
     };
 }

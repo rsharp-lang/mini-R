@@ -108,6 +108,28 @@ NULL is also used as the empty pairlist: see the examples. Because pairlists are
 
 Objects with value NULL cannot have attributes as there is only one null object: attempts to assign them are either an error (attr) or promote the object to an empty list with attribute(s) (attributes and structure).`);
 
+    export const require_keyword = tooltip(
+        "Loading/Attaching and Listing of Packages",
+        `library and require load and attach add-on packages.
+    
+    library(package) and require(package) both load the namespace of the package with name package and attach it on the search list. require is designed for use inside other functions; it returns FALSE and gives a warning (rather than an error as library() does by default) if the package does not exist. Both functions check and update the list of currently attached packages and do not reload a namespace which is already loaded. (If you want to reload such a package, call detach(unload = TRUE) or unloadNamespace first.) If you want to load a package without attaching it on the search list, see requireNamespace.
+    require returns (invisibly) a logical indicating whether the required package is available.
+    `);
+
+    export const library_keyword = tooltip(
+        "Loading/Attaching and Listing of Packages",
+        `library and require load and attach add-on packages.
+            library(package) and require(package) both load the namespace of the package with name package and attach it on the search list. require is designed for use inside other functions; it returns FALSE and gives a warning (rather than an error as library() does by default) if the package does not exist. Both functions check and update the list of currently attached packages and do not reload a namespace which is already loaded. (If you want to reload such a package, call detach(unload = TRUE) or unloadNamespace first.) If you want to load a package without attaching it on the search list, see requireNamespace.
+
+To suppress messages during the loading of packages use suppressPackageStartupMessages: this will suppress all messages from R itself but not necessarily all those from package authors.
+
+If library is called with no package or help argument, it lists all available packages in the libraries specified by lib.loc, and returns the corresponding information in an object of class "libraryIQR". (The structure of this class may change in future versions.) Use .packages(all = TRUE) to obtain just the names of all available packages, and installed.packages() for even more information.
+
+library(help = somename) computes basic information about the package somename, and returns this in an object of class "packageInfo". (The structure of this class may change in future versions.) When used with the default value (NULL) for lib.loc, the attached packages are searched before the libraries.
+Normally library returns (invisibly) the list of attached packages, but TRUE or FALSE if logical.return is TRUE. When called as library() it returns an object of class "libraryIQR", and for library(help=), one of class "packageInfo".
+            `
+    );
+
     export const keywords = {
         "imports": imports_keyword,
         'return': return_keyword,
@@ -120,6 +142,8 @@ Objects with value NULL cannot have attributes as there is only one null object:
         "if": if_keyword,
         "for": for_keyword,
         "step": step_keyword,
-        "NULL": null_keyword
+        "NULL": null_keyword,
+        "require": require_keyword,
+        "library": library_keyword
     };
 }
