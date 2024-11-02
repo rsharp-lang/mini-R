@@ -37,19 +37,13 @@ Public Class RsharpDevVscode
         WebView21.CoreWebView2.Navigate(vscode_url)
         Thread.Sleep(100)
         ready = True
-        View("G:\mzkit\Rscript\Library\MSI_app\test\ggplot_msi_filters.R")
+        WebView21.ExecuteScriptAsync($"run_vscode('{FilePath}','r');")
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
         If file.FileExists Then
             FilePath = file
             TabText = FilePath.FileName
-
-            Do While Not ready
-                Thread.Sleep(10)
-            Loop
-
-            WebView21.ExecuteScriptAsync($"run_vscode('{file}','r');")
         End If
 
         Return Me

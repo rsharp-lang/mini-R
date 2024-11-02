@@ -14,7 +14,7 @@ Partial Public Class RsharpDevMain : Inherits Form
 
         ribbon = New RibbonItems(_ribbon)
 
-        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
+        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevVscode)
         AddHandler ribbon.License.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
         AddHandler ribbon.About.ExecuteEvent, Sub() Call showAboutSplash()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()

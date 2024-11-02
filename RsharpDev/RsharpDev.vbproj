@@ -279,12 +279,6 @@
     <Compile Include="WinForms\RsharpDevAbout.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForms\RsharpDevEditor.designer.vb">
-      <DependentUpon>RsharpDevEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\RsharpDevEditor.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="WinForms\RsharpDevMain.Designer.vb">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>
     </Compile>
@@ -389,9 +383,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevConsole.resx">
       <DependentUpon>RsharpDevConsole.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\RsharpDevEditor.resx">
-      <DependentUpon>RsharpDevEditor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevServerConsole.resx">
       <DependentUpon>RsharpDevServerConsole.vb</DependentUpon>
