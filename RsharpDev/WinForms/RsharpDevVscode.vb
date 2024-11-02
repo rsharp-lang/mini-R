@@ -7,6 +7,7 @@ Imports Microsoft.Web.WebView2.Core
 Imports WeifenLuo.WinFormsUI.Docking
 Imports My
 Imports RDev
+Imports System.Threading
 
 Public Class RsharpDevVscode
     Implements ISaveHandle
@@ -20,6 +21,8 @@ Public Class RsharpDevVscode
     Public Property FilePath As String Implements IFileReference.FilePath
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
 
+    Dim ready As Boolean = False
+
     Public Shared ReadOnly Property vscode_url As String
         Get
             Return $"http://localhost:{MyApplication.lsp_server}/index.html"
@@ -32,12 +35,20 @@ Public Class RsharpDevVscode
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
         WebView21.CoreWebView2.Navigate(vscode_url)
+        Thread.Sleep(100)
+        ready = True
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
         If file.FileExists Then
             FilePath = file
             TabText = FilePath.FileName
+
+            Do While Not ready
+                Thread.Sleep(10)
+            Loop
+
+            WebView21.ExecuteScriptAsync($"run_vscode('{file}','r');").Wait()
         End If
 
         Return Me
