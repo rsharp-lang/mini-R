@@ -187,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="apps\ApplicationEvents.vb" />
+    <Compile Include="apps\vscode.vb" />
     <Compile Include="apps\Config\IApplyVsTheme.vb" />
     <Compile Include="apps\Config\LinuxServer.vb" />
     <Compile Include="apps\Config\ConfigFile.vb" />
@@ -580,6 +581,10 @@
     <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj">
       <Project>{b31b8470-2472-46eb-80b8-dce6355ba580}</Project>
       <Name>Docker.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj">
+      <Project>{7635ce5b-d6bf-4235-9470-0ecdd15214cf}</Project>
+      <Name>parallel-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
       <Project>{cfc0500a-366f-48ba-bf85-5e46c138f858}</Project>
