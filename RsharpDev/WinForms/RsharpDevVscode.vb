@@ -4,10 +4,8 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.Web.WebView2.Core
-Imports WeifenLuo.WinFormsUI.Docking
 Imports My
-Imports RDev
-Imports System.Threading
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class RsharpDevVscode
     Implements ISaveHandle
