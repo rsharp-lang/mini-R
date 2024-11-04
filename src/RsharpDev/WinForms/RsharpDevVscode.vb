@@ -3,6 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports RDev
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class RsharpDevVscode
@@ -17,9 +18,11 @@ Public Class RsharpDevVscode
     Public Property FilePath As String Implements IFileReference.FilePath
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
 
-    Dim ready As Boolean = False
+    Dim WithEvents vscode As New VsCodeEditor
 
     Private Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Controls.Add(vscode)
+        vscode.Dock = DockStyle.Fill
         TabText = "New script"
         Text = TabText
     End Sub
@@ -33,6 +36,8 @@ Public Class RsharpDevVscode
             TabText = "New script"
             Text = TabText
         End If
+
+        vscode.FilePath = FilePath
 
         Return Me
     End Function

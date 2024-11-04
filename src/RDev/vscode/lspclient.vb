@@ -58,6 +58,16 @@ Public Class lspclient
         Return port
     End Function
 
+    Public Shared Sub LaunchLanguageServer(rscript As String,
+                                           languageserver As String,
+                                           vscode As String,
+                                           Optional stdout As Action(Of String) = Nothing)
+
+        _lsp_server = New lspclient(rscript, languageserver, vscode:=vscode) _
+            .RedirectStdOut(stdout) _
+            .Launch()
+    End Sub
+
     Private Sub ProcessMessage(line As String)
         If Not hook_stdout Is Nothing Then
             Call hook_stdout(line)
