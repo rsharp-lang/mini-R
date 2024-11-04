@@ -7,6 +7,6 @@ Software package development studio for R# script language.
 
 ## Credits
 
-WinForm UI: https://github.com/harborsiem/WindowsRibbon
-VisualStudio UI: https://github.com/dockpanelsuite/dockpanelsuite
-Code Editor: https://github.com/microsoft/monaco-editor
+1. WinForm UI: https://github.com/harborsiem/WindowsRibbon
+2. VisualStudio UI: https://github.com/dockpanelsuite/dockpanelsuite
+3. Code Editor: https://github.com/microsoft/monaco-editor
