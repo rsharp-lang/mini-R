@@ -5466,5 +5466,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{14010b90-bc3b-42d9-a52c-30ca537d3c11}*SharedItemsImports = 13
 		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{217e3f57-0159-45f6-859a-8edb93781778}*SharedItemsImports = 5
+		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{a665798e-dad3-47ba-94db-b8a83488b5d9}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
