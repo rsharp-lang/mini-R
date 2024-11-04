@@ -8,6 +8,13 @@
     <AssemblyName>RDev</AssemblyName>
     <RootNamespace>RDev</RootNamespace>
 	  <DefineConstants>netcore5=1</DefineConstants>
+	  <MyType>WindowsForms</MyType>
+	  <StartupObject>RDev.My.MyApplication</StartupObject>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>A common development library for R# language across multiple windows desktop project</Title>
+	  <Authors>xieguigang</Authors>
+	  <Product>R# language</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
