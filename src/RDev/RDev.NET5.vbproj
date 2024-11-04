@@ -10,30 +10,6 @@
 	  <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
     <DocumentationFile>RDev.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
@@ -42,20 +18,8 @@
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
-    <OutputPath>../\App\</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|x64'">
-    <DocumentationFile>RDev.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
-    <OutputPath>../\App\</OutputPath>
+    <OutputPath>../../\App\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -69,10 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj" />
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj" />
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

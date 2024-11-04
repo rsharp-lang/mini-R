@@ -7,13 +7,13 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "RDev.NET5", "RDev.NET5.vbpr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{553A7718-87BD-4CE9-BE5F-E471F7E840C5}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{54C0A3CD-7BE3-4A23-B6BC-FFD859159821}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{54C0A3CD-7BE3-4A23-B6BC-FFD859159821}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{FF82D4F9-FFAB-4065-A402-3B72845FCBC4}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{FF82D4F9-FFAB-4065-A402-3B72845FCBC4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Centos.NET5", "..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj", "{4D26EC9E-DD1F-4A42-BB1B-3A8319FA6043}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Centos.NET5", "..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj", "{4D26EC9E-DD1F-4A42-BB1B-3A8319FA6043}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Docker.NET5", "..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj", "{EC9A13BF-2604-4842-BE56-2BFDC29D010C}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Docker.NET5", "..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj", "{EC9A13BF-2604-4842-BE56-2BFDC29D010C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
