@@ -582,51 +582,51 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj">
       <Project>{0fe351ab-a585-4c86-80d8-7ec25c5715eb}</Project>
       <Name>Rsharp-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Centos\Centos.NET5.vbproj">
       <Project>{7ab86387-aa80-44ab-9a96-1318b846ee19}</Project>
       <Name>Centos.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\CloudKit\Docker\Docker.NET5.vbproj">
       <Project>{b31b8470-2472-46eb-80b8-dce6355ba580}</Project>
       <Name>Docker.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj">
       <Project>{7635ce5b-d6bf-4235-9470-0ecdd15214cf}</Project>
       <Name>parallel-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
       <Project>{cfc0500a-366f-48ba-bf85-5e46c138f858}</Project>
       <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
       <Project>{80342361-c09c-4983-b20c-eb52e1c7cf12}</Project>
       <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Canvas3D\Canvas3D.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Canvas3D\Canvas3D.vbproj">
       <Project>{d67818e6-749d-4b3f-a108-36d45ecb5123}</Project>
       <Name>Canvas3D</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj">
       <Project>{6870ff1b-4340-425f-bbdf-3b0ce794bb02}</Project>
       <Name>plots-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{63e24d1e-75b6-47e3-ab22-54e238a9d818}</Project>
       <Name>imaging.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{920e5968-ef1d-489c-9a9d-4a5543fd6ab5}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\JSON-netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\JSON-netcore5.vbproj">
       <Project>{0a1489c1-cd5f-4d85-b82a-a823eb6a38bc}</Project>
       <Name>JSON-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\html_netcore5.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\html_netcore5.vbproj">
       <Project>{f9da6216-7d3a-47fd-a7b1-2983af23db52}</Project>
       <Name>html_netcore5</Name>
     </ProjectReference>
