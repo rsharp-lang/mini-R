@@ -3,7 +3,8 @@ module rstudio {
     /**
      * the language editor core
     */
-    let editor: monaco.editor.IStandaloneCodeEditor;
+    let editor: monaco.editor.IStandaloneCodeEditor = null;
+    let key: string;
     let demo_r = `    
 imports "JSON" from "base";
         
@@ -18,6 +19,10 @@ str(list(
     b = [TRUE, TRUE, FALSE],
     c = "XXX"
 ));
+
+const text = http_get("http://a.com");
+
+print(text);
 `;
 
     export function getCodeText() {
@@ -25,17 +30,57 @@ str(list(
     }
 
     export function create() {
-        let container = document.getElementById('container');
+        // create demo test
+        create_editor(demo_r, 'r');
+    }
 
+    export function create_editor(script: string, lang: 'r' | 'json') {
+        let container = $ts('#container');
+
+        if (editor && typeof editor.dispose === 'function') {
+            // 编辑器存在，可以继续摧毁
+            editor.dispose();
+        }
+
+        key = md5(script);
         editor = monaco.editor.create(container, {
-            value: demo_r,
-            language: 'r',
+            value: script,
+            language: lang,
             automaticLayout: true,
             glyphMargin: true,
             lightbulb: {
                 enabled: monaco.editor.ShowLightbulbIconMode.On
+            },
+            minimap: {
+                maxColumn: 120
             }
         });
+
+        auto_commit();
+    }
+
+    export function hashkey(): string {
+        return key;
+    }
+
+    export function jumpToLine(line: number) {
+        if (editor && typeof editor.dispose === 'function') {
+            editor.revealLine(line);
+            editor.setPosition({ lineNumber: line, column: 1 });
+        }
+    }
+
+    /**
+     * auto commit the script updates to server
+    */
+    function auto_commit() {
+        editor.onDidChangeModelContent((event) => {
+            // save to server
+            lsp.put_script(getCodeText(), key);
+        });
+
+        // initialize of the server environment
+        lsp.put_script(demo_r, key);
     }
 
     export function setup() {

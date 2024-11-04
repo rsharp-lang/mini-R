@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -11,10 +12,16 @@ Namespace My
 
         Public Shared ReadOnly Property RStudio As RsharpDevMain
 
+        Public Shared ReadOnly Property lsp_server As Integer = 321
+
         Public Shared Sub Register(rstudio As RsharpDevMain)
             MyApplication._RStudio = rstudio
             VisualStudio.ConfigRemote()
         End Sub
+
+        Public Shared Async Function LaunchLanguageServer() As Threading.Tasks.Task
+            Await Task.Run(Sub() _lsp_server = vscode.Launch)
+        End Function
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
 

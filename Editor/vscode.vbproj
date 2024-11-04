@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>vscode</RootNamespace>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AssemblyName>vscode</AssemblyName>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile></DocumentationFile>
+    <Title>An implementation of the Language Server Protocol for R# language</Title>
+    <Authors>xieguigang</Authors>
+    <Company>R# language</Company>
+    <Product>R-sharp language</Product>
+    <ApplicationIcon>vs.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <OutputPath>..\App\rstudio\shares</OutputPath>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Compile Remove="rstudio\**" />
+    <Compile Remove="vscode\dev\**" />
+    <Compile Remove="vscode\esm\**" />
+    <Compile Remove="vscode\min-maps\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="rstudio\**" />
+    <EmbeddedResource Remove="vscode\dev\**" />
+    <EmbeddedResource Remove="vscode\esm\**" />
+    <EmbeddedResource Remove="vscode\min-maps\**" />
+    <None Remove="logs\**" />
+    <None Remove="rstudio\**" />
+    <None Remove="vscode\dev\**" />
+    <None Remove="vscode\esm\**" />
+    <None Remove="vscode\min-maps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Rstudio.d.ts" />
+    <None Remove="Rstudio.js" />
+    <None Remove="Rstudio.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="vs.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rstudio.js" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Compile Update="My Project\Resources.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

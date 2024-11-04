@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Config
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My
 Imports My
 Imports WeifenLuo.WinFormsUI.Docking
@@ -74,7 +75,7 @@ Module VisualStudio
         If fileName.ExtensionSuffix("Rproj") Then
             Call Program.LoadSolution(Rproj:=fileName)
         Else
-            Call AddDocument(New RsharpDevEditor, Sub(c) DirectCast(c, RsharpDevEditor).View(fileName))
+            Call AddDocument(New RsharpDevVscode, fileName, Sub(c) DirectCast(c, RsharpDevVscode).View(fileName))
         End If
 
         Program.Config.AddRecent(fileName)
@@ -83,7 +84,11 @@ Module VisualStudio
         Call VisualStudio.RefreshRecentList()
     End Sub
 
-    Public Sub AddDocument(doc As DockContent, Optional after As Action(Of DockContent) = Nothing)
+    Public Sub AddDocument(doc As DockContent, Optional file As String = Nothing, Optional after As Action(Of DockContent) = Nothing)
+        If TypeOf doc Is IFileReference Then
+            DirectCast(doc, IFileReference).FilePath = file
+        End If
+
         doc.Show(MyApplication.RStudio.DockPanel1)
         doc.DockState = DockState.Document
 

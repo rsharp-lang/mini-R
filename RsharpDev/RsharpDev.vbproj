@@ -38,6 +38,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,6 +125,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\VisualStudio\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
     </Reference>
@@ -144,12 +149,30 @@
     <Reference Include="Microsoft.VisualStudio.WinForm.TextEditor">
       <HintPath>..\dist\Microsoft.VisualStudio.WinForm.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Ribbon">
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2024.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2024.1.0\lib\net462\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -176,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="apps\ApplicationEvents.vb" />
+    <Compile Include="apps\vscode.vb" />
     <Compile Include="apps\Config\IApplyVsTheme.vb" />
     <Compile Include="apps\Config\LinuxServer.vb" />
     <Compile Include="apps\Config\ConfigFile.vb" />
@@ -189,6 +213,7 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="apps\VisualStudio.vb" />
     <Compile Include="Rscript.vb" />
+    <Compile Include="WebKit.vb" />
     <Compile Include="WinForms\Dialogs\AddLinuxServer.Designer.vb">
       <DependentUpon>AddLinuxServer.vb</DependentUpon>
     </Compile>
@@ -205,6 +230,12 @@
       <DependentUpon>CreateSolutionWizard.vb</DependentUpon>
     </Compile>
     <Compile Include="WinForms\Dialogs\CreateSolutionWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevVscode.Designer.vb">
+      <DependentUpon>RsharpDevVscode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\RsharpDevVscode.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinForms\Pages\RecentFiles.Designer.vb">
@@ -259,12 +290,6 @@
       <DependentUpon>RsharpDevAbout.vb</DependentUpon>
     </Compile>
     <Compile Include="WinForms\RsharpDevAbout.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\RsharpDevEditor.designer.vb">
-      <DependentUpon>RsharpDevEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\RsharpDevEditor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinForms\RsharpDevMain.Designer.vb">
@@ -372,14 +397,14 @@
     <EmbeddedResource Include="WinForms\RsharpDevConsole.resx">
       <DependentUpon>RsharpDevConsole.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\RsharpDevEditor.resx">
-      <DependentUpon>RsharpDevEditor.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevServerConsole.resx">
       <DependentUpon>RsharpDevServerConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RsharpDevMain.resx">
       <DependentUpon>RsharpDevMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\RsharpDevVscode.resx">
+      <DependentUpon>RsharpDevVscode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
@@ -427,6 +452,7 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon">
       <DependentUpon>RibbonMarkup.xml</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="RibbonMarkup.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -568,6 +594,10 @@
       <Project>{b31b8470-2472-46eb-80b8-dce6355ba580}</Project>
       <Name>Docker.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj">
+      <Project>{7635ce5b-d6bf-4235-9470-0ecdd15214cf}</Project>
+      <Name>parallel-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
       <Project>{cfc0500a-366f-48ba-bf85-5e46c138f858}</Project>
       <Name>dataframework-netcore5</Name>
@@ -604,10 +634,6 @@
       <Project>{d12d440b-abb8-4ea9-9349-fb4ab58ad267}</Project>
       <Name>console.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataSetViewer\DataSetViewer.vbproj">
-      <Project>{12b56620-3c3e-4fd1-a0fa-7a765629b299}</Project>
-      <Name>DataSetViewer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RDev\RDev.NET5.vbproj">
       <Project>{3b50a888-d864-4f56-8a3e-9547b672b447}</Project>
       <Name>RDev.NET5</Name>
@@ -625,4 +651,11 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>

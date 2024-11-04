@@ -14,7 +14,7 @@ Partial Public Class RsharpDevMain : Inherits Form
 
         ribbon = New RibbonItems(_ribbon)
 
-        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevEditor)
+        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevVscode)
         AddHandler ribbon.License.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
         AddHandler ribbon.About.ExecuteEvent, Sub() Call showAboutSplash()
         AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
@@ -36,7 +36,7 @@ Partial Public Class RsharpDevMain : Inherits Form
         Call New SplashScreen() With {.AutoClose = True}.ShowDialog()
     End Sub
 
-    Private Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Async Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AutoScaleMode = AutoScaleMode.Dpi
 
         Call Program.Initialize()
@@ -44,6 +44,8 @@ Partial Public Class RsharpDevMain : Inherits Form
         Call VisualStudio.InitializeUI()
         Call VisualStudio.vsWindow.Add(Me)
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
+
+        Await MyApplication.LaunchLanguageServer
     End Sub
 
     Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing)

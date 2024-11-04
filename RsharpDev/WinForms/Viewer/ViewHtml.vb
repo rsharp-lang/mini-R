@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.Web.WebView2.Core
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ViewHtml : Implements Viewer
@@ -14,10 +15,18 @@ Public Class ViewHtml : Implements Viewer
         End Get
     End Property
 
+    Private Sub ViewHtml_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Call WebKit.Init(WebView21)
+    End Sub
+
+    Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
+        WebView21.NavigateToString(FilePath.ReadAllText)
+    End Sub
+
     Public Function View(file As String) As DockContent Implements Viewer.View
-        WebBrowser1.DocumentText = file.ReadAllText
         FilePath = file
         TabText = file.FileName
+
         Return Me
     End Function
 
