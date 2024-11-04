@@ -16,7 +16,7 @@ Namespace My
 
         Public Shared Sub Register(rstudio As RsharpDevMain)
             MyApplication._RStudio = rstudio
-            VisualStudio.ConfigRemote()
+            ' VisualStudio.ConfigRemote()
         End Sub
 
         Public Shared Async Function LaunchLanguageServer() As Threading.Tasks.Task

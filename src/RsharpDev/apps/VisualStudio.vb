@@ -47,19 +47,6 @@ Module VisualStudio
         End If
     End Sub
 
-    Public Function ConfigRemote() As (plink$, pscp$)
-        Dim dir As String = App.ProductSharedDIR & "/putty"
-
-        If $"{dir}/plink.exe".FileLength <> My.Resources.plink.Length Then
-            Call My.Resources.plink.FlushStream($"{dir}/plink.exe")
-        End If
-        If $"{dir}/pscp.exe".FileLength <> My.Resources.pscp.Length Then
-            Call My.Resources.pscp.FlushStream($"{dir}/pscp.exe")
-        End If
-
-        Return ($"{dir}/plink.exe", $"{dir}/pscp.exe")
-    End Function
-
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
             .Filter = "R# Package Project(*.Rproj)|*.Rproj|R# script(*.R)|*.R",
