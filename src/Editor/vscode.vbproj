@@ -12,15 +12,16 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile></DocumentationFile>
-    <Title>An implementation of the Language Server Protocol for R# language</Title>
+    <Title>VsCode UI resource for R# language code editor</Title>
     <Authors>xieguigang</Authors>
     <Company>R# language</Company>
     <Product>R-sharp language</Product>
     <ApplicationIcon>vs.ico</ApplicationIcon>
+    <RepositoryUrl>https://github.com/rsharp-lang/mini-R/</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <OutputPath>..\App\rstudio\shares</OutputPath>
+    <OutputPath>..\..\App\rstudio\shares</OutputPath>
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -58,19 +59,15 @@
     <EmbeddedResource Include="Rstudio.js" />
   </ItemGroup>
 
-
-
   <ItemGroup>
-    <None Include="..\LICENSE">
+    <None Include="..\..\LICENSE">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
-
-
   <ItemGroup>
-    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
 

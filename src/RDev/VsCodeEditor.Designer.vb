@@ -1,10 +1,8 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class VsCodeEditor
+    Inherits System.Windows.Forms.UserControl
 
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class RsharpDevVscode
-    Inherits DockContent
-
-    'Form overrides dispose to clean up the component list.
+    'UserControl 重写释放以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -16,15 +14,14 @@ Partial Class RsharpDevVscode
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
+    'Windows 窗体设计器所必需的
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
+    '注意: 以下过程是 Windows 窗体设计器所必需的
+    '可以使用 Windows 窗体设计器修改它。  
+    '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevVscode))
         Me.WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -37,19 +34,17 @@ Partial Class RsharpDevVscode
         Me.WebView21.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WebView21.Location = New System.Drawing.Point(0, 0)
         Me.WebView21.Name = "WebView21"
-        Me.WebView21.Size = New System.Drawing.Size(800, 450)
+        Me.WebView21.Size = New System.Drawing.Size(937, 605)
         Me.WebView21.TabIndex = 0
         Me.WebView21.ZoomFactor = 1.0R
         '
-        'RsharpDevVscode
+        'VsCodeEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.WebView21)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RsharpDevVscode"
-        Me.Text = "vscode"
+        Me.Name = "VsCodeEditor"
+        Me.Size = New System.Drawing.Size(937, 605)
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

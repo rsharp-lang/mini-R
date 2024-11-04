@@ -355,3 +355,4 @@ MigrationBackup/
 RsharpDev/Resources/pscp.exe
 RsharpDev/Resources/plink.exe
 Editor/Resources/vscode.zip
+src/Editor/Resources/vscode.zip

@@ -31,7 +31,7 @@ Public Module DescriptionTooltip
         Dim program As Program
 
         Try
-            program = Program.BuildProgram(script)
+            program = program.BuildProgram(script)
         Catch ex As Exception
             Return
         End Try
@@ -46,7 +46,7 @@ Public Module DescriptionTooltip
 
                 For Each name As String In newSymbol.names
                     Yield New NamedValue(Of String) With {
-                        .Name = name,
+                        .name = name,
                         .Value = "symbol",
                         .Description = newSymbol.stackFrame.Line
                     }
