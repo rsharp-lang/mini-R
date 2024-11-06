@@ -121,10 +121,6 @@ declare class LINQIterator<T> {
     protected sequence: T[];
     private i;
     /**
-     * 实现迭代器的关键元素之1
-    */
-    [Symbol.iterator](): this;
-    /**
      * The number of elements in the data sequence.
     */
     get Count(): number;
@@ -1731,6 +1727,10 @@ declare const $table: (query: string | HTMLElement, args?: Internal.TypeScriptAr
  * 进行对象的浅克隆
 */
 declare function $clone<T extends {}>(obj: T): T;
+/**
+ * check of current environment is on Microsoft WebView2 control?
+*/
+declare function check_webview2(): boolean;
 interface IProperty {
     get: () => any;
     set: (value: any) => void;
@@ -2351,7 +2351,7 @@ declare namespace OADate {
         prepareOADate(value: number): number;
     }
     class TDate extends TDateTime {
-        prepareOADate(value: number): number;
+        prepareOADate(value: number): any;
     }
     class TTime extends TDateTime {
         prepareOADate(value: number): number;

@@ -4930,6 +4930,22 @@ function $clone(obj) {
     }
     return copy;
 }
+/**
+ * check of current environment is on Microsoft WebView2 control?
+*/
+function check_webview2() {
+    var win = window;
+    if (win.chrome && win.chrome.webview) {
+        // 当前环境是WebView2
+        TypeScript.logging.log("Running in WebView2", TypeScript.ConsoleColors.Blue);
+        return true;
+    }
+    else {
+        // 当前环境不是WebView2      
+        TypeScript.logging.log("Not running in WebView2", TypeScript.ConsoleColors.DarkRed);
+        return false;
+    }
+}
 /// <reference path="./Collections/Map.ts" />
 var TypeExtensions;
 (function (TypeExtensions) {
@@ -9151,16 +9167,16 @@ var TypeScript;
         garbageCollect.handler = getHandler();
         function getHandler() {
             if (typeof window.require === "function") {
-                var require_1 = window.require;
+                var require = window.require;
                 try {
-                    require_1("v8").setFlagsFromString('--expose_gc');
+                    require("v8").setFlagsFromString('--expose_gc');
                     if (window.global != null) {
-                        var global_1 = window.global;
-                        if (typeof global_1.gc == "function") {
-                            return global_1.gc;
+                        var global = window.global;
+                        if (typeof global.gc == "function") {
+                            return global.gc;
                         }
                     }
-                    var vm = require_1("vm");
+                    var vm = require("vm");
                     if (vm != null) {
                         if (typeof vm.runInNewContext == "function") {
                             var k = vm.runInNewContext("gc");
@@ -9195,9 +9211,9 @@ var TypeScript;
             //    }
             //}
             if (typeof window.global !== 'undefined') {
-                var global_2 = window.global;
-                if (global_2.gc) {
-                    return global_2.gc;
+                var global = window.global;
+                if (global.gc) {
+                    return global.gc;
                 }
             }
             //if (typeof Duktape == 'object') {

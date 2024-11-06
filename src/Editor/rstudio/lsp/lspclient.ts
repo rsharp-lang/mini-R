@@ -72,6 +72,9 @@ namespace lsp {
         if (!path) {
             // create new file?
             return Promise.resolve("");
+        } else if (path.startsWith("base64://")) {
+            let base64_str = Base64.decode(path.slice(10));
+            return Promise.resolve(base64_str);
         }
 
         return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
