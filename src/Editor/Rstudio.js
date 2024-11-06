@@ -84,6 +84,15 @@ print(text);
         monaco.languages.registerCompletionItemProvider('r', {
             provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
         });
+        if (check_webview2()) {
+            let webview = window.chrome.webview;
+            document.addEventListener("input", function (evt) {
+                webview.postMessage('input');
+            });
+            document.addEventListener('change', function (evt) {
+                webview.postMessage('change');
+            });
+        }
     }
     rstudio.setup = setup;
 })(rstudio || (rstudio = {}));
@@ -240,6 +249,10 @@ var lsp;
         if (!path) {
             // create new file?
             return Promise.resolve("");
+        }
+        else if (path.startsWith("base64://")) {
+            let base64_str = Base64.decode(path.slice(10));
+            return Promise.resolve(base64_str);
         }
         return fetch(`/lsp/read/?file=${encodeURIComponent(path)}`).then(response => {
             return response.text();

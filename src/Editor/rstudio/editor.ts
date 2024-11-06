@@ -90,5 +90,18 @@ print(text);
         monaco.languages.registerCompletionItemProvider('r', {
             provideCompletionItems: (model, position) => rstudio.intellisense.create_intellisense(model, position)
         });
+
+        if (check_webview2()) {
+            let webview: {
+                postMessage: (string) => void
+            } = (<any>window).chrome.webview;
+
+            document.addEventListener("input", function (evt) {
+                webview.postMessage('input');
+            });
+            document.addEventListener('change', function (evt) {
+                webview.postMessage('change');
+            });
+        }
     }
 }

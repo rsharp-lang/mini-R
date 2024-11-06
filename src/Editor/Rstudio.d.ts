@@ -1,6 +1,6 @@
 /// <reference path="vscode/monaco.d.ts" />
 /// <reference path="linq.d.ts" />
-declare module rstudio {
+declare namespace rstudio {
     function getCodeText(): string;
     function create(): void;
     function create_editor(script: string, lang: 'r' | 'json'): void;
@@ -242,7 +242,7 @@ declare namespace rstudio.intellisense {
     const r_primitive: string[];
     const r_const: string[];
 }
-declare module rstudio.tooltip {
+declare namespace rstudio.tooltip {
     function create_tooltip(model: monaco.editor.ITextModel, position: monaco.Position): any;
     function contentHtml(word: string): Promise<string>;
     const imports_keyword: string;
