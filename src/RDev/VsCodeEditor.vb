@@ -70,4 +70,13 @@ Public Class VsCodeEditor : Implements IFileReference
     Private Sub WebView21_GotFocus(sender As Object, e As EventArgs) Handles WebView21.GotFocus
         RaiseEvent OnFocus()
     End Sub
+
+    Private Sub webView2_WebMessageReceived(sender As Object, args As CoreWebView2WebMessageReceivedEventArgs) Handles WebView21.WebMessageReceived
+        Dim message = args.TryGetWebMessageAsString()
+
+        If message = "input" OrElse message = "change" Then
+            RaiseEvent EditCode()
+        End If
+    End Sub
+
 End Class
