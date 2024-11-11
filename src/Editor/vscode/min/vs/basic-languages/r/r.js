@@ -44,13 +44,17 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 { open: "{", close: "}" },
                 { open: "[", close: "]" },
                 { open: "(", close: ")" },
-                { open: '"', close: '"' }
+                { open: '"', close: '"' },
+                { open: "'", close: "'" },
+                { open: '`', close: '`' },
             ],
             surroundingPairs: [
                 { open: "{", close: "}" },
                 { open: "[", close: "]" },
                 { open: "(", close: ")" },
-                { open: '"', close: '"' }
+                { open: '"', close: '"' },
+                { open: "'", close: "'" },
+                { open: '`', close: '`' },
             ]
         };
         var language = {
@@ -116,7 +120,9 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                 "@title",
                 "@TODO",
                 "@usage",
-                "@useDynLib"
+                "@useDynLib",
+                "@config",
+                "@info"
             ],
             constants: [
                 "NULL",
@@ -196,7 +202,7 @@ define("vs/basic-languages/r/r", ["require"], (require) => {
                     [/[,:;]/, "delimiter"],
                     [/@[a-zA-Z]\w*/, "tag"],
                     [
-                        /[a-zA-Z]\w*/,
+                        /[._a-zA-Z][a-zA-Z0-9_.]*/,
                         {
                             cases: {
                                 "@keywords": "keyword",
