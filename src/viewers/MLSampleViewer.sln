@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MLSampleViewer", "MLSampleViewer\MLSampleViewer.vbproj", "{0D5C92E9-E1DB-4D58-BB14-891BBC917A6E}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "machine_learning-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj", "{D27A29DF-F7DD-4476-BCC8-F5198E7A3161}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining.NET5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj", "{036E869C-72AF-4EC9-BD75-8252ACD08C5B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Drawing-net4.8", "..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj", "{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,14 @@ Global
 		{036E869C-72AF-4EC9-BD75-8252ACD08C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{036E869C-72AF-4EC9-BD75-8252ACD08C5B}.Release|x64.ActiveCfg = Release|x64
 		{036E869C-72AF-4EC9-BD75-8252ACD08C5B}.Release|x64.Build.0 = Release|x64
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Debug|x64.ActiveCfg = Debug|x64
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Debug|x64.Build.0 = Debug|x64
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Release|x64.ActiveCfg = Release|x64
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +118,6 @@ Global
 		{BB800CDF-E31E-418E-9BF3-49FF64FB71DC} = {004B896B-817A-4016-9BFB-7C5E9C9CA2A3}
 		{D27A29DF-F7DD-4476-BCC8-F5198E7A3161} = {004B896B-817A-4016-9BFB-7C5E9C9CA2A3}
 		{036E869C-72AF-4EC9-BD75-8252ACD08C5B} = {004B896B-817A-4016-9BFB-7C5E9C9CA2A3}
+		{24868FE0-DE84-4F92-B5FA-2FDDC06AB393} = {BB800CDF-E31E-418E-9BF3-49FF64FB71DC}
 	EndGlobalSection
 EndGlobal
