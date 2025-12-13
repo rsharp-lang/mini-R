@@ -49,6 +49,27 @@ Public Class FormViewer
     End Sub
 
     Private Sub LoadTree(tree As JsonObject, group As StreamGroup)
+        For Each dir As StreamGroup In group.dirs
+            Dim node As New JsonObject With {
+                .Id = dir.fileName,
+                .JsonType = JsonType.Object,
+                .Value = dir,
+                .Parent = tree
+            }
 
+            Call tree.Fields.Add(node)
+            Call LoadTree(node, dir)
+        Next
+
+        For Each file As StreamBlock In group.files
+            Dim node As New JsonObject With {
+                .Id = file.fileName,
+                .JsonType = JsonType.Value,
+                .Parent = tree,
+                .Value = file
+            }
+
+            Call tree.Fields.Add(node)
+        Next
     End Sub
 End Class
