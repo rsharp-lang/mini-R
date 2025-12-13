@@ -1,12 +1,17 @@
-﻿Imports Galaxy.Workbench
+﻿Imports System.Windows.Controls
+Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports ThemeVS2015
 
 Public Class FormViewer : Implements AppHost
 
     Friend pack As StreamPack
     Friend filepath As String
     Friend explorer As FormExplorer
+
+    Dim vS2015LightTheme1 As New VS2015LightTheme
+    Dim vsToolStripExtender1 As New VisualStudioToolStripExtender
 
     Public ReadOnly Property ActiveDocument As Form Implements AppHost.ActiveDocument
         Get
@@ -35,7 +40,7 @@ Public Class FormViewer : Implements AppHost
         Me.Text = title
     End Sub
 
-    Public Sub StatusMessage(msg As String, Optional icon As Image = Nothing) Implements AppHost.StatusMessage
+    Public Sub StatusMessage(msg As String, Optional icon As System.Drawing.Image = Nothing) Implements AppHost.StatusMessage
 
     End Sub
 
@@ -74,12 +79,46 @@ Public Class FormViewer : Implements AppHost
     End Sub
 
     Private Sub FormViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Call CommonRuntime.Hook(Me)
+        Call initializeVSPanel()
+
         explorer = New FormExplorer
         explorer.viewer = Me
         explorer.Show(DockPanel1)
         explorer.DockState = DockState.DockLeftAutoHide
+    End Sub
 
-        Call CommonRuntime.Hook(Me)
+    Private Sub initializeVSPanel()
+        DockPanel1.ShowDocumentIcon = True
+
+        DockPanel1.Dock = DockStyle.Fill
+        DockPanel1.DockBackColor = Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(85, Byte), Integer))
+        DockPanel1.DockBottomPortion = 150.0R
+        DockPanel1.DockLeftPortion = 200.0R
+        DockPanel1.DockRightPortion = 200.0R
+        DockPanel1.DockTopPortion = 150.0R
+        DockPanel1.Font = New Font("Tahoma", 11.0!, FontStyle.Regular, GraphicsUnit.World, CType(0, Byte))
+
+        DockPanel1.Name = "dockPanel"
+        DockPanel1.RightToLeftLayout = True
+        DockPanel1.ShowAutoHideContentOnHover = False
+
+        DockPanel1.TabIndex = 0
+
+        Call SetSchema(Nothing, Nothing)
+    End Sub
+
+    Private Sub SetSchema(sender As Object, e As EventArgs)
+        DockPanel1.Theme = vS2015LightTheme1
+        EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme1)
+
+        If DockPanel1.Theme.ColorPalette IsNot Nothing Then
+            StatusStrip1.BackColor = DockPanel1.Theme.ColorPalette.MainWindowStatusBarDefault.Background
+        End If
+    End Sub
+
+    Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
+        vsToolStripExtender1.SetStyle(StatusStrip1, version, theme)
     End Sub
 
     Public Function GetDesktopLocation() As Point Implements AppHost.GetDesktopLocation
@@ -94,7 +133,7 @@ Public Class FormViewer : Implements AppHost
         Return DockPanel1.Documents.OfType(Of Form)
     End Function
 
-    Public Function GetDockPanel() As Control Implements AppHost.GetDockPanel
+    Public Function GetDockPanel() As System.Windows.Forms.Control Implements AppHost.GetDockPanel
         Return DockPanel1
     End Function
 
