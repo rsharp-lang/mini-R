@@ -72,6 +72,7 @@ Public Class FormExplorer
             Case "jpg", "png", "jpeg", "bmp", "tiff"
                 Call CommonRuntime.ShowDocument(Of FormImageViewer)(, file.fileName).ShowAsImage(pack.LoadStream(file))
             Case "xml"
+                Call CommonRuntime.ShowDocument(Of FormXMLViewer)(, file.fileName).RenderXml(pack.LoadStream(file))
             Case "html"
             Case "csv"
 
