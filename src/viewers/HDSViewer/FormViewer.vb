@@ -119,6 +119,7 @@ Public Class FormViewer : Implements AppHost
 
     Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
         vsToolStripExtender1.SetStyle(StatusStrip1, version, theme)
+        vsToolStripExtender1.SetStyle(MenuStrip1, version, theme)
     End Sub
 
     Public Function GetDesktopLocation() As Point Implements AppHost.GetDesktopLocation

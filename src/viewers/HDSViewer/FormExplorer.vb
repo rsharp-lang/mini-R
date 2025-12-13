@@ -1,5 +1,7 @@
 ﻿Imports Galaxy.Data.JSON
 Imports Galaxy.Data.JSON.Models
+Imports Galaxy.Workbench
+Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 
 Public Class FormExplorer
@@ -13,6 +15,8 @@ Public Class FormExplorer
         packTree.Dock = DockStyle.Fill
 
         Call Controls.Add(packTree)
+        Call ApplyVsTheme(ToolStrip1, packTree.GetContextMenu)
+        Call packTree.BringToFront()
     End Sub
 
     Public Sub LoadTree()
@@ -57,10 +61,12 @@ Public Class FormExplorer
         End If
 
         Dim file As StreamBlock = DirectCast(node.JsonObject.Value, StreamBlock)
+        Dim pack As StreamPack = viewer.pack
 
         Select Case file.fileName.ExtensionSuffix
             Case "json"
             Case "txt"
+                Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(pack.ReadText(file))
             Case "jpg", "png", "jpeg", "bmp", "tiff"
             Case "xml"
             Case "html"
