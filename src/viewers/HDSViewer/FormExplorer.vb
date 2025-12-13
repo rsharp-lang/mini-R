@@ -17,6 +17,7 @@ Public Class FormExplorer
         Call Controls.Add(packTree)
         Call ApplyVsTheme(ToolStrip1, packTree.GetContextMenu)
         Call packTree.BringToFront()
+        Call packTree.AddContextMenuItem("View As PlainText", "view_text")
     End Sub
 
     Public Sub LoadTree()
@@ -75,6 +76,19 @@ Public Class FormExplorer
             Case Else
                 ' view in binary mode
 
+        End Select
+    End Sub
+
+    Private Sub packTree_MenuAction(sender As ToolStripMenuItem, node As JsonObject) Handles packTree.MenuAction
+        If node.Value Is Nothing OrElse TypeOf node.Value Is StreamGroup Then
+            Return
+        End If
+
+        Dim file As StreamBlock = DirectCast(node.Value, StreamBlock)
+        Dim pack As StreamPack = viewer.pack
+
+        Select Case sender.Name
+            Case "view_text" : Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(Pack.ReadText(file))
         End Select
     End Sub
 End Class
