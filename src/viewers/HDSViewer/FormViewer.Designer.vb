@@ -31,7 +31,9 @@ Partial Class FormViewer
         DockPanel1 = New Microsoft.VisualStudio.WinForms.Docking.DockPanel()
         VisualStudioToolStripExtender1 = New Microsoft.VisualStudio.WinForms.Docking.VisualStudioToolStripExtender(components)
         StatusStrip1 = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
         MenuStrip1.SuspendLayout()
+        StatusStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
@@ -81,11 +83,18 @@ Partial Class FormViewer
         ' 
         ' StatusStrip1
         ' 
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
         StatusStrip1.Location = New Point(0, 560)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(942, 22)
         StatusStrip1.TabIndex = 3
         StatusStrip1.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(42, 17)
+        ToolStripStatusLabel1.Text = "Ready!"
         ' 
         ' FormViewer
         ' 
@@ -100,6 +109,8 @@ Partial Class FormViewer
         Text = "HDS Pack Viewer"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
+        StatusStrip1.ResumeLayout(False)
+        StatusStrip1.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -111,5 +122,6 @@ Partial Class FormViewer
     Friend WithEvents DockPanel1 As Microsoft.VisualStudio.WinForms.Docking.DockPanel
     Friend WithEvents VisualStudioToolStripExtender1 As Microsoft.VisualStudio.WinForms.Docking.VisualStudioToolStripExtender
     Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 
 End Class

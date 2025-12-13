@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Controls
+﻿Imports System.ComponentModel
 Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualStudio.WinForms.Docking
@@ -41,11 +41,12 @@ Public Class FormViewer : Implements AppHost
     End Sub
 
     Public Sub StatusMessage(msg As String, Optional icon As System.Drawing.Image = Nothing) Implements AppHost.StatusMessage
-
+        Me.ToolStripStatusLabel1.Text = msg
+        Me.ToolStripStatusLabel1.Image = icon
     End Sub
 
     Public Sub Warning(msg As String) Implements AppHost.Warning
-
+        Call StatusMessage(msg, Icons8.Warning)
     End Sub
 
     Public Sub LogText(text As String) Implements AppHost.LogText
@@ -120,6 +121,14 @@ Public Class FormViewer : Implements AppHost
     Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
         vsToolStripExtender1.SetStyle(StatusStrip1, version, theme)
         vsToolStripExtender1.SetStyle(MenuStrip1, version, theme)
+    End Sub
+
+    Private Sub FormViewer_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        RaiseEvent ResizeForm(Location, Size)
+    End Sub
+
+    Private Sub FormViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        RaiseEvent CloseWorkbench(e)
     End Sub
 
     Public Function GetDesktopLocation() As Point Implements AppHost.GetDesktopLocation

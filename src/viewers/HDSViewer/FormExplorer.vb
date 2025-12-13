@@ -91,4 +91,12 @@ Public Class FormExplorer
             Case "view_text" : Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(Pack.ReadText(file))
         End Select
     End Sub
+
+    Private Sub packTree_Visit(node As JsonViewerTreeNode) Handles packTree.Visit
+        If node.JsonObject Is Nothing OrElse node.JsonObject.Value Is Nothing Then
+            Return
+        End If
+
+        Call CommonRuntime.StatusMessage(node.JsonObject.Value.ToString)
+    End Sub
 End Class
