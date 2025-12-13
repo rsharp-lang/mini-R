@@ -72,4 +72,24 @@ Public Class FormViewer
             Call tree.Fields.Add(node)
         Next
     End Sub
+
+    Private Sub packTree_ViewAction(node As JsonViewerTreeNode) Handles packTree.ViewAction
+        If node.JsonObject.Value Is Nothing OrElse TypeOf node.JsonObject.Value Is StreamGroup Then
+            Return
+        End If
+
+        Dim file As StreamBlock = DirectCast(node.JsonObject.Value, StreamBlock)
+
+        Select Case file.fileName.ExtensionSuffix
+            Case "json"
+            Case "txt"
+            Case "jpg", "png", "jpeg", "bmp", "tiff"
+            Case "xml"
+            Case "html"
+            Case "csv"
+            Case Else
+                ' view in binary mode
+
+        End Select
+    End Sub
 End Class
