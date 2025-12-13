@@ -30,6 +30,7 @@ Partial Class FormTextViewer
         ' TextBox1
         ' 
         TextBox1.Dock = DockStyle.Fill
+        TextBox1.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         TextBox1.Location = New Point(0, 0)
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
