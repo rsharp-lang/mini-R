@@ -61,7 +61,7 @@ Public Class FormViewer
             Call LoadTree(node, dir)
         Next
 
-        For Each file As StreamBlock In group.files
+        For Each file As StreamBlock In group.files.OfType(Of StreamBlock)
             Dim node As New JsonObject With {
                 .Id = file.fileName,
                 .JsonType = JsonType.Value,
