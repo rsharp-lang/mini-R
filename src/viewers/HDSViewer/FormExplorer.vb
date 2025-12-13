@@ -66,6 +66,7 @@ Public Class FormExplorer
 
         Select Case file.fileName.ExtensionSuffix
             Case "json"
+                Call CommonRuntime.ShowDocument(Of FormJSONViewer)(, file.fileName).ShowJSON(file.ToString, pack.ReadText(file))
             Case "txt"
                 Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(pack.ReadText(file))
             Case "jpg", "png", "jpeg", "bmp", "tiff"

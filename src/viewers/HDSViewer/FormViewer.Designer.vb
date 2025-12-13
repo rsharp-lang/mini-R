@@ -41,7 +41,7 @@ Partial Class FormViewer
         MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(942, 24)
+        MenuStrip1.Size = New Size(1256, 24)
         MenuStrip1.TabIndex = 1
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -74,7 +74,7 @@ Partial Class FormViewer
         DockPanel1.Dock = DockStyle.Fill
         DockPanel1.Location = New Point(0, 24)
         DockPanel1.Name = "DockPanel1"
-        DockPanel1.Size = New Size(942, 536)
+        DockPanel1.Size = New Size(1256, 753)
         DockPanel1.TabIndex = 2
         ' 
         ' VisualStudioToolStripExtender1
@@ -84,9 +84,9 @@ Partial Class FormViewer
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
-        StatusStrip1.Location = New Point(0, 560)
+        StatusStrip1.Location = New Point(0, 777)
         StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(942, 22)
+        StatusStrip1.Size = New Size(1256, 22)
         StatusStrip1.TabIndex = 3
         StatusStrip1.Text = "StatusStrip1"
         ' 
@@ -100,7 +100,7 @@ Partial Class FormViewer
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(942, 582)
+        ClientSize = New Size(1256, 799)
         Controls.Add(DockPanel1)
         Controls.Add(StatusStrip1)
         Controls.Add(MenuStrip1)
