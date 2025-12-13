@@ -17,7 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\galaxy\src\dockpanelsuite\Themes\ThemeVS2015.vbproj" />
+    <ProjectReference Include="..\..\..\..\galaxy\src\dockpanelsuite\VSDockPanel\VSDockPanel.vbproj" />
     <ProjectReference Include="..\..\..\..\galaxy\src\GalaxyData\GalaxyData.vbproj" />
+    <ProjectReference Include="..\..\..\..\galaxy\src\GalaxyWorkbench\GalaxyWorkbench.vbproj" />
+    <ProjectReference Include="..\..\..\..\galaxy\src\Microsoft.Windows.FeatureAPI\Microsoft.Windows.FeatureAPI.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
@@ -40,10 +44,6 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DataViewer\" />
   </ItemGroup>
 
 </Project>

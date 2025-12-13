@@ -87,6 +87,7 @@ Public Class FormViewer
             Case "xml"
             Case "html"
             Case "csv"
+            Case "rtf"
             Case Else
                 ' view in binary mode
 
