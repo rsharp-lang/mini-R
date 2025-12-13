@@ -29,7 +29,8 @@ Partial Class FormXMLViewer
         ' 
         ' RichTextBox1
         ' 
-        RichTextBox1.BorderStyle = BorderStyle.None
+        RichTextBox1.BackColor = Color.White
+        RichTextBox1.BorderStyle = BorderStyle.FixedSingle
         RichTextBox1.Dock = DockStyle.Fill
         RichTextBox1.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         RichTextBox1.Location = New Point(0, 0)
@@ -44,8 +45,11 @@ Partial Class FormXMLViewer
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
         Controls.Add(RichTextBox1)
+        DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
+        DoubleBuffered = True
         Name = "FormXMLViewer"
-        Text = "Form1"
+        ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
+        TabPageContextMenuStrip = DockContextMenuStrip1
         ResumeLayout(False)
     End Sub
 

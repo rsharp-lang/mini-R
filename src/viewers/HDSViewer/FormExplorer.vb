@@ -18,6 +18,7 @@ Public Class FormExplorer
         Call ApplyVsTheme(ToolStrip1, packTree.GetContextMenu)
         Call packTree.BringToFront()
         Call packTree.AddContextMenuItem("View As PlainText", "view_text")
+        Call packTree.AddContextMenuItem("View As Html", "view_html")
     End Sub
 
     Public Sub LoadTree()
@@ -74,6 +75,7 @@ Public Class FormExplorer
             Case "xml"
                 Call CommonRuntime.ShowDocument(Of FormXMLViewer)(, file.fileName).RenderXml(pack.LoadStream(file))
             Case "html"
+                Call CommonRuntime.ShowDocument(Of FormHtmlViewer)(, file.fileName).ViewHtml(pack.ReadText(file))
             Case "csv"
 
             Case "rtf"
@@ -93,7 +95,8 @@ Public Class FormExplorer
         Dim pack As StreamPack = viewer.pack
 
         Select Case sender.Name
-            Case "view_text" : Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(Pack.ReadText(file))
+            Case "view_text" : Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(pack.ReadText(file))
+            Case "view_html" : Call CommonRuntime.ShowDocument(Of FormHtmlViewer)(, file.fileName).ViewHtml(pack.ReadText(file))
         End Select
     End Sub
 
