@@ -127,7 +127,9 @@ Public Class FormViewer : Implements AppHost
         RaiseEvent ResizeForm(Location, Size)
     End Sub
 
-    Private Sub FormViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub FormViewer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Call CommonRuntime.SaveUISettings()
+
         RaiseEvent CloseWorkbench(e)
     End Sub
 
