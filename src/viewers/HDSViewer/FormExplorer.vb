@@ -70,10 +70,13 @@ Public Class FormExplorer
             Case "txt"
                 Call CommonRuntime.ShowDocument(Of FormTextViewer)(, file.fileName).ShowTextData(pack.ReadText(file))
             Case "jpg", "png", "jpeg", "bmp", "tiff"
+                Call CommonRuntime.ShowDocument(Of FormImageViewer)(, file.fileName).ShowAsImage(pack.LoadStream(file))
             Case "xml"
             Case "html"
             Case "csv"
+
             Case "rtf"
+                Call CommonRuntime.ShowDocument(Of FormRtfViewer)(, file.fileName).ShowRtf(pack.ReadText(file))
             Case Else
                 ' view in binary mode
 
