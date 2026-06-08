@@ -29,6 +29,10 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
