@@ -31,7 +31,6 @@ Public Class VsCodeEditor : Implements IFileReference
     ' single shared command channel (from galaxy/WebViewHelper). WebView2CommandChannel.Send
     ' only really posts when IsReady = True, so we must set it after Init and keep the instance.
     Dim _channel As WebView2CommandChannel
-
     ' becomes True once the frontend signals EditorReady via postMessage.
     Dim _editorReady As Boolean
 
@@ -75,8 +74,7 @@ Public Class VsCodeEditor : Implements IFileReference
 
         ' create the shared command channel and mark it ready: WebView2CommandChannel.Send
         ' only posts a message when IsReady = True (it is False by default).
-        _channel = New WebView2CommandChannel(WebView21)
-        _channel.IsReady = True
+        _channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
         _editorReady = False
 
         ' intercept every request to our virtual host and serve it from the zip
@@ -135,13 +133,7 @@ Public Class VsCodeEditor : Implements IFileReference
                     _editorReady = True
 
                     ' flush any text buffered before the frontend became ready
-                    If Not code.StringEmpty Then
-                        Call _channel.Send(EditorCommandType.SetText.ToString, code)
-
-                        If Not lang.StringEmpty Then
-                            Call _channel.Send(EditorCommandType.SetLanguage.ToString, lang)
-                        End If
-                    End If
+                    Call FlushContent()
                 End If
             End If
         End If
@@ -190,6 +182,7 @@ Public Class VsCodeEditor : Implements IFileReference
     Public Sub SetContent(content As String, Optional language As String = Nothing)
         code = content
         lang = language
+
         FlushContent()
     End Sub
 
@@ -217,13 +210,16 @@ Public Class VsCodeEditor : Implements IFileReference
     ''' get the current editor content (returns a JSON-unescaped string).
     ''' </summary>
     Public Async Function GetContent() As Task(Of String)
-        If WebView21.CoreWebView2 Is Nothing Then Return ""
-        Dim result = Await WebView21.CoreWebView2.ExecuteScriptAsync("window.getEditorContent()")
-        If String.IsNullOrEmpty(result) Then Return ""
-        Return System.Text.Json.JsonSerializer.Deserialize(Of String)(result)
+        If WebView21.CoreWebView2 Is Nothing Then
+            Return ""
+        Else
+            Dim result = Await WebView21.CoreWebView2.ExecuteScriptAsync("window.getEditorContent()")
+
+            If String.IsNullOrEmpty(result) Then
+                Return ""
+            Else
+                Return System.Text.Json.JsonSerializer.Deserialize(Of String)(result)
+            End If
+        End If
     End Function
-
-    Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
-
-    End Sub
 End Class
