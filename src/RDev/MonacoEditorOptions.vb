@@ -177,7 +177,7 @@ Public Module MonacoEditorOptions
     Public Const FormatOnPaste As String = "formatOnPaste"
     ''' <summary>format as you type. value: boolean</summary>
     Public Const FormatOnType As String = "formatOnType"
-    ''' <summary>enable drag & drop of text. value: boolean</summary>
+    ''' <summary>enable drag &amp; drop of text. value: boolean</summary>
     Public Const DragAndDrop As String = "dragAndDrop"
     ''' <summary>adapt to OS high-contrast mode. value: boolean</summary>
     Public Const AutoDetectHighContrast As String = "autoDetectHighContrast"

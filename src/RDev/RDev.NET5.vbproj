@@ -7,7 +7,7 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <AssemblyName>RDev</AssemblyName>
     <RootNamespace>RDev</RootNamespace>
-	  <DefineConstants>netcore5=1</DefineConstants>
+
 	  <MyType>WindowsForms</MyType>
 	  <StartupObject>RDev.My.MyApplication</StartupObject>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
