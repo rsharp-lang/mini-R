@@ -25,6 +25,9 @@ Public Class RsharpDevVscode
         vscode.Dock = DockStyle.Fill
         TabText = "New script"
         Text = TabText
+
+        vscode.SetMinimapEnabled(True)
+        vscode.SetLineNumbers(LineNumbersMode.On)
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View

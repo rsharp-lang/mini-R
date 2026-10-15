@@ -45,8 +45,9 @@ Public Class VsCodeEditor : Implements IFileReference
 
     ''' <summary>
     ''' raised when the frontend editor content changes (debounced on the JS side).
+    ''' distinct from the base UserControl.TextChanged event.
     ''' </summary>
-    Public Event TextChanged As EventHandler(Of String)
+    Public Event EditorTextChanged As EventHandler(Of String)
 
     ''' <summary>
     ''' raised when the frontend editor dirty/modified state changes.
@@ -194,7 +195,7 @@ Public Class VsCodeEditor : Implements IFileReference
                         text = payloadEl.GetString()
                     End If
 
-                    RaiseEvent TextChanged(Me, text)
+                    RaiseEvent EditorTextChanged(Me, text)
 
                 Case "IsDirtyChanged"
                     ' payload: boolean dirty flag
@@ -374,18 +375,84 @@ Public Class VsCodeEditor : Implements IFileReference
     End Sub
 
     ''' <summary>
-    ''' update a single editor option, e.g. UpdateOption("minimap", New Dictionary... )
-    ''' or UpdateOption("readOnly", True). the option name is passed verbatim to
-    ''' monaco.editor.updateOptions({ [option]: value }).
+    ''' update a single Monaco editor option. pass the option key from the
+    ''' <see cref="MonacoEditorOptions"/> constants module (e.g.
+    ''' UpdateOption(MonacoEditorOptions.TabSize, 4) or
+    ''' UpdateOption(MonacoEditorOptions.Minimap, New Dictionary(...) From {{"enabled", False}})).
+    ''' the option name is forwarded verbatim to monaco.editor.updateOptions({ [option]: value }).
     ''' </summary>
-    Public Sub UpdateOption(option As String, value As Object)
+    Public Sub UpdateOption(optionName As String, optionValue As Object)
         Dim payload = New Dictionary(Of String, Object) From {
-            {"option", option},
-            {"value", value}
+            {"option", optionName},
+            {"value", optionValue}
         }
 
         Call SendCommand(EditorCommandType.UpdateOption.ToString, payload)
     End Sub
+
+    ' ===================== strongly-typed convenience wrappers for common options =====================
+
+    ''' <summary>
+    ''' set the number of spaces per tab (monaco tabSize).
+    ''' </summary>
+    Public Sub SetTabSize(value As Integer)
+        Call UpdateOption(MonacoEditorOptions.TabSize, value)
+    End Sub
+
+    ''' <summary>
+    ''' set the editor font size in pixels (monaco fontSize).
+    ''' </summary>
+    Public Sub SetFontSize(value As Integer)
+        Call UpdateOption(MonacoEditorOptions.FontSize, value)
+    End Sub
+
+    ''' <summary>
+    ''' set the editor font family (monaco fontFamily).
+    ''' </summary>
+    Public Sub SetFontFamily(value As String)
+        Call UpdateOption(MonacoEditorOptions.FontFamily, value)
+    End Sub
+
+    ''' <summary>
+    ''' set the word-wrap behavior (monaco wordWrap).
+    ''' </summary>
+    Public Sub SetWordWrap(mode As WordWrapMode)
+        Call UpdateOption(MonacoEditorOptions.WordWrap, WordWrapToString(mode))
+    End Sub
+
+    ''' <summary>
+    ''' set the line-number rendering mode (monaco lineNumbers).
+    ''' </summary>
+    Public Sub SetLineNumbers(mode As LineNumbersMode)
+        Call UpdateOption(MonacoEditorOptions.LineNumbers, LineNumbersToString(mode))
+    End Sub
+
+    ''' <summary>
+    ''' enable or disable the minimap (monaco minimap.enabled).
+    ''' </summary>
+    Public Sub SetMinimapEnabled(enabled As Boolean)
+        Call UpdateOption(MonacoEditorOptions.Minimap, New Dictionary(Of String, Object) From {{"enabled", enabled}})
+    End Sub
+
+    Private Shared Function WordWrapToString(mode As WordWrapMode) As String
+        Select Case mode
+            Case WordWrapMode.Off : Return "off"
+            Case WordWrapMode.[On] : Return "on"
+            Case WordWrapMode.WordWrapColumn : Return "wordWrapColumn"
+            Case WordWrapMode.Bounded : Return "bounded"
+        End Select
+        Return "off"
+    End Function
+
+    Private Shared Function LineNumbersToString(mode As LineNumbersMode) As String
+        Select Case mode
+            Case LineNumbersMode.[On] : Return "on"
+            Case LineNumbersMode.Off : Return "off"
+            Case LineNumbersMode.Relative : Return "relative"
+            Case LineNumbersMode.Interval : Return "interval"
+        End Select
+        Return "on"
+    End Function
 
     ''' <summary>
     ''' register a custom Monaco theme. rules/colors are passed as already-built JSON
