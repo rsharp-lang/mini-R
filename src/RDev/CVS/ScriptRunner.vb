@@ -2,6 +2,7 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
 
@@ -178,22 +179,11 @@ Namespace CVS
                     ' a FALSE boolean flag is just omitted from the commandline
                     Continue For
                 Else
-                    cli.Add($"--{name} {CLIToken(arg.value)}")
+                    cli.Add($"--{name} {arg.value.CLIToken}")
                 End If
             Next
 
             Return cli.JoinBy(" ")
-        End Function
-
-        Private Shared Function CLIToken(value As String) As String
-            If value Is Nothing Then
-                Return """"""
-            End If
-            If value.IndexOf(" "c) >= 0 OrElse value.IndexOf(""""c) >= 0 Then
-                Return $"""{value.Replace("""", "\""")}"""
-            End If
-
-            Return value
         End Function
 
         ''' <summary>
