@@ -13,7 +13,7 @@ Friend NotInheritable Class Program
     Public Shared ReadOnly Property Config As ConfigFile
 
     Shared Sub New()
-        Call RDev.DescriptionTooltip.SetEngine(REngine)
+        Call RDev.document.SetEngine(REngine)
     End Sub
 
     ''' <summary>
@@ -64,7 +64,7 @@ Friend NotInheritable Class Program
             ElseIf fileName.ExtensionSuffix("R") Then
                 fileNode.ImageIndex = 4
 
-                For Each item In DescriptionTooltip.GetSymbols(file.ReadAllText)
+                For Each item In document.GetSymbols(file.ReadAllText)
                     With fileNode.Nodes.Add(item.Name)
                         If item.Value = "symbol" Then
                             .ImageIndex = 12
