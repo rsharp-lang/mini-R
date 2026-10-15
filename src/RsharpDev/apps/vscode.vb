@@ -1,4 +1,5 @@
-﻿Imports RDev
+﻿Imports Galaxy.Workbench
+Imports RDev
 
 Public NotInheritable Class vscode
 
@@ -14,7 +15,7 @@ Public NotInheritable Class vscode
         Call lspclient.LaunchLanguageServer(
             rscript, languageserver,
             vscode:=clr,
-            stdout:=AddressOf VisualStudio.Output.LogLanguageServer)
+            stdout:=AddressOf CommonRuntime.GetOutputWindow.AppendLine)
     End Sub
 
 End Class

@@ -1,8 +1,8 @@
 ﻿Imports System.Threading
+Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.My
-Imports My
-Imports WeifenLuo.WinFormsUI.Docking
+Imports Microsoft.VisualStudio.WinForms.Docking
+Imports RsharpDev.My
 
 Public Class ToolWinSolution
 
@@ -11,12 +11,8 @@ Public Class ToolWinSolution
         TabText = "Solution Explorer"
         TreeView1.Nodes(Scan0).Nodes.Clear()
 
-        Call ApplyVsTheme()
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
         Call VisualStudio.vsWindow.Add(Me)
-    End Sub
-
-    Public Overrides Sub ApplyVsTheme()
-        VisualStudioToolStripExtender1.ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
     Private Sub ScriptToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ScriptToolStripMenuItem.Click
@@ -85,14 +81,14 @@ Public Class ToolWinSolution
         Dim Rscript = CLI.Rscript.FromEnvironment(App.HOME)
         Dim commandlineArguments As String = Rscript.GetCompileCommandLine(src:=Program.Solution.ProjectFolder)
 
-        VisualStudio.Output.DockState = DockState.DockBottom
+        CommonRuntime.GetOutputWindow().DockState = DockState.DockBottom
 
         Call New Thread(
             Sub()
                 Call PipelineProcess.ExecSub(
                     app:=Rscript.Path,
                     args:=commandlineArguments,
-                    onReadLine:=AddressOf VisualStudio.Output.AppendLine
+                    onReadLine:=AddressOf CommonRuntime.GetOutputWindow().AppendLine
                 )
                 Call MyApplication.RStudio.ShowStatusMsg("Ready")
             End Sub).Start()

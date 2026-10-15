@@ -1,4 +1,4 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports Microsoft.VisualStudio.WinForms.Docking
 
 Public Class ConfigApp
 

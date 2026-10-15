@@ -3,8 +3,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RDev
-Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class RsharpDevVscode
     Implements ISaveHandle

@@ -29,19 +29,12 @@ Partial Public Class RsharpDevMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevMain))
         Me._ribbon = New RibbonLib.Ribbon()
-        Me.VS2015LightTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2015LightTheme()
-        Me.VS2015DarkTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme()
-        Me.VS2015BlueTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme()
-        Me.VS2013LightTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2013LightTheme()
-        Me.VS2013DarkTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2013DarkTheme()
-        Me.VS2013BlueTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2013BlueTheme()
-        Me.VS2012LightTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2012LightTheme()
-        Me.VS2012DarkTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2012DarkTheme()
-        Me.VS2012BlueTheme1 = New WeifenLuo.WinFormsUI.Docking.VS2012BlueTheme()
-        Me.VS2005Theme1 = New WeifenLuo.WinFormsUI.Docking.VS2005Theme()
-        Me.VS2003Theme1 = New WeifenLuo.WinFormsUI.Docking.VS2003Theme()
-        Me.VisualStudioToolStripExtender1 = New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(Me.components)
-        Me.DockPanel1 = New WeifenLuo.WinFormsUI.Docking.DockPanel()
+        Me.VS2015LightTheme1 = New VS2015LightTheme()
+        Me.VS2015DarkTheme1 = New VS2015DarkTheme()
+        Me.VS2015BlueTheme1 = New VS2015BlueTheme()
+
+        Me.VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(Me.components)
+        Me.DockPanel1 = New DockPanel()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
@@ -86,7 +79,7 @@ Partial Public Class RsharpDevMain
         '
         'ToolStripStatusLabel1
         '
-        Me.ToolStripStatusLabel1.Image = Global.My.Resources.Resources.preferences_system_notifications
+        Me.ToolStripStatusLabel1.Image = RsharpDev.My.Resources.Resources.preferences_system_notifications
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(55, 17)
         Me.ToolStripStatusLabel1.Text = "Ready"

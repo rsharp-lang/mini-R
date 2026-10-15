@@ -1,8 +1,8 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports Galaxy.Workbench.DockDocument
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RsharpDevConsole
-    Inherits DockContent
+    Inherits DocumentWindow
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -37,7 +37,7 @@ Partial Class RsharpDevConsole
         Me.ConsoleControl1.ForeColor = System.Drawing.Color.Lime
         Me.ConsoleControl1.Location = New System.Drawing.Point(0, 0)
         Me.ConsoleControl1.Name = "ConsoleControl1"
-        Me.ConsoleControl1.Ps1Pattern = ""
+        ' Me.ConsoleControl1.Ps1Pattern = ""
         Me.ConsoleControl1.ReadOnly = True
         Me.ConsoleControl1.Size = New System.Drawing.Size(800, 450)
         Me.ConsoleControl1.TabIndex = 0

@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports WeifenLuo.WinFormsUI.Docking
+Imports Microsoft.VisualStudio.WinForms.Docking
 
 Public Class StartPage
 

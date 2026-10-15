@@ -1,18 +1,13 @@
 ﻿Imports Microsoft.VisualBasic.Linq
-Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ToolWinServers
 
     Private Sub ToolWinServers_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "Linux Server Resources"
 
-        Call ApplyVsTheme()
+        Call ApplyVsTheme(ToolStrip1)
         Call LoadServers()
         Call VisualStudio.vsWindow.Add(Me)
-    End Sub
-
-    Public Overrides Sub ApplyVsTheme()
-        VisualStudioToolStripExtender1.ApplyVsTheme(ToolStrip1)
     End Sub
 
     Private Sub ToolStripButtonAddServer_Click(sender As Object, e As EventArgs) Handles ToolStripButtonAddServer.Click

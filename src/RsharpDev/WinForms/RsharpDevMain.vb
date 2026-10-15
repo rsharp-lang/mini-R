@@ -1,11 +1,9 @@
-Imports Config
 Imports Microsoft.VisualBasic.My
-Imports My
 Imports RibbonLib.Interop
-Imports WeifenLuo.WinFormsUI.Docking
+Imports RsharpDev.My
+Imports Microsoft.VisualStudio.WinForms.Docking
 
 Partial Public Class RsharpDevMain : Inherits Form
-    Implements IApplyVsTheme
 
     Friend ReadOnly ribbon As RibbonItems
 
@@ -71,7 +69,7 @@ Partial Public Class RsharpDevMain : Inherits Form
         EnableVSRenderer()
     End Sub
 
-    Private Sub EnableVSRenderer() Implements IApplyVsTheme.ApplyVsTheme
+    Private Sub EnableVSRenderer()
         ' vsToolStripExtender1.SetStyle(mainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(toolBar, version, theme)
         VisualStudioToolStripExtender1.ApplyVsTheme(StatusStrip1)

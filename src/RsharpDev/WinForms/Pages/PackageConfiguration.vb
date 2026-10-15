@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.VisualStudio.WinForms.Docking
 Imports SMRUCC.Rsharp.Development.Package.File
-Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PackageConfiguration
 

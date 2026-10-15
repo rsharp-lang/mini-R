@@ -3,13 +3,13 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RsharpDev.Config
+Imports RsharpDev.My
 Imports ThemeVS2015
 
 Module VisualStudio
 
     Public ReadOnly Property SolutionView As ToolWinSolution = SingletonHolder(Of ToolWinSolution).Instance
     Public ReadOnly Property LinuxServerList As ToolWinServers = SingletonHolder(Of ToolWinServers).Instance
-    Public ReadOnly Property Output As ToolOutput = SingletonHolder(Of ToolOutput).Instance
 
     Public Const FolderClose As Integer = 2
 
@@ -27,9 +27,6 @@ Module VisualStudio
 
         LinuxServerList.Show(MyApplication.RStudio.DockPanel1)
         LinuxServerList.DockState = DockState.DockLeftAutoHide
-
-        Output.Show(MyApplication.RStudio.DockPanel1)
-        Output.DockState = DockState.DockBottomAutoHide
     End Sub
 
     Public Sub OpenSolution()
@@ -82,30 +79,6 @@ Module VisualStudio
         Dim theme As ThemeBase = Nothing
 
         Select Case Program.Config.theme
-            Case VisualStudioToolStripExtender.VsVersion.Vs2003
-                theme = VS2003Theme1
-            Case VisualStudioToolStripExtender.VsVersion.Vs2005
-                theme = VS2005Theme1
-            Case VisualStudioToolStripExtender.VsVersion.Vs2012
-                Select Case Program.Config.type
-                    Case Config.ThemeType.Blue
-                        theme = VS2012BlueTheme1
-                    Case Config.ThemeType.Dark
-                        theme = VS2012DarkTheme1
-                    Case Config.ThemeType.Light
-                        theme = VS2012LightTheme1
-                End Select
-
-            Case VisualStudioToolStripExtender.VsVersion.Vs2013
-                Select Case Program.Config.type
-                    Case Config.ThemeType.Blue
-                        theme = VS2013BlueTheme1
-                    Case Config.ThemeType.Dark
-                        theme = VS2013DarkTheme1
-                    Case Config.ThemeType.Light
-                        theme = VS2013LightTheme1
-                End Select
-
             Case VisualStudioToolStripExtender.VsVersion.Vs2015
                 Select Case Program.Config.type
                     Case Config.ThemeType.Blue

@@ -1,10 +1,10 @@
-﻿Imports Config
-Imports Microsoft.VisualBasic.Linq
-Imports My
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RDev
 Imports RibbonLib.Interop
+Imports RsharpDev.Config
+Imports RsharpDev.My
 Imports SMRUCC.Rsharp.Interpreter
-Imports WeifenLuo.WinFormsUI.Docking
 
 Friend NotInheritable Class Program
 
