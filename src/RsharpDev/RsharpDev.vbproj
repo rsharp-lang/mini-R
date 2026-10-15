@@ -67,6 +67,7 @@
 
   <ItemGroup>
     <None Remove="RibbonMarkup.ribbon" />
+    <None Remove="Forms\RsharpDevMain.resx~RF8a8648b.TMP" />
   </ItemGroup>
 
   <ItemGroup>
