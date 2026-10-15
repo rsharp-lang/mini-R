@@ -5,6 +5,8 @@ Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
 
 Public Module document
 
+    Public Property R As RInterpreter
+
     ''' <summary>
     ''' symbol|function|lambda
     ''' </summary>

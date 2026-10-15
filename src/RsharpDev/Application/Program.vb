@@ -12,10 +12,6 @@ Friend NotInheritable Class Program
     Public Shared ReadOnly Property Solution As Solution
     Public Shared ReadOnly Property Config As ConfigFile
 
-    Shared Sub New()
-        Call RDev.document.SetEngine(REngine)
-    End Sub
-
     ''' <summary>
     ''' save config
     ''' </summary>
@@ -109,6 +105,8 @@ Friend NotInheritable Class Program
             Config.theme = VisualStudioToolStripExtender.VsVersion.Vs2015
             Config.type = ThemeType.Light
         End If
+
+        document.R = REngine
     End Sub
 
 End Class

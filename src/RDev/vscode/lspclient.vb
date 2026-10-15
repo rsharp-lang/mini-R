@@ -5,6 +5,7 @@ Imports languageserver
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports SMRUCC.Rsharp.Interpreter
 
 ''' <summary>
 ''' client code for handling of the lsp backend
@@ -21,14 +22,14 @@ Public Class lspclient
     ReadOnly _lspLock As New Threading.SemaphoreSlim(1, 1)
     ReadOnly _lsplog As Action(Of String)
 
-    Sub New(log As Action(Of String))
+    Sub New(R As RInterpreter, log As Action(Of String))
         _lsplog = log
 
         ' create the in-process R# language server lazily and warm it up on a
         ' background thread: the REnv load + global symbol scan take seconds and
         ' must not block the UI thread (nor the editor startup).
         If _lsp Is Nothing Then
-            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, New DebugTextWriter(_lsplog)))
+            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, R, New DebugTextWriter(_lsplog)))
         End If
     End Sub
 

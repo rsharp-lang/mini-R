@@ -127,7 +127,7 @@ Public Class VsCodeEditor : Implements IFileReference
         _channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
         _editorReady = False
         _core = WebView21.CoreWebView2
-        _lsp = Await New lspclient(lspLog).Init()
+        _lsp = Await New lspclient(document.R, lspLog).Init()
 
         ' intercept every request to our virtual host and serve it from the zip
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
