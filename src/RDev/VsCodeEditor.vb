@@ -1,10 +1,9 @@
 ﻿Imports System.IO
-Imports System.Collections.Generic
-Imports System.Text.Json
-Imports Microsoft.Web.WebView2.Core
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.Web.WebView2.Core
 
 Public Class VsCodeEditor : Implements IFileReference
 
@@ -21,6 +20,7 @@ Public Class VsCodeEditor : Implements IFileReference
     Shared ReadOnly resourceFilter As String = "https://monaco.local/*"
 
     Shared ReadOnly cdn As ZipStream
+    Shared ReadOnly editor_js As String
 
     ''' <summary>
     ''' locate an embedded manifest resource by case-insensitive suffix match.
@@ -47,6 +47,13 @@ Public Class VsCodeEditor : Implements IFileReference
             res.CopyTo(buffer)
             buffer.Seek(0, SeekOrigin.Begin)
             cdn = New ZipStream(buffer, is_readonly:=True)
+        End Using
+
+        Using res As Stream = GetManifestResource("editor.js")
+            Dim buffer As New MemoryStream
+            res.CopyTo(buffer)
+            buffer.Seek(0, SeekOrigin.Begin)
+            editor_js = Encoding.UTF8.GetString(buffer.ToArray)
         End Using
     End Sub
 
@@ -80,16 +87,18 @@ Public Class VsCodeEditor : Implements IFileReference
                     e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(ms, 200, "OK", "Content-Type: text/html; charset=utf-8")
                 End Using
                 Return
-            End If
+            ElseIf localPath.Trim("/"c) = "editor.js" Then
+                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(New MemoryStream(Encoding.UTF8.GetBytes(editor_js)), 200, "OK", "Content-Type: text/javascript")
+            Else
+                Dim zipPath = ResolveZipPath(localPath)
+                If zipPath Is Nothing Then
+                    e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(Nothing, 404, "Not Found", "Content-Type: text/plain")
+                    Return
+                End If
 
-            Dim zipPath = ResolveZipPath(localPath)
-            If zipPath Is Nothing Then
-                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(Nothing, 404, "Not Found", "Content-Type: text/plain")
-                Return
+                Dim stream As Stream = cdn.OpenFile(zipPath)
+                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(stream, 200, "OK", "Content-Type: " & MimeFromPath(zipPath) & vbCrLf)
             End If
-
-            Dim stream As Stream = cdn.OpenFile(zipPath)
-            e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(stream, 200, "OK", "Content-Type: " & MimeFromPath(zipPath) & vbCrLf)
         Catch ex As Exception
             If e.Response Is Nothing Then
                 e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(Nothing, 500, "Error", "Content-Type: text/plain")
@@ -112,13 +121,14 @@ Public Class VsCodeEditor : Implements IFileReference
     ''' min/vs/ layout; fall back to the "min" prefix too for robustness.
     ''' </summary>
     Private Function ResolveZipPath(localPath As String) As String
-        For Each prefix As String In {"min/vs", "min"}
-            Dim candidate = prefix & localPath
-            If cdn.FileExists(candidate) Then
-                Return candidate
-            End If
-        Next
-        Return Nothing
+        Dim prefix As String = "monaco-editor/"
+        Dim candidate = prefix & localPath
+
+        If cdn.FileExists(candidate) Then
+            Return candidate
+        Else
+            Return Nothing
+        End If
     End Function
 
     Private Function MimeFromPath(path As String) As String
