@@ -134,6 +134,7 @@ Public Class ScriptManagerView
 
         channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
         core = WebView21.CoreWebView2
+        runner = New ScriptRunner(OpenTaskHost, RscriptPath)
 
         ' serve the html page of the script manager from the embedded resources
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
