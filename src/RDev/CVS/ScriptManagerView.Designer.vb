@@ -105,7 +105,7 @@ Partial Class ScriptManagerView
     End Sub
 
     Friend WithEvents WebView21 As Microsoft.Web.WebView2.WinForms.WebView2
-    Friend WithEvents tsTools As System.Windows.Forms.ToolStrip
+    Public WithEvents tsTools As System.Windows.Forms.ToolStrip
     Friend WithEvents btnNew As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnOpen As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnSave As System.Windows.Forms.ToolStripButton

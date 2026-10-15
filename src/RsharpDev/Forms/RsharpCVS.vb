@@ -8,6 +8,8 @@ Public Class RsharpCVS
     Private Sub RsharpCVS_Load(sender As Object, e As EventArgs) Handles Me.Load
         ScriptManagerView1.OpenEditor = AddressOf OpenEditor
         ScriptManagerView1.RscriptPath = $"{App.HOME}\rstudio\bin\Rscript.exe"
+
+        Call ApplyVsTheme(ScriptManagerView1.tsTools)
     End Sub
 
     Private Function OpenEditor() As IEditor

@@ -166,6 +166,26 @@ Namespace CVS
     End Class
 
     ''' <summary>
+    ''' one hit of the full text search of the script code
+    ''' </summary>
+    Public Class ScriptSearchHit
+
+        ''' <summary>the script that was hit by the query</summary>
+        Public Property script As ScriptRecord
+        ''' <summary>the q-gram similarity rank of current hit</summary>
+        Public Property score As Double
+        ''' <summary>
+        ''' the script code line that contains the query words, used as the
+        ''' preview text of the search result
+        ''' </summary>
+        Public Property snippet As String
+
+        Public Overrides Function ToString() As String
+            Return $"{script?.name} ({score:F2})"
+        End Function
+    End Class
+
+    ''' <summary>
     ''' the per script index file, stored at ``scripts/{scriptId}/index.json``
     ''' </summary>
     Public Class ScriptIndex
