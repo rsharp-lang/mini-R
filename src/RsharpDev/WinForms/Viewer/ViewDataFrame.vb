@@ -1,9 +1,9 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
-Imports WeifenLuo.WinFormsUI.Docking
+Imports Microsoft.VisualStudio.WinForms.Docking
 
 Public Class ViewDataFrame : Implements Viewer
 
@@ -16,7 +16,7 @@ Public Class ViewDataFrame : Implements Viewer
     End Property
 
     Public Function View(file As String) As DockContent Implements Viewer.View
-        Dim table As DataFrame = DataFrame.Load(file).MeasureTypeSchema
+        Dim table As DataFrameResolver = DataFrameResolver.Load(file).MeasureTypeSchema
         Dim col As DataGridViewTextBoxColumn
 
         For Each name As String In table.HeadTitles

@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
-Imports WeifenLuo.WinFormsUI.Docking
+Imports Microsoft.VisualStudio.WinForms.Docking
 
 Public Interface Viewer : Inherits IFileReference, ISaveHandle
 

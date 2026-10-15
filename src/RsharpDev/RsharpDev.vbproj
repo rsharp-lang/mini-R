@@ -3,12 +3,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <StartupObject>HDSViewer.My.MyApplication</StartupObject>
+    <StartupObject>RsharpDev.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <Platforms>AnyCPU;x64</Platforms>
     <UseWPF>True</UseWPF>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   
@@ -49,6 +50,12 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\console\console\console.NET5.vbproj" />
     <ProjectReference Include="..\RDev\RDev.NET5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Windows.Ribbon">
+      <HintPath>..\..\..\galaxy\third-party\ribbon\Microsoft.Windows.Ribbon.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
   </Project>

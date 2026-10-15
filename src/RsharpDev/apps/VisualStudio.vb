@@ -1,9 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Config
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My
-Imports My
-Imports WeifenLuo.WinFormsUI.Docking
+Imports Microsoft.VisualStudio.WinForms.Docking
+Imports RsharpDev.Config
+Imports ThemeVS2015
 
 Module VisualStudio
 
@@ -13,14 +13,6 @@ Module VisualStudio
 
     Public Const FolderClose As Integer = 2
 
-    Friend WithEvents VS2003Theme1 As New VS2003Theme
-    Friend WithEvents VS2005Theme1 As New VS2005Theme
-    Friend WithEvents VS2012BlueTheme1 As New VS2012BlueTheme
-    Friend WithEvents VS2012DarkTheme1 As New VS2012DarkTheme
-    Friend WithEvents VS2012LightTheme1 As New VS2012LightTheme
-    Friend WithEvents VS2013BlueTheme1 As New VS2013BlueTheme
-    Friend WithEvents VS2013DarkTheme1 As New VS2013DarkTheme
-    Friend WithEvents VS2013LightTheme1 As New VS2013LightTheme
     Friend WithEvents VS2015BlueTheme1 As New VS2015BlueTheme
     Friend WithEvents VS2015DarkTheme1 As New VS2015DarkTheme
     Friend WithEvents VS2015LightTheme1 As New VS2015LightTheme

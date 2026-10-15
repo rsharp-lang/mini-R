@@ -1,8 +1,8 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports Galaxy.Workbench.DockDocument
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ViewPkgModule
-    Inherits DockContent
+    Inherits DocumentWindow
 
     'Form 重写 Dispose，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _

@@ -1,8 +1,8 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports Galaxy.Workbench.DockDocument
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ViewDataFrame
-    Inherits DockContent
+    Inherits DocumentWindow
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _

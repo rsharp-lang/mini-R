@@ -1,4 +1,7 @@
 ﻿
+Imports Microsoft.VisualStudio.WinForms.Docking
+Imports ThemeVS2015
+
 Partial Public Class RsharpDevMain
     ''' <summary>
     ''' Required designer variable.
@@ -108,19 +111,11 @@ Partial Public Class RsharpDevMain
 #End Region
 
     Private _ribbon As RibbonLib.Ribbon
-    Friend WithEvents VS2015LightTheme1 As WeifenLuo.WinFormsUI.Docking.VS2015LightTheme
-    Friend WithEvents VS2015DarkTheme1 As WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme
-    Friend WithEvents VS2015BlueTheme1 As WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme
-    Friend WithEvents VS2013LightTheme1 As WeifenLuo.WinFormsUI.Docking.VS2013LightTheme
-    Friend WithEvents VS2013DarkTheme1 As WeifenLuo.WinFormsUI.Docking.VS2013DarkTheme
-    Friend WithEvents VS2013BlueTheme1 As WeifenLuo.WinFormsUI.Docking.VS2013BlueTheme
-    Friend WithEvents VS2012LightTheme1 As WeifenLuo.WinFormsUI.Docking.VS2012LightTheme
-    Friend WithEvents VS2012DarkTheme1 As WeifenLuo.WinFormsUI.Docking.VS2012DarkTheme
-    Friend WithEvents VS2012BlueTheme1 As WeifenLuo.WinFormsUI.Docking.VS2012BlueTheme
-    Friend WithEvents VS2005Theme1 As WeifenLuo.WinFormsUI.Docking.VS2005Theme
-    Friend WithEvents VS2003Theme1 As WeifenLuo.WinFormsUI.Docking.VS2003Theme
-    Friend WithEvents VisualStudioToolStripExtender1 As WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
-    Friend WithEvents DockPanel1 As WeifenLuo.WinFormsUI.Docking.DockPanel
+    Friend WithEvents VS2015LightTheme1 As VS2015LightTheme
+    Friend WithEvents VS2015DarkTheme1 As VS2015DarkTheme
+    Friend WithEvents VS2015BlueTheme1 As VS2015BlueTheme
+    Friend WithEvents VisualStudioToolStripExtender1 As VisualStudioToolStripExtender
+    Friend WithEvents DockPanel1 As DockPanel
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
