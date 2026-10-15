@@ -33,7 +33,7 @@ Public Class VsCodeEditor : Implements IFileReference
     Public Event EditCode()
 
     Private Async Sub VsCodeEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Await WebKit.Init(WebView21)
+        Await WebViewLoader.Init(WebView21)
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted

@@ -4,7 +4,6 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports Microsoft.Web.WebView2.Core
-Imports RDev
 
 Public Class ViewHtml : Implements Viewer
 
@@ -17,7 +16,7 @@ Public Class ViewHtml : Implements Viewer
     End Property
 
     Private Sub ViewHtml_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Call WebKit.Init(WebView21)
+        Call WebViewLoader.Init(WebView21)
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted

@@ -6629,6 +6629,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{14010b90-bc3b-42d9-a52c-30ca537d3c11}*SharedItemsImports = 13
 		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{217e3f57-0159-45f6-859a-8edb93781778}*SharedItemsImports = 5
+		..\galaxy\src\WebViewHelper\WebViewHelper.projitems*{371f89a9-be11-4c8d-bfb4-5b6ae198238a}*SharedItemsImports = 5
 		..\galaxy\src\RibbonEventBinding\RibbonEventBinding.projitems*{72a4c1ee-5cbf-4f72-9b71-c997d7e33c18}*SharedItemsImports = 13
 		..\galaxy\src\LicenseFramework\Shared\LicenseShared.projitems*{9a577141-0e9a-36a2-872b-fd316db164a5}*SharedItemsImports = 5
 		..\galaxy\src\WebViewHelper\WebViewHelper.projitems*{9a577141-0e9a-36a2-872b-fd316db164a5}*SharedItemsImports = 5
