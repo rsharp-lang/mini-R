@@ -31,10 +31,6 @@ Public Class RsharpDevVscode
         vscode.SetLineNumbers(LineNumbersMode.On)
     End Sub
 
-    Private Sub vscode_EditorTextChanged(sender As Object, e As String) Handles vscode.EditorTextChanged
-
-    End Sub
-
     Private Sub vscode_IsDirtyChanged(sender As Object, e As Boolean) Handles vscode.IsDirtyChanged
         TabText = $"{FilePath.FileName} *"
     End Sub
@@ -56,12 +52,18 @@ Public Class RsharpDevVscode
     End Function
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+        FilePath = path
+        TabText = FilePath.FileName
+
         Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Return Save(s, encoding)
         End Using
     End Function
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        FilePath = path
+        TabText = FilePath.FileName
+
         Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Return Save(s, encoding.CodePage)
         End Using
@@ -74,4 +76,16 @@ Public Class RsharpDevVscode
 
         Return True
     End Function
+
+    Protected Overrides Sub SaveDocument()
+        If FilePath.StringEmpty(, True) Then
+            Using file As New SaveFileDialog With {.Filter = "R# script(*.r)|*.R"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call Save(file.FileName, Encodings.UTF8WithoutBOM)
+                End If
+            End Using
+        Else
+            Call Save(FilePath, Encodings.UTF8WithoutBOM)
+        End If
+    End Sub
 End Class
