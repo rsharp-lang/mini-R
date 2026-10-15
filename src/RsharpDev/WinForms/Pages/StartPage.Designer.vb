@@ -54,7 +54,7 @@ Partial Class StartPage
         '
         'PictureBox1
         '
-        Me.PictureBox1.BackgroundImage = Global.My.Resources.Resources.R_sharp
+        Me.PictureBox1.BackgroundImage = My.Resources.Resources.R_sharp
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox1.Location = New System.Drawing.Point(3, 13)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
@@ -89,7 +89,7 @@ Partial Class StartPage
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.My.Resources.Resources.AddMark_10580
+        Me.PictureBox2.BackgroundImage = My.Resources.Resources.AddMark_10580
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox2.Location = New System.Drawing.Point(29, 263)
         Me.PictureBox2.Name = "PictureBox2"
@@ -99,7 +99,7 @@ Partial Class StartPage
         '
         'PictureBox3
         '
-        Me.PictureBox3.BackgroundImage = Global.My.Resources.Resources.folder_Open_32xLG
+        Me.PictureBox3.BackgroundImage = My.Resources.Resources.folder_Open_32xLG
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox3.Location = New System.Drawing.Point(29, 293)
         Me.PictureBox3.Name = "PictureBox3"
@@ -109,7 +109,7 @@ Partial Class StartPage
         '
         'PictureBox4
         '
-        Me.PictureBox4.BackgroundImage = Global.My.Resources.Resources.document_open_recent
+        Me.PictureBox4.BackgroundImage = My.Resources.Resources.document_open_recent
         Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox4.Location = New System.Drawing.Point(245, 136)
         Me.PictureBox4.Name = "PictureBox4"

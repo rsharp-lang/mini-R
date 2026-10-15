@@ -73,7 +73,7 @@ Partial Class ToolWinServers
         'ToolStripButtonAddServer
         '
         Me.ToolStripButtonAddServer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonAddServer.Image = Global.My.Resources.Resources.AddMark_10580
+        Me.ToolStripButtonAddServer.Image = My.Resources.Resources.AddMark_10580
         Me.ToolStripButtonAddServer.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonAddServer.Name = "ToolStripButtonAddServer"
         Me.ToolStripButtonAddServer.Size = New System.Drawing.Size(23, 22)

@@ -79,7 +79,7 @@ Partial Class ConfigApp
         '
         'PictureBox1
         '
-        Me.PictureBox1.BackgroundImage = Global.My.Resources.Resources.R_sharp
+        Me.PictureBox1.BackgroundImage = My.Resources.Resources.R_sharp
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox1.Location = New System.Drawing.Point(733, 9)
         Me.PictureBox1.Name = "PictureBox1"

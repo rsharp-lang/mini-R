@@ -1,11 +1,16 @@
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RibbonLib.Interop
 Imports RsharpDev.My
-Imports Microsoft.VisualStudio.WinForms.Docking
 
 Partial Public Class RsharpDevMain : Inherits Form
 
     Friend ReadOnly ribbon As RibbonItems
+
+    Shared Sub New()
+        ImageDriver.Register()
+    End Sub
 
     Public Sub New()
         InitializeComponent()

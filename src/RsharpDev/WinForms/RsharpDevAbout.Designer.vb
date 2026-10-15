@@ -123,7 +123,7 @@ Partial Class RsharpDevAbout
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.My.Resources.Resources.R_sharp
+        Me.PictureBox1.Image = My.Resources.Resources.R_sharp
         Me.PictureBox1.Location = New System.Drawing.Point(475, 12)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(143, 122)
