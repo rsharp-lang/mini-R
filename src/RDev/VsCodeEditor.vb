@@ -1,5 +1,4 @@
-﻿Imports System.Diagnostics
-Imports System.IO
+﻿Imports System.IO
 Imports System.Reflection
 Imports System.Text
 Imports languageserver
@@ -357,7 +356,7 @@ Public Class VsCodeEditor : Implements IFileReference
                                   Microsoft.VisualBasic.MIME.application.json.Javascript.JsonElement.ParseJSON(paramsJson))
                               Call server.HandleMessageAsync(note).GetAwaiter().GetResult()
                           Catch ex As Exception
-                              Debug.WriteLine("[rsharp-lsp] notify error: " & ex.Message)
+                              System.Diagnostics.Debug.WriteLine("[rsharp-lsp] notify error: " & ex.Message)
                           Finally
                               Call _lspLock.Release()
                           End Try
