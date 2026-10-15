@@ -70,12 +70,15 @@ Public Class RsharpDevVscode
     End Function
 
     Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        Dim sw As New StreamWriter(file, encoding, leaveOpen:=True)
-        Call sw.WriteLine(vscode.GetContent.GetAwaiter.GetResult)
-        Call sw.Flush()
-
+        Call AsyncSave(file, encoding)
         Return True
     End Function
+
+    Private Async Sub AsyncSave(file As Stream, encoding As Encoding)
+        Dim sw As New StreamWriter(file, encoding, leaveOpen:=True)
+        Call sw.WriteLine(Await vscode.GetContent)
+        Call sw.Flush()
+    End Sub
 
     Protected Overrides Sub SaveDocument()
         If FilePath.StringEmpty(, True) Then
