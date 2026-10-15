@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 
-
+src/RDev/vscode/monaco-editor
 App/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
