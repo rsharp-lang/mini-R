@@ -42,6 +42,11 @@ require(['vs/editor/editor.main'], function () {
         }
     );
 
+    // expose the editor instance so the host-side bridge (window.setEditorContent /
+    // window.getEditorContent) and any ExecuteScriptAsync calls can reach it.
+    window.editor = editor;
+    window.monaco = monaco;
+
     //the model with wich the editor works
     const model = editor.getModel();
     let baselineVersion = model.getAlternativeVersionId();
