@@ -70,7 +70,7 @@ Public Class ScriptManagerView
     ''' ```
     ''' </summary>
     ''' <returns>the editor window that was created by the host application</returns>
-    Public Property OpenEditor As Func(Of String, IEditor)
+    Public Property OpenEditor As Func(Of IEditor)
 
     ''' <summary>
     ''' the editor window that is currently opened by the host application
@@ -402,7 +402,7 @@ Public Class ScriptManagerView
         Try
             Dim code As String = db.GetVersionCode(Me.scriptId, Me.versionId)
             Dim scriptFile As String = ExportVersionFile(Me.scriptId, Me.versionId, code)
-            Dim editor As IEditor = OpenEditor(scriptFile)
+            Dim editor As IEditor = _OpenEditor()
 
             If editor Is Nothing Then
                 RaiseStatus("the code editor of the host application is unavailable", "error")

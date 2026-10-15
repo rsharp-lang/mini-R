@@ -20,7 +20,8 @@ Public Class RsharpDevVscode
     Public Property FilePath As String Implements IFileReference.FilePath
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
 
-    Dim cvs As Boolean = False
+    Friend cvs As Boolean = False
+    Friend editorClosed As Boolean = False
 
     Private Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim console = CommonRuntime.GetOutputWindow
@@ -115,4 +116,8 @@ Public Class RsharpDevVscode
     Public Async Function SaveScript() As Task(Of String) Implements IEditor.SaveScript
         Return Await vscode.GetContent
     End Function
+
+    Private Sub RsharpDevVscode_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        editorClosed = True
+    End Sub
 End Class
