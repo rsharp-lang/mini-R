@@ -570,6 +570,23 @@ body {
     color: var(--muted);
 }
 
+/* highlight the card for a moment when the run history pushed its arguments back */
+#formCard.flash {
+    animation: form-flash 900ms ease-out;
+}
+
+@keyframes form-flash {
+    0% {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(0, 122, 204, .22);
+    }
+
+    100% {
+        border-color: var(--border);
+        box-shadow: none;
+    }
+}
+
 .field-label .arg-type {
     font-family: var(--mono);
     font-size: 10px;

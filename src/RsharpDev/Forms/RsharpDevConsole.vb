@@ -14,13 +14,13 @@ Public Class RsharpDevConsole : Implements IRunnerHost
 
     Public ReadOnly Property stdout As String
         Get
-            Return _stdout.JoinBy(vbCrLf)
+            Return _stdout.JoinBy("")
         End Get
     End Property
 
     Public ReadOnly Property stderr As String
         Get
-            Return _stderr.JoinBy(vbCrLf)
+            Return _stderr.JoinBy("")
         End Get
     End Property
 
@@ -81,5 +81,6 @@ Public Class RsharpDevConsole : Implements IRunnerHost
 
     Private Sub WebViewConsole1_ProcessExisted(args As ProcessEventArgs) Handles WebViewConsole1.ProcessExisted
         exitCode = args.Code
+        running = False
     End Sub
 End Class

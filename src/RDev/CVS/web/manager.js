@@ -43,6 +43,8 @@
         runId: null,
         metadata: null,
         args: {},          // name -> value of the parameter form
+        formSpec: [],      // the ArgumentSpec list that the form was built from
+        formControls: {},  // name -> {kind,node,spec} of the rendered inputs
         stream: 'stdout',  // the visible tab of the output panel
         output: { stdout: '', stderr: '' },
         busy: false
@@ -56,7 +58,7 @@
     const ids = ['dbPath', 'dbStat', 'statusPill', 'scriptList', 'scriptEmpty',
         'scriptFilter', 'btnNewScript', 'versionList', 'versionEmpty',
         'versionColTitle', 'versionComment', 'btnSaveVersion', 'btnOpenEditor',
-        'metaGrid', 'metaDesc', 'metaDeps', 'versionBadge', 'paramForm',
+        'metaGrid', 'metaDesc', 'metaDeps', 'versionBadge', 'paramForm', 'formCard',
         'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'runList', 'runEmpty',
         'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
         'newScriptModal', 'newScriptName', 'btnCreateScript', 'btnCancelNew'];
@@ -409,16 +411,49 @@
 
     /* ============================ render: parameter form ============================ */
 
+    /**
+     * the hint of the parameter form card: the argument count plus an
+     * optional note (eg. the run history record that the values come from)
+     */
+    function updateFormHint(note) {
+        const n = (state.formSpec || []).length;
+        let text = n ? n + ' 个参数' : '该脚本没有声明命令行参数';
+
+        if (note) text += ' · ' + note;
+        dom.formHint.textContent = text;
+    }
+
+    function specDefault(spec) {
+        if (!spec || spec.defaultValue === null || spec.defaultValue === undefined) return '';
+        return String(spec.defaultValue);
+    }
+
+    function controlValue(ctl) {
+        if (ctl.kind === 'boolean') return ctl.node.checked ? 'TRUE' : 'FALSE';
+        return ctl.node.value;
+    }
+
+    function setControlValue(ctl, value) {
+        if (ctl.kind === 'boolean') {
+            const text = (value === null || value === undefined ? '' : String(value)).trim();
+
+            ctl.node.checked = /^(true|1|yes|on)$/i.test(text);
+        } else {
+            ctl.node.value = value === null || value === undefined ? '' : String(value);
+        }
+    }
+
     function renderForm(args) {
         dom.paramForm.innerHTML = '';
         state.args = {};
+        state.formSpec = args || [];
+        state.formControls = {};
+
+        updateFormHint();
 
         if (!args || !args.length) {
-            dom.formHint.textContent = '该脚本没有声明命令行参数';
             return;
         }
-
-        dom.formHint.textContent = args.length + ' 个参数';
 
         args.forEach(function (arg) {
             const field = el('div', 'field');
@@ -430,6 +465,8 @@
             if (arg.required) label.appendChild(el('span', 'req', '必填'));
 
             field.appendChild(label);
+
+            let ctl;
 
             if (isBool) {
                 const wrap = el('label', 'switch');
@@ -443,7 +480,7 @@
                 wrap.appendChild(el('span', null, '启用'));
                 field.appendChild(wrap);
 
-                state.args[arg.name] = box.checked ? 'TRUE' : 'FALSE';
+                ctl = { kind: 'boolean', node: box, spec: arg };
             } else {
                 const input = document.createElement('input');
 
@@ -453,8 +490,14 @@
                 input.addEventListener('input', function () { state.args[arg.name] = input.value; });
 
                 field.appendChild(input);
-                state.args[arg.name] = input.value;
+
+                ctl = { kind: 'value', node: input, spec: arg };
             }
+
+            // remember the input node so that a run history record can push
+            // its argument values back into the form later
+            state.formControls[arg.name] = ctl;
+            state.args[arg.name] = controlValue(ctl);
 
             if (arg.description) {
                 field.appendChild(el('div', 'arg-desc', arg.description));
@@ -469,7 +512,9 @@
     function renderRuns() {
         dom.runList.innerHTML = '';
         dom.runEmpty.hidden = state.runs.length > 0;
-        dom.runsHint.textContent = state.runs.length ? state.runs.length + ' 次运行' : '';
+        dom.runsHint.textContent = state.runs.length
+            ? state.runs.length + ' 次运行 · 点击回填参数'
+            : '';
 
         state.runs.slice().reverse().forEach(function (run) {
             const li = el('li');
@@ -487,15 +532,84 @@
             }).join(' ');
 
             li.appendChild(el('div', 'item-sub', (run.workdir || '(default)') + '  ' + argText));
+            li.title = run.commandLine
+                ? '点击把该次运行的命令行参数回填到运行参数\n' + run.commandLine
+                : '点击把该次运行的命令行参数回填到运行参数';
 
             li.addEventListener('click', function () { selectRun(run); });
             dom.runList.appendChild(li);
         });
     }
 
+    let flashTimer = null;
+
+    function flashForm() {
+        if (!dom.formCard) return;
+
+        dom.formCard.classList.remove('flash');
+        // force a reflow, otherwise the animation is not restarted
+        void dom.formCard.offsetWidth;
+        dom.formCard.classList.add('flash');
+
+        if (flashTimer) clearTimeout(flashTimer);
+        flashTimer = setTimeout(function () { dom.formCard.classList.remove('flash'); }, 1000);
+    }
+
+    /**
+     * push the commandline arguments of one historical run back into the
+     * parameter form. the parameters that were removed from the script (they
+     * do not exist in the metadata of the current version any more) can not
+     * be restored, they are reported via the status pill instead.
+     */
+    function applyRunArguments(run) {
+        if (!run) return;
+
+        const controls = state.formControls;
+        const values = {};
+        const unknown = [];
+        let filled = 0;
+
+        (run.arguments || []).forEach(function (a) {
+            if (a && a.name) {
+                values[a.name] = a.value === null || a.value === undefined ? '' : String(a.value);
+            }
+        });
+
+        Object.keys(controls).forEach(function (name) {
+            const ctl = controls[name];
+            const restore = Object.prototype.hasOwnProperty.call(values, name);
+
+            // a parameter that the record does not carry falls back to the
+            // default value, so that the form exactly reproduces that run
+            setControlValue(ctl, restore ? values[name] : specDefault(ctl.spec));
+            state.args[name] = controlValue(ctl);
+
+            if (restore) filled += 1;
+        });
+
+        Object.keys(values).forEach(function (name) {
+            if (!controls[name]) unknown.push(name);
+        });
+
+        if (run.workdir) {
+            dom.workdir.value = run.workdir;
+        }
+
+        updateFormHint('回填自 #' + run.runId);
+        flashForm();
+
+        if (unknown.length) {
+            setStatus('回填 ' + filled + ' 个参数，' + unknown.length +
+                ' 个已不存在: ' + unknown.join(', '), 'warn');
+        } else {
+            setStatus('已回填 #' + run.runId + ' 的 ' + filled + ' 个参数', 'ok');
+        }
+    }
+
     function selectRun(run) {
         state.runId = run.runId;
         renderRuns();
+        applyRunArguments(run);
         send(Outgoing.RequestOutput, { scriptId: state.scriptId, runId: run.runId });
     }
 
