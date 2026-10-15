@@ -43,10 +43,6 @@ Public Class ConfigApp
                 Program.Config.type = Config.ThemeType.Light
         End Select
 
-        For Each window In VisualStudio.vsWindow
-            Call window.ApplyVsTheme()
-        Next
-
         Call Program.Save()
         Call Me.Close()
     End Sub

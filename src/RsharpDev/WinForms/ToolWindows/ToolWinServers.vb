@@ -7,7 +7,6 @@ Public Class ToolWinServers
 
         Call ApplyVsTheme(ToolStrip1)
         Call LoadServers()
-        Call VisualStudio.vsWindow.Add(Me)
     End Sub
 
     Private Sub ToolStripButtonAddServer_Click(sender As Object, e As EventArgs) Handles ToolStripButtonAddServer.Click

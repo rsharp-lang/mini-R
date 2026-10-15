@@ -3,7 +3,7 @@ Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RsharpDev.My.Resources
 Imports ThemeVS2015
 
-Partial Public Class RsharpDevMain
+Partial Public Class RsharpDevMain : Inherits Form
     ''' <summary>
     ''' Required designer variable.
     ''' </summary>
@@ -20,6 +20,10 @@ Partial Public Class RsharpDevMain
         MyBase.Dispose(disposing)
     End Sub
 
+    Sub New()
+        Call InitializeComponent()
+    End Sub
+
 #Region "Windows Form Designer generated code"
 
     ''' <summary>
@@ -27,84 +31,96 @@ Partial Public Class RsharpDevMain
     ''' the contents of this method with the code editor.
     ''' </summary>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevMain))
-        Me._ribbon = New RibbonLib.Ribbon()
-        Me.VS2015LightTheme1 = New VS2015LightTheme()
-        Me.VS2015DarkTheme1 = New VS2015DarkTheme()
-        Me.VS2015BlueTheme1 = New VS2015BlueTheme()
-
-        Me.VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(Me.components)
-        Me.DockPanel1 = New DockPanel()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.StatusStrip1.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        '_ribbon
-        '
-        Me._ribbon.Location = New System.Drawing.Point(0, 0)
-        Me._ribbon.Name = "_ribbon"
-        Me._ribbon.ResourceIdentifier = Nothing
-        Me._ribbon.ResourceName = "RibbonMarkup.ribbon"
-        Me._ribbon.ShortcutTableResourceName = Nothing
-        Me._ribbon.Size = New System.Drawing.Size(1035, 100)
-        Me._ribbon.TabIndex = 5
-        '
-        'VisualStudioToolStripExtender1
-        '
-        Me.VisualStudioToolStripExtender1.DefaultRenderer = Nothing
-        '
-        'DockPanel1
-        '
-        Me.DockPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DockPanel1.Location = New System.Drawing.Point(0, 100)
-        Me.DockPanel1.Name = "DockPanel1"
-        Me.DockPanel1.Size = New System.Drawing.Size(1035, 529)
-        Me.DockPanel1.TabIndex = 6
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 629)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1035, 22)
-        Me.StatusStrip1.TabIndex = 7
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.Image = IconResource.preferences_system_notifications
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(55, 17)
-        Me.ToolStripStatusLabel1.Text = "Ready"
-        '
-        'RsharpDevMain
-        '
-        Me.ClientSize = New System.Drawing.Size(1035, 651)
-        Me.Controls.Add(Me.DockPanel1)
-        Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me._ribbon)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RsharpDevMain"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "R# Develop Studio"
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        RibbonUI = New RibbonLib.Ribbon()
+        VS2015LightTheme1 = New VS2015LightTheme()
+        VS2015DarkTheme1 = New VS2015DarkTheme()
+        VS2015BlueTheme1 = New VS2015BlueTheme()
+        VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
+        DockPanel1 = New DockPanel()
+        StatusStrip1 = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        ToolStripStatusLabel2 = New ToolStripStatusLabel()
+        ToolStripStatusLabel3 = New ToolStripStatusLabel()
+        ContextMenuStrip1 = New ContextMenuStrip(components)
+        StatusStrip1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' RibbonUI
+        ' 
+        RibbonUI.Location = New Point(0, 0)
+        RibbonUI.Name = "RibbonUI"
+        RibbonUI.ResourceIdentifier = Nothing
+        RibbonUI.ResourceName = "RsharpDev.RibbonMarkup.ribbon"
+        RibbonUI.ShortcutTableResourceName = Nothing
+        RibbonUI.Size = New Size(1035, 116)
+        RibbonUI.TabIndex = 5
+        ' 
+        ' VisualStudioToolStripExtender1
+        ' 
+        VisualStudioToolStripExtender1.DefaultRenderer = Nothing
+        ' 
+        ' DockPanel1
+        ' 
+        DockPanel1.Dock = DockStyle.Fill
+        DockPanel1.Location = New Point(0, 116)
+        DockPanel1.Name = "DockPanel1"
+        DockPanel1.Size = New Size(1035, 513)
+        DockPanel1.TabIndex = 6
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, ToolStripStatusLabel3})
+        StatusStrip1.Location = New Point(0, 629)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(1035, 22)
+        StatusStrip1.TabIndex = 7
+        StatusStrip1.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Image = CType(resources.GetObject("ToolStripStatusLabel1.Image"), Image)
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(55, 17)
+        ToolStripStatusLabel1.Text = "Ready"
+        ' 
+        ' ToolStripStatusLabel2
+        ' 
+        ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        ToolStripStatusLabel2.Size = New Size(965, 17)
+        ToolStripStatusLabel2.Spring = True
+        ' 
+        ' ToolStripStatusLabel3
+        ' 
+        ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        ToolStripStatusLabel3.Size = New Size(0, 17)
+        ' 
+        ' ContextMenuStrip1
+        ' 
+        ContextMenuStrip1.Name = "ContextMenuStrip1"
+        ContextMenuStrip1.Size = New Size(61, 4)
+        ' 
+        ' RsharpDevMain
+        ' 
+        ClientSize = New Size(1035, 651)
+        Controls.Add(DockPanel1)
+        Controls.Add(StatusStrip1)
+        Controls.Add(RibbonUI)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Name = "RsharpDevMain"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "R# Develop Studio"
+        StatusStrip1.ResumeLayout(False)
+        StatusStrip1.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 
 #End Region
 
-    Private _ribbon As RibbonLib.Ribbon
+    Friend WithEvents RibbonUI As RibbonLib.Ribbon
     Friend WithEvents VS2015LightTheme1 As VS2015LightTheme
     Friend WithEvents VS2015DarkTheme1 As VS2015DarkTheme
     Friend WithEvents VS2015BlueTheme1 As VS2015BlueTheme
@@ -113,5 +129,7 @@ Partial Public Class RsharpDevMain
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
 End Class
 

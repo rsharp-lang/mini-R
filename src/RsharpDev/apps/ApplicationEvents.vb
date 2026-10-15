@@ -1,4 +1,6 @@
-﻿Namespace My
+﻿Imports Microsoft.VisualBasic.ApplicationServices
+
+Namespace My
     ' The following events are available for MyApplication:
     ' Startup: Raised when the application starts, before the startup form is created.
     ' Shutdown: Raised after all application forms are closed.  This event is not raised if the application terminates abnormally.
@@ -13,7 +15,11 @@
             MyApplication._RStudio = rstudio
         End Sub
 
-        Public Shared Async Function LaunchLanguageServer() As Threading.Tasks.Task
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            Call App.LogException(e.Exception)
+        End Sub
+
+        Public Shared Async Function LaunchLanguageServer() As Task
             Await Task.Run(Sub() vscode.Launch())
         End Function
     End Class

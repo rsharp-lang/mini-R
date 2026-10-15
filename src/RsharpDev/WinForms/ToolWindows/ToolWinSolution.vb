@@ -12,8 +12,7 @@ Public Class ToolWinSolution
         TabText = "Solution Explorer"
         TreeView1.Nodes(Scan0).Nodes.Clear()
 
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
-        Call VisualStudio.vsWindow.Add(Me)
+        Call MyBase.ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
     Private Sub ScriptToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ScriptToolStripMenuItem.Click

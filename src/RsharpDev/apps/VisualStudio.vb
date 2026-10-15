@@ -2,7 +2,6 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
-Imports RsharpDev.Config
 Imports RsharpDev.My
 Imports ThemeVS2015
 
@@ -16,8 +15,6 @@ Module VisualStudio
     Friend WithEvents VS2015BlueTheme1 As New VS2015BlueTheme
     Friend WithEvents VS2015DarkTheme1 As New VS2015DarkTheme
     Friend WithEvents VS2015LightTheme1 As New VS2015LightTheme
-
-    Friend ReadOnly vsWindow As New List(Of IApplyVsTheme)
 
     Friend RefreshRecentList As Action
 

@@ -6,18 +6,18 @@ Imports RibbonLib.Interop
 Imports RsharpDev.My
 Imports RsharpDev.My.Resources
 
-Partial Public Class RsharpDevMain : Inherits Form
+Public Class RsharpDevMain
 
-    Friend ReadOnly ribbon As RibbonItems
+    Friend ribbon As RibbonItems
 
-    Shared Sub New()
-        ImageDriver.Register()
+    Private Sub showAboutSplash()
+        Call New SplashScreen() With {.AutoClose = True}.ShowDialog()
     End Sub
 
-    Public Sub New()
-        InitializeComponent()
-
-        ribbon = New RibbonItems(_ribbon)
+    Private Async Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+        AutoScaleMode = AutoScaleMode.Dpi
+        ribbon = New RibbonItems(RibbonUI)
+        ImageDriver.Register()
 
         AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevVscode)
         AddHandler ribbon.License.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
@@ -35,19 +35,10 @@ Partial Public Class RsharpDevMain : Inherits Form
         ribbon.SolutionTab.Label = "Solution [RsharpDev]"
 
         MyApplication.Register(Me)
-    End Sub
-
-    Private Sub showAboutSplash()
-        Call New SplashScreen() With {.AutoClose = True}.ShowDialog()
-    End Sub
-
-    Private Async Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
-        AutoScaleMode = AutoScaleMode.Dpi
 
         Call Program.Initialize()
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
-        Call VisualStudio.vsWindow.Add(Me)
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
 
         Await MyApplication.LaunchLanguageServer
