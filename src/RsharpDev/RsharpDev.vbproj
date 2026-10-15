@@ -12,6 +12,14 @@
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="RibbonMarkup.ribbon" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="RibbonMarkup.ribbon" />
+  </ItemGroup>
   
     <ItemGroup>
     <Import Include="System.Data" />
