@@ -104,6 +104,9 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\LLMs\src\Harness\Harness.vbproj" />
+    <ProjectReference Include="..\..\..\LLMs\src\Ollama\Ollama.vbproj" />
     <ProjectReference Include="..\languageserver\src\languageserver\languageserver.vbproj" />
   </ItemGroup>
 
