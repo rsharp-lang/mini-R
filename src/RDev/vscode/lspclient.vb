@@ -36,9 +36,9 @@ Public Class lspclient
                                   Try
                                       Dim server = _lsp.Value
 
-                                      System.Diagnostics.Debug.WriteLine("[rsharp-lsp] server ready: " & server.GetType.Name)
+                                      _lsplog("[rsharp-lsp] server ready: " & server.GetType.Name)
                                   Catch ex As Exception
-                                      System.Diagnostics.Debug.WriteLine("[rsharp-lsp] warmup failed: " & ex.Message)
+                                      _lsplog("[rsharp-lsp] warmup failed: " & ex.Message)
                                   End Try
 
                                   Return Me
@@ -46,40 +46,41 @@ Public Class lspclient
     End Function
 
     Public Async Function handleLspRequest(id As Long, method As String, paramsJSON As String) As Task(Of Dictionary(Of String, Object))
-        Dim server = _lsp.Value
+        Dim server As RsharpLspServer = _lsp.Value
+        Return Await Task.Run(Function() CreateResponse(server, id, method, paramsJSON))
+    End Function
 
-        Return Await Task.Run(Function()
-                                  Dim reply As Dictionary(Of String, Object)
+    Private Function CreateResponse(server As RsharpLspServer, id As Long, method As String, paramsJSON As String) As Dictionary(Of String, Object)
+        Dim reply As Dictionary(Of String, Object)
 
-                                  Call _lspLock.Wait()
+        Call _lspLock.Wait()
 
-                                  Try
-                                      Dim req = JsonRpc.MakeRequest(CInt(id), method, JsonElement.ParseJSON(paramsJSON))
-                                      Dim resp = server.HandleMessageAsync(req).GetAwaiter().GetResult()
-                                      Dim resultNode As Object = Nothing
-                                      Dim resEl = resp("result")
+        Try
+            Dim req = JsonRpc.MakeRequest(CInt(id), method, JsonElement.ParseJSON(paramsJSON))
+            Dim resp = server.HandleMessageAsync(req).GetAwaiter().GetResult()
+            Dim resultNode As Object = Nothing
+            Dim resEl = resp("result")
 
-                                      ' pass the raw json element straight through: rebuilding
-                                      ' it from a dictionary would expose the LSP keys to the
-                                      ' serializer naming policy
-                                      If resEl IsNot Nothing Then
-                                          Using doc As System.Text.Json.JsonDocument = System.Text.Json.JsonDocument.Parse(resEl.BuildJsonString)
-                                              resultNode = doc.RootElement.Clone()
-                                          End Using
-                                      End If
+            ' pass the raw json element straight through: rebuilding
+            ' it from a dictionary would expose the LSP keys to the
+            ' serializer naming policy
+            If resEl IsNot Nothing Then
+                Using doc As System.Text.Json.JsonDocument = System.Text.Json.JsonDocument.Parse(resEl.BuildJsonString)
+                    resultNode = doc.RootElement.Clone()
+                End Using
+            End If
 
-                                      reply = New Dictionary(Of String, Object) From {
-                                          {"id", id},
-                                          {"result", resultNode}
-                                      }
-                                  Catch ex As Exception
-                                      reply = New Dictionary(Of String, Object) From {{"id", id}, {"error", ex.Message}}
-                                  Finally
-                                      Call _lspLock.Release()
-                                  End Try
+            reply = New Dictionary(Of String, Object) From {
+                {"id", id},
+                {"result", resultNode}
+            }
+        Catch ex As Exception
+            reply = New Dictionary(Of String, Object) From {{"id", id}, {"error", ex.Message}}
+        Finally
+            Call _lspLock.Release()
+        End Try
 
-                                  Return reply
-                              End Function)
+        Return reply
     End Function
 
     Public Async Sub handleLspNotification(method As String, paramsJSON As String)
