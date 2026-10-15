@@ -51,6 +51,8 @@ Public Class RsharpDevMain : Implements AppHost
 
         DockPanel1.Theme = VS2015LightTheme1
         DockPanel1.ShowDocumentIcon = True
+        DockPanel1.DockLeftPortion = 300
+        DockPanel1.DockRightPortion = 300
 
         EnableVSRenderer()
     End Sub

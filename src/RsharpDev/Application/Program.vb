@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports Galaxy.Workbench
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RDev
 Imports RibbonLib.Interop
@@ -33,8 +34,11 @@ Friend NotInheritable Class Program
 
         MyApplication.RStudio.Text = $"R# Develop Studio [{Rproj}]"
 
-        VisualStudio.SolutionView.TreeView1.Nodes(Scan0).Nodes.Clear()
-        VisualStudio.SolutionView.TreeView1.Nodes(Scan0).DoCall(Sub(root) listFolder(root, Rproj.ParentPath))
+        Call ProgressSpinner.DoLoading(
+            Sub()
+                VisualStudio.SolutionView.TreeView1.Nodes(Scan0).Nodes.Clear()
+                VisualStudio.SolutionView.TreeView1.Nodes(Scan0).DoCall(Sub(root) listFolder(root, Rproj.ParentPath))
+            End Sub, host:=VisualStudio.SolutionView)
     End Sub
 
     Private Shared Sub listFolder(explorer As TreeNode, folder As String)
