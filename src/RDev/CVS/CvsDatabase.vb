@@ -720,11 +720,13 @@ Namespace CVS
         ''' <param name="top">the max number of the result hits</param>
         ''' <param name="threshold">
         ''' the q-gram jaccard similarity threshold of one single query word,
-        ''' a larger value makes the search more strict.
+        ''' a larger value makes the search more strict (0.25 keeps the fuzzy
+        ''' hits like ``clustring`` -&gt; ``clustering``, but drops the weak
+        ''' ones that only share a few q-grams).
         ''' </param>
         Public Function SearchScripts(query As String,
                                       Optional top As Integer = 20,
-                                      Optional threshold As Double = 0.15) As ScriptSearchHit()
+                                      Optional threshold As Double = 0.25) As ScriptSearchHit()
 
             If query.StringEmpty Then
                 Return {}
