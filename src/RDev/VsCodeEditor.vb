@@ -34,6 +34,49 @@ Public Class VsCodeEditor : Implements IFileReference
     ' becomes True once the frontend signals EditorReady via postMessage.
     Dim _editorReady As Boolean
 
+    ' commands queued until the frontend reports EditorReady (avoids racing the page load).
+    Dim _pending As New List(Of KeyValuePair(Of String, Object))
+
+    ' mirrored editor state reported by the frontend through Outgoing messages.
+    Dim _isDirty As Boolean
+    Dim _languages As String()
+    ' pending tcs used by GetLanguagesAsync to await the Languages reply.
+    Dim _languagesTcs As TaskCompletionSource(Of String())
+
+    ''' <summary>
+    ''' raised when the frontend editor content changes (debounced on the JS side).
+    ''' </summary>
+    Public Event TextChanged As EventHandler(Of String)
+
+    ''' <summary>
+    ''' raised when the frontend editor dirty/modified state changes.
+    ''' </summary>
+    Public Event IsDirtyChanged As EventHandler(Of Boolean)
+
+    ''' <summary>
+    ''' raised when the frontend returns the list of available language ids
+    ''' (in response to GetLanguagesAsync / GetLanguages).
+    ''' </summary>
+    Public Event LanguagesReceived As EventHandler(Of String())
+
+    ''' <summary>
+    ''' true when the editor content differs from the last baseline (after SetContent / MarkAsSaved).
+    ''' </summary>
+    Public ReadOnly Property IsModified As Boolean
+        Get
+            Return _isDirty
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' the most recent list of language ids reported by the frontend.
+    ''' </summary>
+    Public ReadOnly Property Languages As String()
+        Get
+            Return _languages
+        End Get
+    End Property
+
     ''' <summary>
     ''' locate an embedded manifest resource by case-insensitive suffix match.
     ''' the embedded monaco resources are named "RDev.monaco-editor.zip" /
@@ -123,20 +166,74 @@ Public Class VsCodeEditor : Implements IFileReference
 
     Private Sub OnWebMessageReceived(sender As Object, e As CoreWebView2WebMessageReceivedEventArgs)
         Dim message As String = e.WebMessageAsJson
-        Dim json As JsonElement = JsonParser.Parse(message)
 
-        If TypeOf json Is JsonObject Then
-            Dim msg As JsonObject = DirectCast(json, JsonObject)
+        ' parse with System.Text.Json for robust, typed payload extraction.
+        Using doc As System.Text.Json.JsonDocument = System.Text.Json.JsonDocument.Parse(message)
+            Dim root = doc.RootElement
 
-            If msg.HasObjectKey("type") Then
-                If msg!type.AsString(True) = "EditorReady" Then
+            Dim typeEl As System.Text.Json.JsonElement
+            If Not root.TryGetProperty("type", typeEl) Then
+                Return
+            End If
+
+            Dim type As String = typeEl.GetString()
+
+            Select Case type
+                Case "EditorReady"
                     _editorReady = True
 
-                    ' flush any text buffered before the frontend became ready
-                    Call FlushContent()
-                End If
-            End If
-        End If
+                    ' flush any commands queued before the frontend became ready
+                    Call FlushPending()
+
+                Case "TextChanged"
+                    ' payload: the current editor text
+                    Dim text As String = ""
+                    Dim payloadEl As System.Text.Json.JsonElement
+
+                    If root.TryGetProperty("payload", payloadEl) Then
+                        text = payloadEl.GetString()
+                    End If
+
+                    RaiseEvent TextChanged(Me, text)
+
+                Case "IsDirtyChanged"
+                    ' payload: boolean dirty flag
+                    Dim isDirty As Boolean = False
+                    Dim payloadEl As System.Text.Json.JsonElement
+
+                    If root.TryGetProperty("payload", payloadEl) Then
+                        isDirty = payloadEl.GetBoolean()
+                    End If
+
+                    _isDirty = isDirty
+                    RaiseEvent IsDirtyChanged(Me, isDirty)
+
+                Case "Languages"
+                    ' payload: array of language ids
+                    Dim langs As String() = {}
+                    Dim payloadEl As System.Text.Json.JsonElement
+
+                    If root.TryGetProperty("payload", payloadEl) AndAlso
+                       payloadEl.ValueKind = System.Text.Json.JsonValueKind.Array Then
+
+                        Dim list As New List(Of String)
+
+                        For Each item In payloadEl.EnumerateArray()
+                            list.Add(item.GetString())
+                        Next
+
+                        langs = list.ToArray()
+                    End If
+
+                    _languages = langs
+                    RaiseEvent LanguagesReceived(Me, langs)
+
+                    If _languagesTcs IsNot Nothing Then
+                        Call _languagesTcs.TrySetResult(langs)
+                        _languagesTcs = Nothing
+                    End If
+            End Select
+        End Using
     End Sub
 
     ''' <summary>
@@ -173,36 +270,41 @@ Public Class VsCodeEditor : Implements IFileReference
     End Function
 
     ''' <summary>
+    ''' send a command to the frontend editor. if the WebView2 channel or the
+    ''' frontend is not ready yet, the command is queued and flushed on EditorReady.
+    ''' </summary>
+    Private Sub SendCommand(type As String, payload As Object)
+        If _channel IsNot Nothing AndAlso _channel.IsReady AndAlso _editorReady Then
+            Call _channel.Send(type, payload)
+        Else
+            _pending.Add(New KeyValuePair(Of String, Object)(type, payload))
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' flush all commands queued before the frontend became ready.
+    ''' </summary>
+    Private Sub FlushPending()
+        For Each cmd In _pending
+            Call _channel.Send(cmd.Key, cmd.Value)
+        Next
+
+        _pending.Clear()
+    End Sub
+
+    ''' <summary>
     ''' set the editor content and optionally its language from the host.
-    ''' the text is pushed through the WebView2 command channel once both the
-    ''' WebView2 environment and the editor frontend are ready; otherwise it is
-    ''' buffered in <see cref="code"/> / <see cref="lang"/> and flushed when the
-    ''' frontend signals EditorReady.
+    ''' the text is pushed through the WebView2 command channel; if the frontend
+    ''' is not ready yet the command is queued and flushed on EditorReady.
     ''' </summary>
     Public Sub SetContent(content As String, Optional language As String = Nothing)
         code = content
         lang = language
 
-        FlushContent()
-    End Sub
-
-    ''' <summary>
-    ''' push the buffered code/lang to the frontend, but only when both the
-    ''' WebView2 channel and the editor frontend are ready.
-    ''' </summary>
-    Private Sub FlushContent()
-        If _channel Is Nothing OrElse Not _channel.IsReady OrElse Not _editorReady Then
-            Return
-        End If
-
-        If code.StringEmpty Then
-            Return
-        End If
-
-        Call _channel.Send(EditorCommandType.SetText.ToString, code)
+        Call SendCommand(EditorCommandType.SetText.ToString, code)
 
         If Not lang.StringEmpty Then
-            Call _channel.Send(EditorCommandType.SetLanguage.ToString, lang)
+            Call SendCommand(EditorCommandType.SetLanguage.ToString, lang)
         End If
     End Sub
 
@@ -222,4 +324,112 @@ Public Class VsCodeEditor : Implements IFileReference
             End If
         End If
     End Function
+
+    ' ===================== editor options (Incoming contract, editor.js:9-19) =====================
+
+    ''' <summary>
+    ''' toggle the read-only mode of the editor.
+    ''' </summary>
+    Public Sub SetReadOnly(value As Boolean)
+        Call SendCommand(EditorCommandType.SetReadOnly.ToString, value)
+    End Sub
+
+    ''' <summary>
+    ''' mark the current content as saved: clears the dirty flag and resets the
+    ''' baseline version on the frontend.
+    ''' </summary>
+    Public Sub MarkAsSaved()
+        Call SendCommand(EditorCommandType.MarkAsSaved.ToString, Nothing)
+    End Sub
+
+    ''' <summary>
+    ''' request the list of available language ids from the frontend. completes when
+    ''' the frontend replies via the Languages message (2s timeout, returns empty on
+    ''' not-ready or timeout). the <see cref="LanguagesReceived"/> event also fires.
+    ''' </summary>
+    Public Async Function GetLanguagesAsync() As Task(Of String())
+        If _channel Is Nothing OrElse Not _channel.IsReady OrElse Not _editorReady Then
+            Return {}
+        End If
+
+        _languagesTcs = New TaskCompletionSource(Of String())()
+        Call SendCommand(EditorCommandType.GetLanguages.ToString, Nothing)
+
+        Dim completed = Await Task.WhenAny(_languagesTcs.Task, Task.Delay(2000))
+
+        If completed Is _languagesTcs.Task Then
+            Return Await _languagesTcs.Task
+        End If
+
+        ' timeout: discard the pending tcs so a late reply just raises the event.
+        _languagesTcs = Nothing
+        Return {}
+    End Function
+
+    ''' <summary>
+    ''' set the editor language (e.g. "r", "vb", "json").
+    ''' </summary>
+    Public Sub SetLanguage(id As String)
+        Call SendCommand(EditorCommandType.SetLanguage.ToString, id)
+    End Sub
+
+    ''' <summary>
+    ''' update a single editor option, e.g. UpdateOption("minimap", New Dictionary... )
+    ''' or UpdateOption("readOnly", True). the option name is passed verbatim to
+    ''' monaco.editor.updateOptions({ [option]: value }).
+    ''' </summary>
+    Public Sub UpdateOption(option As String, value As Object)
+        Dim payload = New Dictionary(Of String, Object) From {
+            {"option", option},
+            {"value", value}
+        }
+
+        Call SendCommand(EditorCommandType.UpdateOption.ToString, payload)
+    End Sub
+
+    ''' <summary>
+    ''' register a custom Monaco theme. rules/colors are passed as already-built JSON
+    ''' objects (e.g. Dictionary(Of String, Object) or JsonElement) matching the
+    ''' monaco.editor.defineTheme signature.
+    ''' </summary>
+    Public Sub RegisterTheme(name As String, base As String, inherit As Boolean, rules As Object, colors As Object)
+        Dim payload = New Dictionary(Of String, Object) From {
+            {"name", name},
+            {"base", base},
+            {"inherit", inherit},
+            {"rules", rules},
+            {"colors", colors}
+        }
+
+        Call SendCommand(EditorCommandType.RegisterTheme.ToString, payload)
+    End Sub
+
+    ''' <summary>
+    ''' apply a previously registered (or built-in) theme by name.
+    ''' </summary>
+    Public Sub SetTheme(themeName As String)
+        Call SendCommand(EditorCommandType.SetTheme.ToString, themeName)
+    End Sub
+
+    ''' <summary>
+    ''' register a custom language. <paramref name="monarch"/> and
+    ''' <paramref name="configuration"/> are JS source literals (object expressions)
+    ''' evaluated on the frontend via new Function(...), matching editor.js
+    ''' handleRegisterLanguage.
+    ''' </summary>
+    Public Sub RegisterLanguage(id As String, Optional monarch As String = Nothing, Optional configuration As String = Nothing)
+        Dim payload = New Dictionary(Of String, Object) From {
+            {"id", id}
+        }
+
+        If monarch IsNot Nothing Then
+            payload("monarch") = monarch
+        End If
+
+        If configuration IsNot Nothing Then
+            payload("configuration") = configuration
+        End If
+
+        Call SendCommand(EditorCommandType.RegisterLanguage.ToString, payload)
+    End Sub
 End Class
