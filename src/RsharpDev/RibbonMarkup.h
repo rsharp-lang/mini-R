@@ -123,7 +123,11 @@
 #define cmdStartPage_LabelDescription_RESID 90
 #define cmdStartPage_SmallImages_192__RESID 91
 #define cmdStartPage_LargeImages_192__RESID 92
-#define InternalCmd2_LabelTitle_RESID 60001
-#define InternalCmd4_LabelTitle_RESID 60002
-#define InternalCmd8_LabelTitle_RESID 60003
-#define InternalCmd10_LabelTitle_RESID 60004
+#define cmdButtonOpenCVS 29 
+#define cmdButtonOpenCVS_LabelTitle_RESID 60001
+#define cmdButtonOpenCVS_SmallImages_192__RESID 60002
+#define cmdButtonOpenCVS_LargeImages_192__RESID 60003
+#define InternalCmd2_LabelTitle_RESID 60004
+#define InternalCmd4_LabelTitle_RESID 60005
+#define InternalCmd8_LabelTitle_RESID 60006
+#define InternalCmd10_LabelTitle_RESID 60007

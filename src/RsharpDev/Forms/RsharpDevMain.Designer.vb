@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports RibbonLib
 Imports RsharpDev.My.Resources
 Imports ThemeVS2015
 
@@ -33,7 +34,7 @@ Partial Public Class RsharpDevMain : Inherits Form
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevMain))
-        RibbonUI = New RibbonLib.Ribbon()
+        RibbonUI = New Ribbon()
         VS2015LightTheme1 = New VS2015LightTheme()
         VS2015DarkTheme1 = New VS2015DarkTheme()
         VS2015BlueTheme1 = New VS2015BlueTheme()
@@ -120,7 +121,7 @@ Partial Public Class RsharpDevMain : Inherits Form
 
 #End Region
 
-    Friend WithEvents RibbonUI As RibbonLib.Ribbon
+    Friend WithEvents RibbonUI As Ribbon
     Friend WithEvents VS2015LightTheme1 As VS2015LightTheme
     Friend WithEvents VS2015DarkTheme1 As VS2015DarkTheme
     Friend WithEvents VS2015BlueTheme1 As VS2015BlueTheme

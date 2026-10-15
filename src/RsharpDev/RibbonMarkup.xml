@@ -328,6 +328,14 @@
         <Image Id="92" MinDPI="192">Resources/preferences-system-notifications.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonOpenCVS" Id="29" LabelTitle="Script Manager">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/folder-documents.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/folder-documents.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -344,6 +352,7 @@
           <MenuGroup>
             <Button CommandName="cmdAbout" />
             <Button CommandName="cmdLicense" />
+            <Button CommandName="cmdStartPage" />
           </MenuGroup>
           <MenuGroup>
             <Button CommandName="cmdConfig" />
@@ -379,7 +388,7 @@
             <Button CommandName="cmdButtonNew" />
             <Button CommandName="cmdButtonOpen" />
             <Button CommandName="cmdButtonSave" />
-            <Button CommandName="cmdStartPage" />
+            <Button CommandName="cmdButtonOpenCVS" />
           </Group>
           <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdConfigServer" />

@@ -11,9 +11,9 @@
 using System;
 using RibbonLib;
 using RibbonLib.Controls;
-using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -23,6 +23,7 @@ using RibbonLib.Interop;
             public const uint cmdButtonSave = 1007;
             public const uint cmdAbout = 16;
             public const uint cmdLicense = 25;
+            public const uint cmdStartPage = 28;
             public const uint cmdConfig = 26;
             public const uint cmdClose = 24;
             public const uint cmdHelp = 14;
@@ -31,7 +32,7 @@ using RibbonLib.Interop;
             public const uint cmdViewProperty = 21;
             public const uint cmdTabMain = 1001;
             public const uint cmdGroupCommon = 1002;
-            public const uint cmdStartPage = 28;
+            public const uint cmdButtonOpenCVS = 29;
             public const uint cmdGroupSimple = 1003;
             public const uint cmdConfigServer = 23;
             public const uint cmdRunScript = 18;
@@ -52,6 +53,7 @@ using RibbonLib.Interop;
         public RibbonButton ButtonSave { get; private set; }
         public RibbonButton About { get; private set; }
         public RibbonButton License { get; private set; }
+        public RibbonButton StartPage { get; private set; }
         public RibbonButton Config { get; private set; }
         public RibbonButton Close { get; private set; }
         public RibbonHelpButton Help { get; private set; }
@@ -60,7 +62,7 @@ using RibbonLib.Interop;
         public RibbonButton ViewProperty { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupCommon { get; private set; }
-        public RibbonButton StartPage { get; private set; }
+        public RibbonButton ButtonOpenCVS { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
         public RibbonButton ConfigServer { get; private set; }
         public RibbonButton RunScript { get; private set; }
@@ -82,6 +84,7 @@ using RibbonLib.Interop;
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
             About = new RibbonButton(ribbon, Cmd.cmdAbout);
             License = new RibbonButton(ribbon, Cmd.cmdLicense);
+            StartPage = new RibbonButton(ribbon, Cmd.cmdStartPage);
             Config = new RibbonButton(ribbon, Cmd.cmdConfig);
             Close = new RibbonButton(ribbon, Cmd.cmdClose);
             Help = new RibbonHelpButton(ribbon, Cmd.cmdHelp);
@@ -90,7 +93,7 @@ using RibbonLib.Interop;
             ViewProperty = new RibbonButton(ribbon, Cmd.cmdViewProperty);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
-            StartPage = new RibbonButton(ribbon, Cmd.cmdStartPage);
+            ButtonOpenCVS = new RibbonButton(ribbon, Cmd.cmdButtonOpenCVS);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
             ConfigServer = new RibbonButton(ribbon, Cmd.cmdConfigServer);
             RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);
@@ -104,3 +107,4 @@ using RibbonLib.Interop;
         }
 
     }
+}

@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RibbonLib
 Imports RibbonLib.Interop
+Imports RsharpDev.RibbonLib.Controls
 
 Module RibbonMenu
 
@@ -30,6 +31,7 @@ Module RibbonMenu
         AddHandler ribbon.Config.ExecuteEvent, Sub() Call New ConfigApp().ShowDialog()
         AddHandler ribbon.StartPage.ExecuteEvent, Sub() Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
         AddHandler ribbon.Close.ExecuteEvent, Sub() Call DirectCast(CommonRuntime.AppHost, Form).Close()
+        AddHandler ribbon.ButtonOpenCVS.ExecuteEvent, Sub() Call CommonRuntime.ShowSingleDocument(Of RsharpCVS)()
     End Sub
 
     Private Sub showAboutSplash()

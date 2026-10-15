@@ -24,9 +24,33 @@ Partial Class RsharpCVS
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "Form1"
+        ScriptManagerView1 = New RDev.ScriptManagerView()
+        SuspendLayout()
+        ' 
+        ' ScriptManagerView1
+        ' 
+        ScriptManagerView1.DatabasePath = "C:\Users\Administrator\AppData\Local\RDev\scripts.rscvs"
+        ScriptManagerView1.Dock = DockStyle.Fill
+        ScriptManagerView1.Location = New Point(0, 0)
+        ScriptManagerView1.Name = "ScriptManagerView1"
+        ScriptManagerView1.RscriptPath = Nothing
+        ScriptManagerView1.Size = New Size(1078, 681)
+        ScriptManagerView1.TabIndex = 1
+        ' 
+        ' RsharpCVS
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(1078, 681)
+        Controls.Add(ScriptManagerView1)
+        DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
+        DoubleBuffered = True
+        Name = "RsharpCVS"
+        ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
+        TabPageContextMenuStrip = DockContextMenuStrip1
+        Text = "R# CSV"
+        ResumeLayout(False)
     End Sub
+
+    Friend WithEvents ScriptManagerView1 As RDev.ScriptManagerView
 End Class
