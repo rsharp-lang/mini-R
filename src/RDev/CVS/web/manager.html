@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R# Script CVS</title>
+    <link rel="stylesheet" href="manager.css" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- ===================== title bar ===================== -->
+        <header class="titlebar">
+            <span class="brand">
+                <span class="brand-mark">R#</span>
+                <span class="brand-text">Script CVS</span>
+            </span>
+            <span class="db-path" id="dbPath" title="database file">…</span>
+            <span class="spacer"></span>
+            <span class="stat" id="dbStat"></span>
+            <span class="pill" id="statusPill" data-level="info">ready</span>
+        </header>
+
+        <!-- ===================== three column body ===================== -->
+        <div class="body">
+            <!-- column 1: the script list -->
+            <aside class="col col-scripts">
+                <div class="col-head">
+                    <span class="col-title">脚本列表</span>
+                    <button class="icon-btn" id="btnNewScript" title="新建脚本">＋</button>
+                </div>
+                <div class="search">
+                    <input type="text" id="scriptFilter" placeholder="过滤脚本…" autocomplete="off" />
+                </div>
+                <ul class="list" id="scriptList"></ul>
+                <div class="empty" id="scriptEmpty" hidden>暂无脚本，点击 ＋ 新建</div>
+            </aside>
+
+            <!-- column 2: the version list of the selected script -->
+            <section class="col col-versions">
+                <div class="col-head">
+                    <span class="col-title" id="versionColTitle">历史版本</span>
+                </div>
+                <div class="col-tools">
+                    <input type="text" id="versionComment" placeholder="版本变更说明…" autocomplete="off" />
+                    <div class="btn-row">
+                        <button class="btn" id="btnSaveVersion" title="把编辑器中的内容保存为一个新版本">保存新版本</button>
+                        <button class="btn" id="btnOpenEditor" title="在编辑器中打开选中的版本">编辑器打开</button>
+                    </div>
+                </div>
+                <ul class="list" id="versionList"></ul>
+                <div class="empty" id="versionEmpty" hidden>请先选择一个脚本</div>
+            </section>
+
+            <!-- column 3: metadata + parameter form + run history + output -->
+            <section class="col col-detail">
+                <div class="card" id="metaCard">
+                    <div class="card-head">
+                        <h3>元数据</h3>
+                        <span class="badge" id="versionBadge"></span>
+                    </div>
+                    <div class="meta-grid" id="metaGrid"></div>
+                    <div class="meta-desc" id="metaDesc"></div>
+                    <div class="tag-row" id="metaDeps"></div>
+                </div>
+
+                <div class="card" id="formCard">
+                    <div class="card-head">
+                        <h3>运行参数</h3>
+                        <span class="hint" id="formHint"></span>
+                    </div>
+                    <div class="form" id="paramForm"></div>
+                    <div class="form-row">
+                        <label class="field">
+                            <span class="field-label">工作目录</span>
+                            <input type="text" id="workdir" placeholder="脚本运行时的工作文件夹" autocomplete="off" />
+                        </label>
+                    </div>
+                    <div class="btn-row form-actions">
+                        <button class="btn primary" id="btnRun">运行</button>
+                        <button class="btn" id="btnResetArgs">重置参数</button>
+                    </div>
+                </div>
+
+                <div class="card" id="runsCard">
+                    <div class="card-head">
+                        <h3>运行历史</h3>
+                        <span class="hint" id="runsHint"></span>
+                    </div>
+                    <ul class="list" id="runList"></ul>
+                    <div class="empty" id="runEmpty" hidden>尚无运行记录</div>
+                </div>
+
+                <div class="card grow" id="outputCard">
+                    <div class="card-head">
+                        <div class="tabs">
+                            <button class="tab active" data-stream="stdout">标准输出</button>
+                            <button class="tab" data-stream="stderr">标准错误</button>
+                        </div>
+                        <span class="spacer"></span>
+                        <span class="hint" id="outputHint"></span>
+                        <button class="icon-btn" id="btnCopyOutput" title="复制">⧉</button>
+                    </div>
+                    <pre class="terminal" id="outputView"></pre>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ===================== new script dialog ===================== -->
+    <div class="modal" id="newScriptModal" hidden>
+        <div class="modal-mask"></div>
+        <div class="modal-box">
+            <h3>新建 R# 脚本</h3>
+            <label class="field">
+                <span class="field-label">脚本名称</span>
+                <input type="text" id="newScriptName" placeholder="demo.R" autocomplete="off" />
+            </label>
+            <div class="btn-row modal-actions">
+                <button class="btn primary" id="btnCreateScript">创建</button>
+                <button class="btn" id="btnCancelNew">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="manager.js"></script>
+</body>
+
+</html>
