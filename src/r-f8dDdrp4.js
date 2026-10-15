@@ -146,6 +146,9 @@ define("vs/r-f8dDdrp4", ["exports"], function (e) {
         "string",
         "boolean",
         ".Internal",
+        "str",
+        "as.list",
+        "as.data.frame",
       ],
       special: [
         "\\n",
@@ -229,7 +232,6 @@ define("vs/r-f8dDdrp4", ["exports"], function (e) {
         ],
         strings: [
           [/'/, "string.escape", "@stringBody"],
-          [/`/, "string.escape", "@stringBody"],
           [/"/, "string.escape", "@dblStringBody"],
         ],
         stringBody: [
