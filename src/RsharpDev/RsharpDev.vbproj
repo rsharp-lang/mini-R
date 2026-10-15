@@ -9,12 +9,60 @@
     <RootNamespace>RsharpDev</RootNamespace>
     <UseWPF>True</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <Configurations>RsharpDev;Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ApplicationIcon>R#.ico</ApplicationIcon>
+  
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RsharpDev|AnyCPU'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RsharpDev|x64'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <OutputPath>G:\mini-R\dist\bin</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="RibbonMarkup.ribbon" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="R#.ico" />
   </ItemGroup>
 
   <ItemGroup>
