@@ -32,6 +32,13 @@
     box-sizing: border-box;
 }
 
+/* the `hidden` attribute must win over any component display rule
+   (the user agent [hidden] style has a lower priority than a class
+   selector, so `.modal{display:flex}` used to keep the dialog visible) */
+[hidden] {
+    display: none !important;
+}
+
 html,
 body {
     height: 100%;

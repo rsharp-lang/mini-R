@@ -570,6 +570,11 @@
 
     dom.btnCancelNew.addEventListener('click', function () { dom.newScriptModal.hidden = true; });
 
+    // click on the mask (or press escape) also closes the dialog
+    document.querySelector('.modal-mask').addEventListener('click', function () {
+        dom.newScriptModal.hidden = true;
+    });
+
     dom.btnCreateScript.addEventListener('click', function () {
         const name = (dom.newScriptName.value || '').trim();
 
