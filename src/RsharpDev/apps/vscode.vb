@@ -11,11 +11,14 @@ Public NotInheritable Class vscode
         Dim rscript As String = $"{rstudio}/bin/Rscript.exe"
         Dim languageserver As String = $"{rstudio}/R/languageserver.R"
         Dim clr As String = $"{rstudio}/shares/vscode.dll"
+        Dim output = CommonRuntime.GetOutputWindow
 
         Call lspclient.LaunchLanguageServer(
             rscript, languageserver,
             vscode:=clr,
-            stdout:=AddressOf CommonRuntime.GetOutputWindow.AppendLine)
+            stdout:=Sub(line)
+                        Call output.AppendTo("lsp", line)
+                    End Sub)
     End Sub
 
 End Class
