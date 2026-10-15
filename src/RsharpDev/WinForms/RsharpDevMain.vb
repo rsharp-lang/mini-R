@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports RibbonLib.Interop
 Imports RsharpDev.My
+Imports RsharpDev.My.Resources
 
 Partial Public Class RsharpDevMain : Inherits Form
 
@@ -54,7 +55,7 @@ Partial Public Class RsharpDevMain : Inherits Form
 
     Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing)
         If icon Is Nothing Then
-            icon = My.Resources.preferences_system_notifications
+            icon = IconResource.preferences_system_notifications
         End If
 
         Call Me.Invoke(

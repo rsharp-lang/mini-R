@@ -57,5 +57,21 @@
       <HintPath>..\..\..\galaxy\third-party\ribbon\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\vs_icon\IconResource.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IconResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\vs_icon\IconResource.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IconResource.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   
   </Project>

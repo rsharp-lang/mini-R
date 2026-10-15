@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports RsharpDev.My.Resources
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class SplashScreen
     Inherits System.Windows.Forms.Form
 
@@ -32,7 +34,7 @@ Partial Class SplashScreen
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = My.Resources.Resources.R_sharp
+        Me.PictureBox1.Image = IconResource.R_sharp
         Me.PictureBox1.Location = New System.Drawing.Point(12, 24)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(156, 202)

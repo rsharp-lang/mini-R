@@ -1,11 +1,12 @@
 ﻿Imports Galaxy.Workbench.DockDocument
+Imports RsharpDev.My.Resources
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ToolWinServers
     Inherits ToolWindow
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +23,7 @@ Partial Class ToolWinServers
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("All Servers")
@@ -73,7 +74,7 @@ Partial Class ToolWinServers
         'ToolStripButtonAddServer
         '
         Me.ToolStripButtonAddServer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonAddServer.Image = My.Resources.Resources.AddMark_10580
+        Me.ToolStripButtonAddServer.Image = IconResource.AddMark_10580
         Me.ToolStripButtonAddServer.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonAddServer.Name = "ToolStripButtonAddServer"
         Me.ToolStripButtonAddServer.Size = New System.Drawing.Size(23, 22)

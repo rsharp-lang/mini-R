@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports RsharpDev.My.Resources
 
 Public Class RecentFiles
 
@@ -14,9 +15,9 @@ Public Class RecentFiles
             Dim item As New FileItem
 
             If file.name.ExtensionSuffix("Rproj") Then
-                item.PictureBox1.BackgroundImage = My.Resources.Rproj
+                item.PictureBox1.BackgroundImage = IconResource.Rproj
             Else
-                item.PictureBox1.BackgroundImage = My.Resources.R_sharp
+                item.PictureBox1.BackgroundImage = IconResource.R_sharp
             End If
 
             item.Label1.Text = file.name.FileName

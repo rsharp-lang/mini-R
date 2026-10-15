@@ -1,11 +1,12 @@
 ﻿Imports Galaxy.Workbench.DockDocument
+Imports RsharpDev.My.Resources
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ToolWinSolution
     Inherits ToolWindow
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +23,7 @@ Partial Class ToolWinSolution
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("assembly")
@@ -56,14 +57,14 @@ Partial Class ToolWinSolution
         'NewToolStripMenuItem
         '
         Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ScriptToolStripMenuItem})
-        Me.NewToolStripMenuItem.Image = My.Resources.Resources.New32
+        Me.NewToolStripMenuItem.Image = IconResource.New32
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
         Me.NewToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.NewToolStripMenuItem.Text = "Add"
         '
         'ScriptToolStripMenuItem
         '
-        Me.ScriptToolStripMenuItem.Image = My.Resources.Resources.script_32xLG
+        Me.ScriptToolStripMenuItem.Image = IconResource.script_32xLG
         Me.ScriptToolStripMenuItem.Name = "ScriptToolStripMenuItem"
         Me.ScriptToolStripMenuItem.Size = New System.Drawing.Size(104, 22)
         Me.ScriptToolStripMenuItem.Text = "Script"
@@ -75,7 +76,7 @@ Partial Class ToolWinSolution
         '
         'BuildToolStripMenuItem
         '
-        Me.BuildToolStripMenuItem.Image = My.Resources.Resources.build_Selection_32xLG
+        Me.BuildToolStripMenuItem.Image = IconResource.build_Selection_32xLG
         Me.BuildToolStripMenuItem.Name = "BuildToolStripMenuItem"
         Me.BuildToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.BuildToolStripMenuItem.Text = "Build"
@@ -149,7 +150,7 @@ Partial Class ToolWinSolution
         'ToolStripButton1
         '
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = My.Resources.Resources.package_32xLG
+        Me.ToolStripButton1.Image = IconResource.package_32xLG
         Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton1.Name = "ToolStripButton1"
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
@@ -158,7 +159,7 @@ Partial Class ToolWinSolution
         'ToolStripButton2
         '
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = My.Resources.Resources.build_Selection_32xLG
+        Me.ToolStripButton2.Image = IconResource.build_Selection_32xLG
         Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton2.Name = "ToolStripButton2"
         Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)

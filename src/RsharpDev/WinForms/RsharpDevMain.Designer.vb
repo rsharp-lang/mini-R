@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports RsharpDev.My.Resources
 Imports ThemeVS2015
 
 Partial Public Class RsharpDevMain
@@ -79,7 +80,7 @@ Partial Public Class RsharpDevMain
         '
         'ToolStripStatusLabel1
         '
-        Me.ToolStripStatusLabel1.Image = RsharpDev.My.Resources.Resources.preferences_system_notifications
+        Me.ToolStripStatusLabel1.Image = IconResource.preferences_system_notifications
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(55, 17)
         Me.ToolStripStatusLabel1.Text = "Ready"
