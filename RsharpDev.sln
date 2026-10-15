@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.9.12128.139 oobstable
+VisualStudioVersion = 18.9.12128.139
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{F26FDEF0-2F7E-47AF-A797-1EAA89AEDD2E}"
 EndProject
@@ -1967,8 +1967,8 @@ Global
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.Rsharp_app_release|x86.Build.0 = RsharpDev|Any CPU
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|Any CPU.ActiveCfg = RsharpDev|Any CPU
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|Any CPU.Build.0 = RsharpDev|Any CPU
-		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x64.ActiveCfg = RsharpDev|x64
-		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x64.Build.0 = RsharpDev|x64
+		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x64.ActiveCfg = Rsharp_app_release|x64
+		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x64.Build.0 = Rsharp_app_release|x64
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x86.ActiveCfg = RsharpDev|Any CPU
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.RsharpDev|x86.Build.0 = RsharpDev|Any CPU
 		{D67818E6-749D-4B3F-A108-36D45ECB5123}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -3791,8 +3791,8 @@ Global
 		{217E3F57-0159-45F6-859A-8EDB93781778}.Rsharp_app_release|x86.Build.0 = Rsharp_app_release|Any CPU
 		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
 		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x64.ActiveCfg = RsharpDev|x64
-		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x64.Build.0 = RsharpDev|x64
+		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x64.ActiveCfg = Rsharp_app_release|x64
+		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x64.Build.0 = Rsharp_app_release|x64
 		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x86.ActiveCfg = Rsharp_app_release|Any CPU
 		{217E3F57-0159-45F6-859A-8EDB93781778}.RsharpDev|x86.Build.0 = Rsharp_app_release|Any CPU
 		{217E3F57-0159-45F6-859A-8EDB93781778}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -4019,8 +4019,8 @@ Global
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|Any CPU.ActiveCfg = Release|Any CPU
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|Any CPU.Build.0 = Release|Any CPU
-		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x64.ActiveCfg = Release|x64
-		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x64.Build.0 = Release|x64
+		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x64.ActiveCfg = Rsharp_app_release|x64
+		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x64.Build.0 = Rsharp_app_release|x64
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x86.ActiveCfg = Release|Any CPU
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.RsharpDev|x86.Build.0 = Release|Any CPU
 		{B30E29F5-E117-4245-9F74-38B5DB9688D0}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -5159,8 +5159,8 @@ Global
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.Rsharp_app_release|x86.Build.0 = RsharpDev|Any CPU
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|Any CPU.ActiveCfg = RsharpDev|Any CPU
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|Any CPU.Build.0 = RsharpDev|Any CPU
-		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x64.ActiveCfg = RsharpDev|x64
-		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x64.Build.0 = RsharpDev|x64
+		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x64.ActiveCfg = Release|x64
+		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x64.Build.0 = Release|x64
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x86.ActiveCfg = RsharpDev|Any CPU
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.RsharpDev|x86.Build.0 = RsharpDev|Any CPU
 		{A665798E-DAD3-47BA-94DB-B8A83488B5D9}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -5387,8 +5387,8 @@ Global
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.Rsharp_app_release|x86.Build.0 = Rsharp_app_release|Any CPU
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|Any CPU.ActiveCfg = nuget_release|Any CPU
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|Any CPU.Build.0 = nuget_release|Any CPU
-		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x64.ActiveCfg = nuget_release|x64
-		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x64.Build.0 = nuget_release|x64
+		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x64.ActiveCfg = Rsharp_app_release|x64
+		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x64.Build.0 = Rsharp_app_release|x64
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x86.ActiveCfg = nuget_release|Any CPU
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.RsharpDev|x86.Build.0 = nuget_release|Any CPU
 		{87EE63B2-F1B8-1CC8-00B5-B33F2DA6DD10}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
