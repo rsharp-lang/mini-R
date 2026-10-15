@@ -1,3 +1,4 @@
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
@@ -78,5 +79,9 @@ Partial Public Class RsharpDevMain : Inherits Form
         ' vsToolStripExtender1.SetStyle(mainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(toolBar, version, theme)
         VisualStudioToolStripExtender1.ApplyVsTheme(StatusStrip1)
+    End Sub
+
+    Private Sub RsharpDevMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Call Program.Save()
     End Sub
 End Class

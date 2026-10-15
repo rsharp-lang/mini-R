@@ -3,9 +3,9 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <StartupObject>RsharpDev.My.MyApplication</StartupObject>
+    <StartupObject>RsharpDev.RsharpDevMain</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <Platforms>AnyCPU;x64</Platforms>
     <UseWPF>True</UseWPF>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
