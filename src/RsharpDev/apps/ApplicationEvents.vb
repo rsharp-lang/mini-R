@@ -20,7 +20,7 @@ Namespace My
         End Sub
 
         Public Shared Async Function LaunchLanguageServer() As Task
-            Await Task.Run(Sub() vscode.Launch())
+            Await vscode.Launch()
         End Function
     End Class
 End Namespace
