@@ -38,7 +38,7 @@ require(['vs/editor/editor.main'], function () {
         {
             value: '',
             language: 'r',
-            theme: 'vs-light'
+            theme: 'vs'
         }
     );
 

@@ -120,7 +120,7 @@ Public Class VsCodeEditor : Implements IFileReference
             If msg.HasObjectKey("type") Then
                 If msg!type.AsString(True) = "EditorReady" Then
                     If Not code.StringEmpty Then
-                        Call SetContentInternal(code, lang)
+                        Call New WebView2CommandChannel(WebView21).Send(EditorCommandType.SetText.ToString, code)
                     End If
                 End If
             End If
