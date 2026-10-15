@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports languageserver
 Imports Microsoft.VisualBasic.ComponentModel
@@ -45,19 +46,19 @@ Public Class lspclient
                               End Function)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Async Function handleLspRequest(id As Long, method As String, paramsJSON As String) As Task(Of Dictionary(Of String, Object))
-        Dim server As RsharpLspServer = _lsp.Value
-        Return Await Task.Run(Function() CreateResponse(server, id, method, paramsJSON))
+        Return Await CreateResponse(server:=_lsp.Value, id, method, paramsJSON)
     End Function
 
-    Private Function CreateResponse(server As RsharpLspServer, id As Long, method As String, paramsJSON As String) As Dictionary(Of String, Object)
+    Private Async Function CreateResponse(server As RsharpLspServer, id As Long, method As String, paramsJSON As String) As Task(Of Dictionary(Of String, Object))
         Dim reply As Dictionary(Of String, Object)
 
         Call _lspLock.Wait()
 
         Try
             Dim req = JsonRpc.MakeRequest(CInt(id), method, JsonElement.ParseJSON(paramsJSON))
-            Dim resp = server.HandleMessageAsync(req).GetAwaiter().GetResult()
+            Dim resp = Await server.HandleMessageAsync(req)
             Dim resultNode As Object = Nothing
             Dim resEl = resp("result")
 
