@@ -18,9 +18,5 @@ Namespace My
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Call App.LogException(e.Exception)
         End Sub
-
-        Public Shared Async Function LaunchLanguageServer() As Task
-            Await vscode.Launch()
-        End Function
     End Class
 End Namespace

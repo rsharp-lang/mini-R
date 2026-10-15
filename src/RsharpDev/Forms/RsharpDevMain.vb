@@ -25,7 +25,7 @@ Public Class RsharpDevMain : Implements AppHost
         End Get
     End Property
 
-    Private Async Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AutoScaleMode = AutoScaleMode.Dpi
 
         Call ImageDriver.Register()
@@ -36,8 +36,6 @@ Public Class RsharpDevMain : Implements AppHost
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
         Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
-
-        Await MyApplication.LaunchLanguageServer
     End Sub
 
     Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing) Implements AppHost.StatusMessage

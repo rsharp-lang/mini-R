@@ -1,92 +1,134 @@
-﻿Imports System.Threading
-Imports Darwinism.HPC.Parallel
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+﻿Imports System.IO
+Imports System.Text
+Imports languageserver
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 ''' <summary>
 ''' client code for handling of the lsp backend
 ''' </summary>
 Public Class lspclient
 
-    ''' <summary>
-    ''' the http port to the language server backend
-    ''' </summary>
-    ''' <returns></returns>
-    Public Shared ReadOnly Property lsp_server As Integer
+    ' the in-process R# language server. it is created lazily on first use so the
+    ' (slow) REnv load never delays the editor startup, and warmed up on a
+    ' background thread once the WebView is up.
+    Shared _lsp As Lazy(Of RsharpLspServer)
 
-    ReadOnly rscript As String
-    ReadOnly languageserver As String
-    ReadOnly vscode As String
-    ReadOnly rstudio As String
+    ' the R# interpreter + its global environment are not thread safe: every LSP
+    ' call must be serialized.
+    ReadOnly _lspLock As New Threading.SemaphoreSlim(1, 1)
+    ReadOnly _lsplog As Action(Of String)
 
-    Dim background As RunSlavePipeline
-    Dim process As Process
-    Dim hook_stdout As Action(Of String) = Nothing
+    Sub New(log As Action(Of String))
+        _lsplog = log
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="rscript">
-    ''' the program path to the rscript host
-    ''' </param>
-    ''' <param name="languageserver">
-    ''' the script path to make invoke for start of the language server backend
-    ''' </param>
-    ''' <param name="vscode">
-    ''' the file path to the .net assembly of the vscode web ui
-    ''' </param>
-    Sub New(rscript As String, languageserver As String, vscode As String)
-        Me.rscript = rscript.GetFullPath
-        Me.languageserver = languageserver.GetFullPath
-        Me.vscode = vscode.GetFullPath
-        Me.rstudio = rscript.ParentPath.ParentPath
-    End Sub
-
-    Public Function RedirectStdOut(dev As Action(Of String)) As lspclient
-        hook_stdout = dev
-        Return Me
-    End Function
-
-    Public Function Launch() As Integer
-        Dim port As Integer = IPCSocket.GetFirstAvailablePort(delay:=0)
-        Dim background As String = $"{languageserver.CLIPath} --port {port} --vscode {vscode.CLIPath}"
-
-        Call New Thread(Sub() Call launch(rscript, background, rstudio)).Start()
-
-        Return port
-    End Function
-
-    Public Shared Sub LaunchLanguageServer(rscript As String,
-                                           languageserver As String,
-                                           vscode As String,
-                                           Optional stdout As Action(Of String) = Nothing)
-
-        _lsp_server = New lspclient(rscript, languageserver, vscode:=vscode) _
-            .RedirectStdOut(stdout) _
-            .Launch()
-    End Sub
-
-    Private Sub ProcessMessage(line As String)
-        If Not hook_stdout Is Nothing Then
-            Call hook_stdout(line)
+        ' create the in-process R# language server lazily and warm it up on a
+        ' background thread: the REnv load + global symbol scan take seconds and
+        ' must not block the UI thread (nor the editor startup).
+        If _lsp Is Nothing Then
+            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, New DebugTextWriter(_lsplog)))
         End If
     End Sub
 
-    Private Sub launch(rscript As String, arguments As String, workdir As String)
-        Using log As New LogFile($"{App.ProductProgramData}/vscode.log")
-            Call log.WriteLine($"{rscript} {arguments}", "launch_vscode_languageserver", MSG_TYPES.DEBUG)
-        End Using
+    Public Async Function Init() As Task(Of lspclient)
+        Return Await Task.Run(Function()
+                                  Try
+                                      Dim server = _lsp.Value
 
-        Call PipelineProcess.ExecSub(
-            app:=rscript,
-            args:=arguments,
-            onReadLine:=AddressOf ProcessMessage,
-            workdir:=workdir,
-            shell:=False,
-            setProcess:=Sub(p) process = p,
-            [in]:=Nothing
-        )
+                                      System.Diagnostics.Debug.WriteLine("[rsharp-lsp] server ready: " & server.GetType.Name)
+                                  Catch ex As Exception
+                                      System.Diagnostics.Debug.WriteLine("[rsharp-lsp] warmup failed: " & ex.Message)
+                                  End Try
+
+                                  Return Me
+                              End Function)
+    End Function
+
+    Public Async Function handleLspRequest(id As Long, method As String, paramsJSON As String) As Task(Of Dictionary(Of String, Object))
+        Dim server = _lsp.Value
+
+        Return Await Task.Run(Function()
+                                  Dim reply As Dictionary(Of String, Object)
+
+                                  Call _lspLock.Wait()
+
+                                  Try
+                                      Dim req = JsonRpc.MakeRequest(CInt(id), method, JsonElement.ParseJSON(paramsJSON))
+                                      Dim resp = server.HandleMessageAsync(req).GetAwaiter().GetResult()
+                                      Dim resultNode As Object = Nothing
+                                      Dim resEl = resp("result")
+
+                                      ' pass the raw json element straight through: rebuilding
+                                      ' it from a dictionary would expose the LSP keys to the
+                                      ' serializer naming policy
+                                      If resEl IsNot Nothing Then
+                                          Using doc As System.Text.Json.JsonDocument = System.Text.Json.JsonDocument.Parse(resEl.BuildJsonString)
+                                              resultNode = doc.RootElement.Clone()
+                                          End Using
+                                      End If
+
+                                      reply = New Dictionary(Of String, Object) From {
+                                          {"id", id},
+                                          {"result", resultNode}
+                                      }
+                                  Catch ex As Exception
+                                      reply = New Dictionary(Of String, Object) From {{"id", id}, {"error", ex.Message}}
+                                  Finally
+                                      Call _lspLock.Release()
+                                  End Try
+
+                                  Return reply
+                              End Function)
+    End Function
+
+    Public Async Sub handleLspNotification(method As String, paramsJSON As String)
+        Dim server = _lsp.Value
+
+        Call _lspLock.Wait()
+
+        Try
+            Dim note = JsonRpc.MakeNotification(method, JsonElement.ParseJSON(paramsJSON))
+            Dim parsed = Await server.HandleMessageAsync(note)
+
+            Call _lsplog($"lsp/get_notify: {parsed.BuildJsonString}")
+        Catch ex As Exception
+            Call _lsplog("[rsharp-lsp] notify error: " & ex.Message)
+        Finally
+            Call _lspLock.Release()
+        End Try
     End Sub
+
+    ''' <summary>
+    ''' routes the language server log to the debugger output. a GUI host has no
+    ''' console attached, so the default stderr sink is useless (and may not even
+    ''' be openable).
+    ''' </summary>
+    Private Class DebugTextWriter
+        Inherits TextWriter
+
+        Public Overrides ReadOnly Property Encoding As Encoding
+            Get
+                Return Encoding.UTF8
+            End Get
+        End Property
+
+        ReadOnly _log As Action(Of String)
+
+        Sub New()
+            _log = AddressOf System.Diagnostics.Debug.WriteLine
+        End Sub
+
+        Sub New(log As Action(Of String))
+            _log = log
+        End Sub
+
+        Public Overrides Sub Write(value As String)
+            _log(value)
+        End Sub
+
+        Public Overrides Sub WriteLine(value As String)
+            _log(value)
+        End Sub
+    End Class
 End Class
