@@ -28,6 +28,13 @@ Public Class VsCodeEditor : Implements IFileReference
     Dim code As String
     Dim lang As String
 
+    ' single shared command channel (from galaxy/WebViewHelper). WebView2CommandChannel.Send
+    ' only really posts when IsReady = True, so we must set it after Init and keep the instance.
+    Dim _channel As WebView2CommandChannel
+
+    ' becomes True once the frontend signals EditorReady via postMessage.
+    Dim _editorReady As Boolean
+
     ''' <summary>
     ''' locate an embedded manifest resource by case-insensitive suffix match.
     ''' the embedded monaco resources are named "RDev.monaco-editor.zip" /
@@ -65,6 +72,12 @@ Public Class VsCodeEditor : Implements IFileReference
 
     Private Async Sub VsCodeEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await WebViewLoader.Init(WebView21)
+
+        ' create the shared command channel and mark it ready: WebView2CommandChannel.Send
+        ' only posts a message when IsReady = True (it is False by default).
+        _channel = New WebView2CommandChannel(WebView21)
+        _channel.IsReady = True
+        _editorReady = False
 
         ' intercept every request to our virtual host and serve it from the zip
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
@@ -119,8 +132,15 @@ Public Class VsCodeEditor : Implements IFileReference
 
             If msg.HasObjectKey("type") Then
                 If msg!type.AsString(True) = "EditorReady" Then
+                    _editorReady = True
+
+                    ' flush any text buffered before the frontend became ready
                     If Not code.StringEmpty Then
-                        Call New WebView2CommandChannel(WebView21).Send(EditorCommandType.SetText.ToString, code)
+                        Call _channel.Send(EditorCommandType.SetText.ToString, code)
+
+                        If Not lang.StringEmpty Then
+                            Call _channel.Send(EditorCommandType.SetLanguage.ToString, lang)
+                        End If
                     End If
                 End If
             End If
@@ -162,27 +182,36 @@ Public Class VsCodeEditor : Implements IFileReference
 
     ''' <summary>
     ''' set the editor content and optionally its language from the host.
+    ''' the text is pushed through the WebView2 command channel once both the
+    ''' WebView2 environment and the editor frontend are ready; otherwise it is
+    ''' buffered in <see cref="code"/> / <see cref="lang"/> and flushed when the
+    ''' frontend signals EditorReady.
     ''' </summary>
-    Public Async Function SetContent(content As String, Optional language As String = Nothing) As Task
+    Public Sub SetContent(content As String, Optional language As String = Nothing)
         code = content
         lang = language
+        FlushContent()
+    End Sub
 
-        If Not WebView21.CoreWebView2 Is Nothing Then
-            Await SetContentInternal(content, language)
-        End If
-    End Function
-
-    Private Async Function SetContentInternal(content As String, Optional language As String = Nothing) As Task
-        Dim script As String
-
-        If String.IsNullOrEmpty(language) Then
-            script = "window.setEditorContent(" & System.Text.Json.JsonSerializer.Serialize(content) & ");"
-        Else
-            script = "window.setEditorContent(" & System.Text.Json.JsonSerializer.Serialize(content) & "," & System.Text.Json.JsonSerializer.Serialize(language) & ");"
+    ''' <summary>
+    ''' push the buffered code/lang to the frontend, but only when both the
+    ''' WebView2 channel and the editor frontend are ready.
+    ''' </summary>
+    Private Sub FlushContent()
+        If _channel Is Nothing OrElse Not _channel.IsReady OrElse Not _editorReady Then
+            Return
         End If
 
-        Await WebView21.CoreWebView2.ExecuteScriptAsync(script)
-    End Function
+        If code.StringEmpty Then
+            Return
+        End If
+
+        Call _channel.Send(EditorCommandType.SetText.ToString, code)
+
+        If Not lang.StringEmpty Then
+            Call _channel.Send(EditorCommandType.SetLanguage.ToString, lang)
+        End If
+    End Sub
 
     ''' <summary>
     ''' get the current editor content (returns a JSON-unescaped string).
