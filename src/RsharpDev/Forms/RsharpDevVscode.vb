@@ -11,6 +11,7 @@ Public Class RsharpDevVscode
     Implements ISaveHandle
     Implements IFileReference
     Implements Viewer
+    Implements Editor
 
     ''' <summary>
     ''' the file path of the script file
@@ -77,7 +78,7 @@ Public Class RsharpDevVscode
         Return True
     End Function
 
-    Private Async Sub AsyncSave(file As Stream, encoding As Encoding)
+    Private Async Sub AsyncSave(file As Stream, encoding As Encoding) Implements Editor.Save
         Dim sw As New StreamWriter(file, encoding, leaveOpen:=True)
         Call sw.WriteLine(Await vscode.GetContent)
         Call sw.Flush()
@@ -94,5 +95,11 @@ Public Class RsharpDevVscode
         Else
             Call Save(FilePath, Encodings.UTF8WithoutBOM)
         End If
+    End Sub
+
+    Public Sub SetContent(scriptText As String, name As String) Implements Editor.SetContent
+        vscode.SetContent(scriptText, "r")
+        TabText = name
+        FilePath = name
     End Sub
 End Class
