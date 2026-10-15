@@ -1,10 +1,7 @@
-Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
-Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.Linq
 
 Namespace CVS
 
@@ -36,6 +33,14 @@ Namespace CVS
         End Function
     End Class
 
+    Public Interface IRunnerHost
+
+        Sub SetTask(program As String, args As String, workdir As String)
+
+        Function GetResult() As Task(Of RunResult)
+
+    End Interface
+
     ''' <summary>
     ''' run the R# script via the R# script host (``Rscript.exe``) and then
     ''' capture the standard output/error text of the child process.
@@ -53,9 +58,12 @@ Namespace CVS
         ''' </summary>
         Public Property TempFolder As String
 
-        Sub New(Optional rscript As String = Nothing, Optional temp As String = Nothing)
-            RscriptPath = If(rscript, ResolveRscript())
-            TempFolder = If(temp, DefaultTempFolder)
+        Dim host As Func(Of IRunnerHost)
+
+        Sub New(host As Func(Of IRunnerHost), Optional rscript As String = Nothing, Optional temp As String = Nothing)
+            Me.host = host
+            Me.RscriptPath = If(rscript, ResolveRscript())
+            Me.TempFolder = If(temp, DefaultTempFolder)
         End Sub
 
         Public Shared ReadOnly Property DefaultTempFolder As String
@@ -192,10 +200,7 @@ Namespace CVS
         ''' <param name="scriptFile">the R# script file that is to be executed</param>
         ''' <param name="args">the commandline arguments of the script</param>
         ''' <param name="workdir">the working directory of the script run</param>
-        Public Function Run(scriptFile As String,
-                           args As IEnumerable(Of RunArgument),
-                           Optional workdir As String = Nothing) As RunResult
-
+        Public Async Function Run(scriptFile As String, args As IEnumerable(Of RunArgument), Optional workdir As String = Nothing) As Task(Of RunResult)
             If RscriptPath.StringEmpty OrElse Not File.Exists(RscriptPath) Then
                 Return RunResult.Failed("R# script host 'Rscript.exe' is not found, please setup the location of the R# interpreter at first.")
             End If
@@ -212,59 +217,16 @@ Namespace CVS
 
             Dim argsLine As String = BuildArgumentLine(args)
             Dim cli As String = $"""{scriptFile}"" {argsLine}".Trim()
-            Dim stdout As String = Nothing
-            Dim stderr As String = Nothing
-            Dim exitCode As Integer = 0
-            Dim watch As Stopwatch = Stopwatch.StartNew()
+            Dim rhost As IRunnerHost = host()
 
-            Try
-                stdout = PipelineProcess.Call(
-                    app:=RscriptPath,
-                    args:=cli,
-                    stdErr:=stderr,
-                    exitCode:=exitCode,
-                    workdir:=If(workdir.StringEmpty, Nothing, workdir)
-                )
-            Catch ex As Exception
-                watch.Stop()
+            Call rhost.SetTask(RscriptPath, cli, If(workdir.StringEmpty, Nothing, workdir))
 
-                Return New RunResult With {
-                    .success = False,
-                    .message = ex.Message,
-                    .stdout = If(stdout, ""),
-                    .stderr = If(stderr, ""),
-                    .exitCode = exitCode,
-                    .durationMs = watch.ElapsedMilliseconds,
-                    .commandLine = $"{RscriptPath} {cli}",
-                    .scriptFile = scriptFile
-                }
-            End Try
+            Dim result As RunResult = Await rhost.GetResult
 
-            watch.Stop()
+            result.commandLine = $"{RscriptPath} {cli}"
+            result.scriptFile = scriptFile
 
-            Return New RunResult With {
-                .success = exitCode = 0,
-                .stdout = If(stdout, ""),
-                .stderr = If(stderr, ""),
-                .exitCode = exitCode,
-                .durationMs = watch.ElapsedMilliseconds,
-                .commandLine = $"{RscriptPath} {cli}",
-                .scriptFile = scriptFile
-            }
-        End Function
-
-        ''' <summary>
-        ''' run the R# script on a background thread
-        ''' </summary>
-        Public Function RunAsync(scriptFile As String,
-                                args As IEnumerable(Of RunArgument),
-                                Optional workdir As String = Nothing) As Task(Of RunResult)
-
-            Dim file As String = scriptFile
-            Dim argv As IEnumerable(Of RunArgument) = args
-            Dim dir As String = workdir
-
-            Return Task.Run(Function() Run(file, argv, dir))
+            Return result
         End Function
     End Class
 End Namespace

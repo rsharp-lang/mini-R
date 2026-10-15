@@ -29,21 +29,6 @@ Public Class ScriptManagerView
     ''' the file path of the R# script host program (Rscript.exe)
     ''' </summary>
     Public Property RscriptPath As String
-        Get
-            If runner Is Nothing Then
-                Return Nothing
-            End If
-
-            Return runner.RscriptPath
-        End Get
-        Set(value As String)
-            If runner Is Nothing Then
-                runner = New ScriptRunner(value)
-            Else
-                runner.RscriptPath = value
-            End If
-        End Set
-    End Property
 
     ''' <summary>
     ''' the underlying zip database of current control
@@ -71,6 +56,7 @@ Public Class ScriptManagerView
     ''' </summary>
     ''' <returns>the editor window that was created by the host application</returns>
     Public Property OpenEditor As Func(Of IEditor)
+    Public Property OpenTaskHost As Func(Of IRunnerHost)
 
     ''' <summary>
     ''' the editor window that is currently opened by the host application
@@ -164,10 +150,6 @@ Public Class ScriptManagerView
 
         DatabasePath = path
         db = CvsDatabase.Open(path)
-
-        If runner Is Nothing Then
-            runner = New ScriptRunner()
-        End If
 
         RaiseStatus($"database: {db.FilePath}", "info")
     End Sub
@@ -534,9 +516,14 @@ Public Class ScriptManagerView
                 workdir = runner.TempFolder
             End If
 
-            lastWorkdir = workdir
+            If runner Is Nothing Then
+                runner = New ScriptRunner(OpenTaskHost, RscriptPath, workdir)
+            End If
 
-            Dim result As RunResult = Await runner.RunAsync(scriptFile, args, workdir)
+            lastWorkdir = workdir
+            runner.RscriptPath = RscriptPath
+
+            Dim result As RunResult = Await runner.Run(scriptFile, args, workdir)
             Dim run As RunRecord = RunRecord.Create(sid, vid)
 
             run.workdir = workdir
@@ -734,13 +721,17 @@ Public Class ScriptManagerView
             Return
         End If
 
+        If runner Is Nothing Then
+            runner = New ScriptRunner(OpenTaskHost, RscriptPath)
+        End If
+
         Try
             RaiseStatus("running...", "busy")
 
             Dim code As String = db.GetVersionCode(sid, vid)
             Dim scriptFile As String = runner.ExportScript(vid, code)
             Dim workdir As String = If(lastWorkdir, runner.TempFolder)
-            Dim result As RunResult = Await runner.RunAsync(scriptFile, args, workdir)
+            Dim result As RunResult = Await runner.Run(scriptFile, args, workdir)
             Dim run As RunRecord = RunRecord.Create(sid, vid)
 
             run.workdir = workdir

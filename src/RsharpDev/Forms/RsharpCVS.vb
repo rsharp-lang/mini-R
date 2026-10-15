@@ -8,6 +8,7 @@ Public Class RsharpCVS
     Private Sub RsharpCVS_Load(sender As Object, e As EventArgs) Handles Me.Load
         ScriptManagerView1.OpenEditor = AddressOf OpenEditor
         ScriptManagerView1.RscriptPath = $"{App.HOME}\rstudio\bin\R#.exe"
+        ScriptManagerView1.OpenTaskHost = Function() CommonRuntime.ShowDocument(Of RsharpDevConsole)
 
         Call ApplyVsTheme(ScriptManagerView1.tsTools)
     End Sub
