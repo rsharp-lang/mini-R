@@ -1,11 +1,8 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Text
-Imports languageserver
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.Web.WebView2.Core
 
@@ -117,7 +114,8 @@ Public Class VsCodeEditor : Implements IFileReference
     End Sub
 
     Dim WithEvents _core As CoreWebView2
-    Dim WithEvents _lsp As lspclient
+
+    Shared _lsp As lspclient
 
     Private Async Sub VsCodeEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await WebViewLoader.Init(WebView21)
@@ -127,7 +125,10 @@ Public Class VsCodeEditor : Implements IFileReference
         _channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
         _editorReady = False
         _core = WebView21.CoreWebView2
-        _lsp = Await New lspclient(document.R, lspLog).Init()
+
+        If _lsp Is Nothing Then
+            _lsp = Await New lspclient(document.R, lspLog).Init()
+        End If
 
         ' intercept every request to our virtual host and serve it from the zip
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
