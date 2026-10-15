@@ -25,15 +25,11 @@
     <script>
         require.config({ paths: { 'vs': '/' } });
 
-        // 解决 CDN 加载 Monaco 的 Web Worker 跨域问题
-        window.MonacoEnvironment = {
-            getWorkerUrl: function (workerId, label) {
-                return `data:text/javascript;base64,${btoa(
-                    "self.MonacoEnvironment = { baseUrl: '/' }; " +
-                    "importScripts('/base/worker/workerMain.js')"
-                )}`;
-            }
-        };
+        // MonacoEnvironment.getWorkerUrl is injected from C# (VsCodeEditor) at
+        // document creation time, pointing each worker label to the matching
+        // file inside the embedded monaco-editor.zip (min/vs/assets/*worker*.js).
+        // The embedded zip has no base/worker/workerMain.js, so it must not be
+        // hardcoded here.
 
         require(['vs/editor/editor.main'], function () {
             // 创建编辑器实例

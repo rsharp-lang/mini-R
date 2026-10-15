@@ -73,12 +73,10 @@
     <None Remove="vscode\monaco-editor.zip" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="vscode\monaco-editor.html" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="vscode\monaco-editor.zip" />
+    <EmbeddedResource Include="vscode\monaco-editor.html" />
   </ItemGroup>
   
   <ItemGroup>

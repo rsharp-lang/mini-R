@@ -1,4 +1,7 @@
 ﻿Imports System.IO
+Imports System.Collections.Generic
+Imports System.Text.Json
+Imports Microsoft.Web.WebView2.Core
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
