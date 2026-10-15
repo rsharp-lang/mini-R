@@ -3,6 +3,8 @@ Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.Web.WebView2.Core
 
@@ -109,10 +111,19 @@ Public Class VsCodeEditor : Implements IFileReference
     End Sub
 
     Private Sub OnWebMessageReceived(sender As Object, e As CoreWebView2WebMessageReceivedEventArgs)
-        Dim message = e.TryGetWebMessageAsString()
-        ' the page posts "initialized" once the editor is ready; hook point for callers
-        If message = "initialized" Then
-            ' editor ready
+        Dim message As String = e.WebMessageAsJson
+        Dim json As JsonElement = JsonParser.Parse(message)
+
+        If TypeOf json Is JsonObject Then
+            Dim msg As JsonObject = DirectCast(json, JsonObject)
+
+            If msg.HasObjectKey("type") Then
+                If msg!type.AsString(True) = "EditorReady" Then
+                    If Not code.StringEmpty Then
+                        Call SetContentInternal(code, lang)
+                    End If
+                End If
+            End If
         End If
     End Sub
 
