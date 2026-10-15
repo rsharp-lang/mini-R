@@ -137,7 +137,7 @@ Namespace CVS
                 path = DefaultPath
             End If
 
-            Dim dir As String = Path.GetDirectoryName(path)
+            Dim dir As String = System.IO.Path.GetDirectoryName(path)
 
             If Not dir.StringEmpty AndAlso Not Directory.Exists(dir) Then
                 Call Directory.CreateDirectory(dir)
@@ -274,6 +274,16 @@ Namespace CVS
                 sidx.script.versionCount = sidx.versions.Count
                 sidx.script.runCount = sidx.runs.Count
                 sidx.script.updated = RunRecord.NowISO()
+
+                ' the script record of the per script index file is a deserialized
+                ' copy, so the counters must be mirrored back into the global
+                ' index to keep the statistic data of the database in sync.
+                For i As Integer = 0 To index.scripts.Count - 1
+                    If index.scripts(i).id = sidx.script.id Then
+                        index.scripts(i) = sidx.script
+                        Exit For
+                    End If
+                Next
             End If
 
             Call WriteEntry(zip, ScriptIndexPath(sidx.script.id), CvsJson.Serialize(sidx))

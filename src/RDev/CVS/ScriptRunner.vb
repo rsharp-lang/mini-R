@@ -59,7 +59,7 @@ Namespace CVS
 
         Public Shared ReadOnly Property DefaultTempFolder As String
             Get
-                Return Path.Combine(
+                Return System.IO.Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "RDev", "tmp")
             End Get
@@ -99,17 +99,17 @@ Namespace CVS
                 End If
 
                 ' Rscript.exe is the R# script host of the GCModeller runtime
-                candidates.Add(Path.Combine(dir, "Rscript.exe"))
-                candidates.Add(Path.Combine(dir, "R#.exe"))
-                candidates.Add(Path.Combine(dir, "R.exe"))
+                candidates.Add(System.IO.Path.Combine(dir, "Rscript.exe"))
+                candidates.Add(System.IO.Path.Combine(dir, "R#.exe"))
+                candidates.Add(System.IO.Path.Combine(dir, "R.exe"))
             Next
 
-            For Each path As String In candidates
-                If path.StringEmpty Then
+            For Each exe As String In candidates
+                If exe.StringEmpty Then
                     Continue For
                 End If
-                If File.Exists(path) Then
-                    Return path.GetFullPath
+                If File.Exists(exe) Then
+                    Return exe.GetFullPath
                 End If
             Next
 
@@ -131,16 +131,16 @@ Namespace CVS
                 name = "script"
             End If
 
-            For Each c As Char In Path.GetInvalidFileNameChars()
+            For Each c As Char In System.IO.Path.GetInvalidFileNameChars()
                 name = name.Replace(c, "-"c)
             Next
 
-            Dim path As String = Path.Combine(TempFolder, name & ".R")
+            Dim scriptPath As String = System.IO.Path.Combine(TempFolder, name & ".R")
             Dim utf8 As New UTF8Encoding(False)
 
-            Call File.WriteAllText(path, If(code, ""), utf8)
+            Call File.WriteAllText(scriptPath, If(code, ""), utf8)
 
-            Return path
+            Return scriptPath
         End Function
 
         ''' <summary>
@@ -165,7 +165,7 @@ Namespace CVS
                     Continue For
                 End If
 
-                Dim name As String = arg.name.Trim("--"c, "/"c, "-"c)
+                Dim name As String = arg.name.Trim("-"c, "/"c)
 
                 If name.StringEmpty Then
                     Continue For

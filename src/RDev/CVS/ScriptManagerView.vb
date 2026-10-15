@@ -1,0 +1,674 @@
+Imports System.IO
+Imports System.Reflection
+Imports System.Text
+Imports System.Text.Json
+Imports RDev.CVS
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.Web.WebView2.Core
+Imports Microsoft.Web.WebView2.WinForms
+
+''' <summary>
+''' A winform user control for manage the version history of the R# scripts:
+''' the left webview2 panel browses the script / version / run history of the
+''' zip database and the right monaco editor edits the script text of one
+''' specific version.
+''' </summary>
+Public Class ScriptManagerView
+
+    ''' <summary>the virtual host of the embedded html page</summary>
+    Shared ReadOnly host As String = "https://cvs.local/"
+    Shared ReadOnly resourceFilter As String = "https://cvs.local/*"
+
+    ''' <summary>
+    ''' the file path of the zip database package, by default is located at
+    ''' ``%LOCALAPPDATA%\RDev\scripts.rscvs``
+    ''' </summary>
+    Public Property DatabasePath As String
+
+    ''' <summary>
+    ''' the file path of the R# script host program (Rscript.exe)
+    ''' </summary>
+    Public Property RscriptPath As String
+        Get
+            If runner Is Nothing Then
+                Return Nothing
+            End If
+
+            Return runner.RscriptPath
+        End Get
+        Set(value As String)
+            If runner Is Nothing Then
+                runner = New ScriptRunner(value)
+            Else
+                runner.RscriptPath = value
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' the underlying zip database of current control
+    ''' </summary>
+    Public ReadOnly Property Database As CvsDatabase
+        Get
+            Return db
+        End Get
+    End Property
+
+    Public ReadOnly Property CurrentScriptId As String
+        Get
+            Return scriptId
+        End Get
+    End Property
+
+    Public ReadOnly Property CurrentVersionId As String
+        Get
+            Return versionId
+        End Get
+    End Property
+
+    ''' <summary>raised when a new version was created from the editor</summary>
+    Public Event VersionCreated As EventHandler(Of VersionRecord)
+    ''' <summary>raised when a run task was finished and written into the database</summary>
+    Public Event RunCompleted As EventHandler(Of RunRecord)
+    ''' <summary>the status text of current control</summary>
+    Public Event StatusMessage As EventHandler(Of String)
+
+    Dim db As CvsDatabase
+    Dim runner As ScriptRunner
+    Dim channel As WebView2CommandChannel
+    Dim pageReady As Boolean
+    Dim pending As New List(Of KeyValuePair(Of String, Object))
+    Dim WithEvents core As CoreWebView2
+
+    Dim scriptId As String
+    Dim versionId As String
+    Dim lastArgs As New List(Of RunArgument)
+    Dim lastWorkdir As String
+
+    Sub New()
+        Call InitializeComponent()
+    End Sub
+
+    ''' <summary>
+    ''' locate an embedded manifest resource by case-insensitive suffix match.
+    ''' </summary>
+    Private Shared Function GetManifestResource(suffix As String) As Stream
+        Dim asm As Assembly = GetType(ScriptManagerView).Assembly
+
+        For Each name As String In asm.GetManifestResourceNames()
+            If name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase) Then
+                Return asm.GetManifestResourceStream(name)
+            End If
+        Next
+
+        Throw New System.Resources.MissingManifestResourceException("Embedded resource ending with '" & suffix & "' was not found in assembly " & asm.FullName & ".")
+    End Function
+
+    Private Async Sub ScriptManagerView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If db Is Nothing Then
+            Call OpenDatabase(DatabasePath)
+        End If
+
+        Try
+            Await WebViewLoader.Init(WebView21)
+        Catch ex As Exception
+            RaiseStatus("webview2 init failed: " & ex.Message, "error")
+            Exit Sub
+        End Try
+
+        channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
+        core = WebView21.CoreWebView2
+
+        ' serve the html page of the script manager from the embedded resources
+        WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
+        WebView21.CoreWebView2.Navigate(host)
+    End Sub
+
+    ''' <summary>
+    ''' open or create the zip database package of the R# script CVS
+    ''' </summary>
+    Public Sub OpenDatabase(Optional path As String = Nothing)
+        If path.StringEmpty Then
+            path = CvsDatabase.DefaultPath
+        End If
+
+        DatabasePath = path
+        db = CvsDatabase.Open(path)
+
+        If runner Is Nothing Then
+            runner = New ScriptRunner()
+        End If
+
+        RaiseStatus($"database: {db.FilePath}", "info")
+    End Sub
+
+    Private Sub OnWebResourceRequested(sender As Object, e As CoreWebView2WebResourceRequestedEventArgs) Handles core.WebResourceRequested
+        Dim def = e.GetDeferral()
+
+        Try
+            Dim localPath As String = New Uri(e.Request.Uri).LocalPath.Trim("/"c).ToLower()
+            Dim file As String = Nothing
+            Dim mime As String = Nothing
+
+            Select Case localPath
+                Case "", "index.html", "manager.html"
+                    file = "manager.html"
+                    mime = "text/html; charset=utf-8"
+                Case "manager.css"
+                    file = "manager.css"
+                    mime = "text/css"
+                Case "manager.js"
+                    file = "manager.js"
+                    mime = "text/javascript"
+            End Select
+
+            If file Is Nothing Then
+                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(Nothing, 404, "Not Found", "Content-Type: text/plain")
+                Return
+            End If
+
+            Using res As Stream = GetManifestResource(file)
+                Dim ms As New MemoryStream
+
+                Call res.CopyTo(ms)
+                Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(ms, 200, "OK", "Content-Type: " & mime)
+            End Using
+        Catch ex As Exception
+            If e.Response Is Nothing Then
+                e.Response = WebView21.CoreWebView2.Environment.CreateWebResourceResponse(Nothing, 500, "Error", "Content-Type: text/plain")
+            End If
+        Finally
+            def.Complete()
+        End Try
+    End Sub
+
+    Private Sub OnWebMessageReceived(sender As Object, e As CoreWebView2WebMessageReceivedEventArgs) Handles core.WebMessageReceived
+        Try
+            Using doc As JsonDocument = JsonDocument.Parse(e.WebMessageAsJson)
+                Dim root As JsonElement = doc.RootElement
+                Dim typeEl As JsonElement
+
+                If Not root.TryGetProperty("type", typeEl) Then
+                    Return
+                End If
+
+                Dim type As String = typeEl.GetString()
+                Dim payload As JsonElement = Nothing
+
+                If root.TryGetProperty("payload", payload) Then
+                    Call Dispatch(type, payload)
+                Else
+                    Call Dispatch(type, Nothing)
+                End If
+            End Using
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    Private Sub Dispatch(type As String, payload As JsonElement)
+        Select Case type
+            Case CvsOutgoing.Ready
+                pageReady = True
+                Call FlushPending()
+                Call SendDatabase()
+                Call SendScripts()
+
+            Case CvsOutgoing.NewScript
+                Call CreateScript(CvsPayload.Str(payload, "name"))
+
+            Case CvsOutgoing.SelectScript
+                Call SelectScript(CvsPayload.Str(payload, "scriptId"))
+
+            Case CvsOutgoing.SelectVersion
+                Call SelectVersion(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "versionId"))
+
+            Case CvsOutgoing.OpenInEditor
+                Call OpenInEditor(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "versionId"))
+
+            Case CvsOutgoing.SaveVersion
+                Call SaveVersionAsync(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "comment"))
+
+            Case CvsOutgoing.RunScript
+                Call RunScriptAsync(payload)
+
+            Case CvsOutgoing.RequestOutput
+                Call SendRunOutput(CvsPayload.Str(payload, "scriptId"), CvsPayload.UInt(payload, "runId"))
+
+            Case CvsOutgoing.DeleteScript
+                Call RemoveScript(CvsPayload.Str(payload, "scriptId"))
+        End Select
+    End Sub
+
+    ' ===================== database -> page =====================
+
+    Private Sub SendDatabase()
+        If db Is Nothing Then
+            Return
+        End If
+
+        Call Post(CvsIncoming.Database, New Dictionary(Of String, Object) From {
+            {"path", db.FilePath},
+            {"statistic", db.Statistic()}
+        })
+    End Sub
+
+    Private Sub SendScripts()
+        If db Is Nothing Then
+            Return
+        End If
+
+        Call Post(CvsIncoming.Scripts, db.ListScripts())
+    End Sub
+
+    Private Sub SelectScript(scriptId As String)
+        If scriptId.StringEmpty Then
+            Return
+        End If
+
+        Me.scriptId = scriptId
+
+        Dim versions As VersionRecord() = db.ListVersions(scriptId)
+
+        Call Post(CvsIncoming.Versions, versions)
+
+        If versions.Length > 0 Then
+            Call SelectVersion(scriptId, versions(versions.Length - 1).versionId)
+        Else
+            versionId = Nothing
+
+            Call Post(CvsIncoming.Runs, New RunRecord() {})
+            Call Post(CvsIncoming.VersionDetail, New Dictionary(Of String, Object) From {
+                {"versionId", Nothing},
+                {"metadata", Nothing},
+                {"workdir", runner.TempFolder}
+            })
+        End If
+    End Sub
+
+    Private Sub SelectVersion(scriptId As String, versionId As String)
+        If Not scriptId.StringEmpty Then
+            Me.scriptId = scriptId
+        End If
+        If versionId.StringEmpty Then
+            Return
+        End If
+
+        Me.versionId = versionId
+
+        Dim ver As VersionRecord = db.GetVersion(Me.scriptId, versionId)
+        Dim workdir As String = If(lastWorkdir, runner.TempFolder)
+
+        Call Post(CvsIncoming.VersionDetail, New Dictionary(Of String, Object) From {
+            {"versionId", versionId},
+            {"metadata", If(ver Is Nothing, Nothing, ver.metadata)},
+            {"workdir", workdir}
+        })
+        Call Post(CvsIncoming.Runs, db.ListRuns(Me.scriptId, versionId))
+    End Sub
+
+    Private Sub SendRunOutput(scriptId As String, runId As UInteger)
+        If db Is Nothing OrElse runId = 0 Then
+            Return
+        End If
+
+        Dim id As String = If(scriptId, Me.scriptId)
+
+        Call Post(CvsIncoming.Output, New Dictionary(Of String, Object) From {
+            {"runId", runId},
+            {"stdout", db.GetRunOutput(id, runId, stderr:=False)},
+            {"stderr", db.GetRunOutput(id, runId, stderr:=True)}
+        })
+    End Sub
+
+    ' ===================== editor interop =====================
+
+    ''' <summary>
+    ''' load the script text of one version into the monaco editor
+    ''' </summary>
+    Public Sub OpenInEditor(Optional scriptId As String = Nothing, Optional versionId As String = Nothing)
+        If db Is Nothing Then
+            Return
+        End If
+        If Not scriptId.StringEmpty Then
+            Me.scriptId = scriptId
+        End If
+        If Not versionId.StringEmpty Then
+            Me.versionId = versionId
+        End If
+        If Me.versionId.StringEmpty Then
+            RaiseStatus("no version selected", "warn")
+            Return
+        End If
+
+        Try
+            Dim code As String = db.GetVersionCode(Me.scriptId, Me.versionId)
+
+            Call Editor.SetContent(If(code, ""), "r")
+            Call Editor.MarkAsSaved()
+
+            Editor.FilePath = Me.versionId & ".R"
+
+            RaiseStatus($"open {Me.versionId}", "info")
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' save the editor content as a new version when the script text was modified
+    ''' </summary>
+    Private Async Sub SaveVersionAsync(scriptId As String, comment As String)
+        If db Is Nothing Then
+            Return
+        End If
+        If Not scriptId.StringEmpty Then
+            Me.scriptId = scriptId
+        End If
+        If Me.scriptId.StringEmpty Then
+            RaiseStatus("no script selected", "warn")
+            Return
+        End If
+
+        Try
+            Dim code As String = Await Editor.GetContent()
+
+            If code.StringEmpty Then
+                RaiseStatus("the editor is empty, please open a script version at first", "warn")
+                Return
+            End If
+
+            Dim ver As VersionRecord = db.SaveVersion(Me.scriptId, code, comment, parentVersionId:=Me.versionId)
+
+            If ver Is Nothing Then
+                RaiseStatus("the script is not modified", "warn")
+            Else
+                versionId = ver.versionId
+
+                Call Editor.MarkAsSaved()
+
+                RaiseStatus($"new version {ver.versionId}", "ok")
+                RaiseEvent VersionCreated(Me, ver)
+
+                Call SendScripts()
+                Call Post(CvsIncoming.Versions, db.ListVersions(Me.scriptId))
+                Call SelectVersion(Me.scriptId, ver.versionId)
+            End If
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    ' ===================== script run =====================
+
+    Private Async Sub RunScriptAsync(payload As JsonElement)
+        Dim sid As String = If(CvsPayload.Str(payload, "scriptId"), scriptId)
+        Dim vid As String = If(CvsPayload.Str(payload, "versionId"), versionId)
+        Dim workdir As String = CvsPayload.Str(payload, "workdir")
+        Dim args As List(Of RunArgument) = CvsPayload.Arguments(payload, "args")
+
+        lastArgs = args
+
+        If db Is Nothing Then
+            Return
+        End If
+        If vid.StringEmpty Then
+            RaiseStatus("no version selected", "warn")
+            Return
+        End If
+
+        Try
+            RaiseStatus("running...", "busy")
+
+            Dim code As String = db.GetVersionCode(sid, vid)
+            Dim scriptFile As String = runner.ExportScript(vid, code)
+
+            If workdir.StringEmpty Then
+                workdir = runner.TempFolder
+            End If
+
+            lastWorkdir = workdir
+
+            Dim result As RunResult = Await runner.RunAsync(scriptFile, args, workdir)
+            Dim run As RunRecord = RunRecord.Create(sid, vid)
+
+            run.workdir = workdir
+            run.arguments = args
+            run.commandLine = result.commandLine
+            run.exitCode = result.exitCode
+            run.durationMs = result.durationMs
+            run.success = result.success
+
+            Call db.AddRun(run, result.stdout, result.stderr)
+
+            RaiseEvent RunCompleted(Me, run)
+
+            Call Post(CvsIncoming.Runs, db.ListRuns(sid, vid))
+            Call Post(CvsIncoming.RunResult, New Dictionary(Of String, Object) From {
+                {"ok", result.message Is Nothing},
+                {"exitCode", result.exitCode},
+                {"durationMs", result.durationMs},
+                {"stdout", result.stdout},
+                {"stderr", result.stderr},
+                {"message", result.message}
+            })
+            Call Post(CvsIncoming.Output, New Dictionary(Of String, Object) From {
+                {"runId", run.runId},
+                {"stdout", result.stdout},
+                {"stderr", result.stderr}
+            })
+
+            If result.message.StringEmpty Then
+                RaiseStatus($"exit {result.exitCode} in {result.durationMs}ms", If(result.exitCode = 0, "ok", "error"))
+            Else
+                RaiseStatus(result.message, "error")
+            End If
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    ' ===================== script manage =====================
+
+    Private Sub CreateScript(name As String)
+        If db Is Nothing Then
+            Return
+        End If
+        If name.StringEmpty Then
+            name = "script.R"
+        End If
+
+        Try
+            Dim rec As ScriptRecord = db.AddScript(name, NewScriptTemplate(name), comment:="create script")
+
+            scriptId = rec.id
+            versionId = rec.latestVersionId
+
+            Call SendScripts()
+            Call Post(CvsIncoming.Versions, db.ListVersions(rec.id))
+            Call SelectVersion(rec.id, versionId)
+            Call OpenInEditor(rec.id, versionId)
+
+            RaiseStatus($"script '{name}' created", "ok")
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    Private Sub RemoveScript(scriptId As String)
+        If db Is Nothing OrElse scriptId.StringEmpty Then
+            Return
+        End If
+
+        Try
+            Call db.DeleteScript(scriptId)
+
+            Me.scriptId = Nothing
+            versionId = Nothing
+
+            Call SendScripts()
+            Call Post(CvsIncoming.Versions, New VersionRecord() {})
+            Call Post(CvsIncoming.Runs, New RunRecord() {})
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' the template of a new created R# script
+    ''' </summary>
+    Public Shared Function NewScriptTemplate(name As String) As String
+        Dim title As String = If(name.StringEmpty, "unnamed script", name)
+        Dim sb As New StringBuilder
+
+        Call sb.AppendLine($"#' @title {title}")
+        Call sb.AppendLine($"#' @description a short description of the R# script '{title}'")
+        Call sb.AppendLine($"#' @author {Environment.UserName}")
+        Call sb.AppendLine()
+        Call sb.AppendLine("let input as string = ?""--input"" || ""test.txt"";")
+        Call sb.AppendLine("let debug as boolean = ?""--debug"";")
+        Call sb.AppendLine()
+        Call sb.AppendLine("print(`input=${input}`);")
+
+        Return sb.ToString()
+    End Function
+
+    ' ===================== message channel =====================
+
+    ''' <summary>
+    ''' post a message to the html page, the webview2 message api requires
+    ''' the call happens on the UI thread.
+    ''' </summary>
+    Private Sub Post(type As String, payload As Object)
+        If Me.InvokeRequired Then
+            Call Me.BeginInvoke(New Action(Sub() Post(type, payload)))
+            Return
+        End If
+        If channel Is Nothing OrElse Not channel.IsReady OrElse Not pageReady Then
+            pending.Add(New KeyValuePair(Of String, Object)(type, payload))
+            Return
+        End If
+
+        Call channel.Send(type, payload)
+    End Sub
+
+    Private Sub FlushPending()
+        If channel Is Nothing Then
+            Return
+        End If
+
+        For Each cmd As KeyValuePair(Of String, Object) In pending
+            Call channel.Send(cmd.Key, cmd.Value)
+        Next
+
+        pending.Clear()
+    End Sub
+
+    Private Sub RaiseStatus(text As String, Optional level As String = "info")
+        RaiseEvent StatusMessage(Me, text)
+
+        Call Post(CvsIncoming.Status, New Dictionary(Of String, Object) From {
+            {"text", text},
+            {"level", level}
+        })
+    End Sub
+
+    ' ===================== toolbar =====================
+
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Dim n As Integer = If(db Is Nothing, 0, db.ListScripts().Length)
+        Dim name As String = Interaction.InputBox("请输入新脚本的名称:", "新建 R# 脚本", $"script{n + 1}.R")
+
+        If name.StringEmpty Then
+            Return
+        End If
+
+        Call CreateScript(name.Trim)
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim comment As String = Interaction.InputBox("版本变更说明:", "保存新版本", "")
+
+        Call SaveVersionAsync(scriptId, If(comment, ""))
+    End Sub
+
+    Private Sub btnRun_Click(sender As Object, e As EventArgs) Handles btnRun.Click
+        If versionId.StringEmpty Then
+            RaiseStatus("no version selected", "warn")
+            Return
+        End If
+
+        Dim args As List(Of RunArgument) = If(lastArgs, New List(Of RunArgument)())
+
+        If args.Count = 0 AndAlso Not scriptId.StringEmpty AndAlso Not versionId.StringEmpty Then
+            ' fill the arguments from the metadata default value when the
+            ' html form was not submitted yet
+            Dim ver As VersionRecord = db.GetVersion(scriptId, versionId)
+
+            If Not ver Is Nothing AndAlso Not ver.metadata Is Nothing Then
+                For Each arg As ArgumentSpec In ver.metadata.arguments.SafeQuery
+                    args.Add(New RunArgument With {.name = arg.name, .value = arg.defaultValue})
+                Next
+            End If
+        End If
+
+        Call RunScriptAsyncFromToolbar(args)
+    End Sub
+
+    Private Async Sub RunScriptAsyncFromToolbar(args As List(Of RunArgument))
+        Dim sid As String = scriptId
+        Dim vid As String = versionId
+
+        If db Is Nothing OrElse vid.StringEmpty Then
+            Return
+        End If
+
+        Try
+            RaiseStatus("running...", "busy")
+
+            Dim code As String = db.GetVersionCode(sid, vid)
+            Dim scriptFile As String = runner.ExportScript(vid, code)
+            Dim workdir As String = If(lastWorkdir, runner.TempFolder)
+            Dim result As RunResult = Await runner.RunAsync(scriptFile, args, workdir)
+            Dim run As RunRecord = RunRecord.Create(sid, vid)
+
+            run.workdir = workdir
+            run.arguments = args
+            run.commandLine = result.commandLine
+            run.exitCode = result.exitCode
+            run.durationMs = result.durationMs
+            run.success = result.success
+
+            Call db.AddRun(run, result.stdout, result.stderr)
+
+            RaiseEvent RunCompleted(Me, run)
+
+            Call Post(CvsIncoming.Runs, db.ListRuns(sid, vid))
+            Call Post(CvsIncoming.Output, New Dictionary(Of String, Object) From {
+                {"runId", run.runId},
+                {"stdout", result.stdout},
+                {"stderr", result.stderr}
+            })
+
+            If result.message.StringEmpty Then
+                RaiseStatus($"exit {result.exitCode} in {result.durationMs}ms", If(result.exitCode = 0, "ok", "error"))
+            Else
+                RaiseStatus(result.message, "error")
+            End If
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        Call SendDatabase()
+        Call SendScripts()
+
+        If Not scriptId.StringEmpty Then
+            Call Post(CvsIncoming.Versions, db.ListVersions(scriptId))
+            Call SelectVersion(Nothing, versionId)
+        End If
+    End Sub
+End Class

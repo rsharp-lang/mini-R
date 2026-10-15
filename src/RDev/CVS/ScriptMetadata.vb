@@ -52,12 +52,116 @@ Namespace CVS
             If fallback Then
                 Call FallbackMeta(code, meta)
             End If
+            If meta.arguments Is Nothing OrElse meta.arguments.Length = 0 Then
+                ' the R# parser is unavailable for current script (for example
+                ' the script is under editing, or the R# runtime was compiled
+                ' in debug mode), so just scan the commandline getter expression
+                ' from the script text directly.
+                meta.arguments = FallbackArguments(code)
+            End If
 
             If meta.title.StringEmpty Then
                 meta.title = "<unnamed script>"
             End If
 
             Return meta
+        End Function
+
+        ''' <summary>
+        ''' the R# tokenizer of a debug compiled runtime throws a
+        ''' ``NotImplementedException`` on the ``?"--argument"`` commandline
+        ''' getter token, so the argument list is also scanned from the script
+        ''' text with a regex pattern as the fallback solution.
+        ''' </summary>
+        ''' <remarks>
+        ''' a VB module member can not be declared as Shared, so the compiled
+        ''' pattern is declared as a plain module field here.
+        ''' </remarks>
+        Private ReadOnly argGetter As New Regex("\?\s*([""']?)(?<name>[\w\.\-/]+)\1", RegexOptions.Compiled)
+
+        Private Function FallbackArguments(code As String) As ArgumentSpec()
+            Dim list As New List(Of ArgumentSpec)
+            Dim seen As New HashSet(Of String)
+
+            For Each line As String In code.LineTokens
+                Dim m As Match = argGetter.Match(line)
+
+                If Not m.Success Then
+                    Continue For
+                End If
+
+                Dim name As String = m.Groups("name").Value.Trim("-"c, "/"c)
+
+                If name.StringEmpty OrElse seen.Contains(name) Then
+                    Continue For
+                End If
+
+                Dim rest As String = line.Substring(m.Index + m.Length).Trim()
+                Dim type As String = InferType(line, rest)
+                Dim defaultValue As String = ""
+                Dim required As Boolean = False
+
+                seen.Add(name)
+
+                If rest.StartsWith("||") Then
+                    Dim expr As String = rest.Substring(2).Trim().TrimEnd(";"c).Trim()
+
+                    If expr.StartsWith("stop(") Then
+                        required = True
+                    Else
+                        defaultValue = TrimQuotes(expr)
+                    End If
+                End If
+
+                list.Add(New ArgumentSpec With {
+                    .name = name,
+                    .type = type,
+                    .defaultValue = defaultValue,
+                    .description = "",
+                    .required = required,
+                    .isLiteral = False
+                })
+            Next
+
+            Return list.ToArray()
+        End Function
+
+        ''' <summary>
+        ''' guess the data type of one commandline argument from its declaration
+        ''' expression or its default value literal
+        ''' </summary>
+        Private Function InferType(line As String, rest As String) As String
+            Dim decl As Match = Regex.Match(line, "^\s*(let|const)\s+[\w\.]+\s+as\s+(?<type>\w+)")
+
+            If decl.Success Then
+                Select Case decl.Groups("type").Value.ToLower()
+                    Case "integer", "int", "long" : Return "integer"
+                    Case "double", "numeric", "single", "decimal" : Return "double"
+                    Case "boolean", "logical", "bool" : Return "boolean"
+                    Case Else : Return "string"
+                End Select
+            End If
+
+            Dim def As Match = Regex.Match(rest, "\|\|\s*(?<v>.+?)\s*;?\s*$")
+            Dim value As String = If(def.Success, def.Groups("v").Value.Trim(), "")
+
+            If value.StringEmpty Then
+                Return "string"
+            End If
+            If Regex.IsMatch(value, "^[""'].*[""']$") Then
+                Return "string"
+            End If
+            If value.TextEquals("TRUE") OrElse value.TextEquals("FALSE") Then
+                Return "boolean"
+            End If
+            If Regex.IsMatch(value, "^-?\d+$") Then
+                Return "integer"
+            End If
+            If Regex.IsMatch(value, "^-?\d*\.\d+$") Then
+                Return "double"
+            End If
+
+            Return "string"
         End Function
 
         ''' <summary>
