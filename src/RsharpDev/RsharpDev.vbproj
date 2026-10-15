@@ -70,6 +70,7 @@
     <None Remove="RibbonMarkup.log" />
     <None Remove="RibbonMarkup.ribbon" />
     <None Remove="Forms\RsharpDevMain.resx~RF8a8648b.TMP" />
+    <None Remove="RibbonMarkup.xml.bak" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,3 @@
-Imports System.Collections.Generic
-
 Namespace CVS
 
     ''' <summary>
@@ -10,10 +8,6 @@ Namespace CVS
     ''' frontend reads the very same json keys, and the json serializer of the
     ''' host side (see <see cref="CvsJson"/>) does not rename any member.
     ''' </remarks>
-
-    ''' <summary>
-    ''' one managed R# script inside the database
-    ''' </summary>
     Public Class ScriptRecord
 
         ''' <summary>

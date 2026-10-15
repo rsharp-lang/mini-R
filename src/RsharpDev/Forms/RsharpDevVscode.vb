@@ -11,7 +11,7 @@ Public Class RsharpDevVscode
     Implements ISaveHandle
     Implements IFileReference
     Implements Viewer
-    Implements Editor
+    Implements IEditor
 
     ''' <summary>
     ''' the file path of the script file
@@ -19,6 +19,8 @@ Public Class RsharpDevVscode
     ''' <returns></returns>
     Public Property FilePath As String Implements IFileReference.FilePath
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+
+    Dim cvs As Boolean = False
 
     Private Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim console = CommonRuntime.GetOutputWindow
@@ -33,7 +35,11 @@ Public Class RsharpDevVscode
     End Sub
 
     Private Sub vscode_IsDirtyChanged(sender As Object, e As Boolean) Handles vscode.IsDirtyChanged
-        TabText = $"{FilePath.FileName} *"
+        If cvs Then
+            TabText = $"{FilePath} *"
+        Else
+            TabText = $"{FilePath.FileName} *"
+        End If
     End Sub
 
     Public Function View(file As String) As DockContent Implements Viewer.View
@@ -78,7 +84,7 @@ Public Class RsharpDevVscode
         Return True
     End Function
 
-    Private Async Sub AsyncSave(file As Stream, encoding As Encoding) Implements Editor.Save
+    Private Async Sub AsyncSave(file As Stream, encoding As Encoding)
         Dim sw As New StreamWriter(file, encoding, leaveOpen:=True)
         Call sw.WriteLine(Await vscode.GetContent)
         Call sw.Flush()
@@ -86,20 +92,27 @@ Public Class RsharpDevVscode
     End Sub
 
     Protected Overrides Sub SaveDocument()
-        If FilePath.StringEmpty(, True) Then
-            Using file As New SaveFileDialog With {.Filter = "R# script(*.r)|*.R"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Call Save(file.FileName, Encodings.UTF8WithoutBOM)
-                End If
-            End Using
-        Else
-            Call Save(FilePath, Encodings.UTF8WithoutBOM)
+        If Not cvs Then
+            If FilePath.StringEmpty(, True) Then
+                Using file As New SaveFileDialog With {.Filter = "R# script(*.r)|*.R"}
+                    If file.ShowDialog = DialogResult.OK Then
+                        Call Save(file.FileName, Encodings.UTF8WithoutBOM)
+                    End If
+                End Using
+            Else
+                Call Save(FilePath, Encodings.UTF8WithoutBOM)
+            End If
         End If
     End Sub
 
-    Public Sub SetContent(scriptText As String, name As String) Implements Editor.SetContent
-        vscode.SetContent(scriptText, "r")
-        TabText = name
-        FilePath = name
+    Public Sub LoadScript(code As String, Optional title As String = Nothing) Implements IEditor.LoadScript
+        TabText = title
+        FilePath = title
+        vscode.SetContent(code, "r")
+        cvs = True
     End Sub
+
+    Public Async Function SaveScript() As Task(Of String) Implements IEditor.SaveScript
+        Return Await vscode.GetContent
+    End Function
 End Class

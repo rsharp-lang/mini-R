@@ -54,6 +54,33 @@ Public Class ScriptManagerView
         End Get
     End Property
 
+    ''' <summary>
+    ''' the code editor provider of the host application: the script manager
+    ''' exports the script of one version as a temp file, then the delegate
+    ''' opens the file inside the editor window of the host application and
+    ''' returns the editor instance (a winform form that implements the
+    ''' <see cref="IEditor"/> interface).
+    '''
+    ''' ```
+    ''' view.OpenEditor = Function(scriptFile)
+    '''                      Dim doc As New RsharpDevVscode
+    '''                      Call doc.View(scriptFile)
+    '''                      Return doc
+    '''                  End Function
+    ''' ```
+    ''' </summary>
+    ''' <returns>the editor window that was created by the host application</returns>
+    Public Property OpenEditor As Func(Of String, IEditor)
+
+    ''' <summary>
+    ''' the editor window that is currently opened by the host application
+    ''' </summary>
+    Public ReadOnly Property Editor As IEditor
+        Get
+            Return _editor
+        End Get
+    End Property
+
     Public ReadOnly Property CurrentScriptId As String
         Get
             Return scriptId
@@ -84,6 +111,9 @@ Public Class ScriptManagerView
     Dim versionId As String
     Dim lastArgs As New List(Of RunArgument)
     Dim lastWorkdir As String
+    ' the editor window of the host application + the version that it displays
+    Dim _editor As IEditor
+    Dim _editorVersionId As String
 
     Sub New()
         Call InitializeComponent()
@@ -229,7 +259,7 @@ Public Class ScriptManagerView
                 Call OpenInEditor(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "versionId"))
 
             Case CvsOutgoing.SaveVersion
-                Call SaveVersionAsync(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "comment"))
+                Call SaveVersion(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "comment"))
 
             Case CvsOutgoing.RunScript
                 Call RunScriptAsync(payload)
@@ -326,8 +356,30 @@ Public Class ScriptManagerView
     ' ===================== editor interop =====================
 
     ''' <summary>
-    ''' load the script text of one version into the monaco editor
+    ''' export the script text of one version as a temp file, so that the host
+    ''' application can open it inside its own code editor window.
     ''' </summary>
+    Private Function ExportVersionFile(scriptId As String, versionId As String, code As String) As String
+        Dim dir As String = System.IO.Path.Combine(runner.TempFolder, scriptId)
+
+        If Not Directory.Exists(dir) Then
+            Call Directory.CreateDirectory(dir)
+        End If
+
+        Dim scriptPath As String = System.IO.Path.Combine(dir, versionId & ".R")
+
+        Call File.WriteAllText(scriptPath, If(code, ""), New UTF8Encoding(False))
+
+        Return scriptPath
+    End Function
+
+    ''' <summary>
+    ''' open the script of one version inside the code editor window of the host
+    ''' application, the editor window is created by the
+    ''' <see cref="OpenEditor"/> delegate.
+    ''' </summary>
+    ''' <param name="scriptId"></param>
+    ''' <param name="versionId"></param>
     Public Sub OpenInEditor(Optional scriptId As String = Nothing, Optional versionId As String = Nothing)
         If db Is Nothing Then
             Return
@@ -342,25 +394,46 @@ Public Class ScriptManagerView
             RaiseStatus("no version selected", "warn")
             Return
         End If
+        If OpenEditor Is Nothing Then
+            RaiseStatus("the host application does not provide a code editor", "warn")
+            Return
+        End If
 
         Try
             Dim code As String = db.GetVersionCode(Me.scriptId, Me.versionId)
+            Dim scriptFile As String = ExportVersionFile(Me.scriptId, Me.versionId, code)
+            Dim editor As IEditor = OpenEditor(scriptFile)
 
-            Call Editor.SetContent(If(code, ""), "r")
-            Call Editor.MarkAsSaved()
+            If editor Is Nothing Then
+                RaiseStatus("the code editor of the host application is unavailable", "error")
+                Return
+            End If
 
-            Editor.FilePath = Me.versionId & ".R"
+            Dim scriptName As String = Me.scriptId
+            Dim rec As ScriptRecord = db.GetScript(Me.scriptId)
 
-            RaiseStatus($"open {Me.versionId}", "info")
+            If rec IsNot Nothing Then
+                scriptName = rec.name
+            End If
+
+            Call editor.LoadScript(If(code, ""), $"{scriptName} [{Me.versionId}]")
+
+            _editor = editor
+            _editorVersionId = Me.versionId
+
+            RaiseStatus($"open {Me.versionId} in editor", "info")
         Catch ex As Exception
             RaiseStatus(ex.Message, "error")
         End Try
     End Sub
 
     ''' <summary>
-    ''' save the editor content as a new version when the script text was modified
+    ''' save the script of the editor window as a new version when the script
+    ''' text was modified
     ''' </summary>
-    Private Async Sub SaveVersionAsync(scriptId As String, comment As String)
+    ''' <param name="scriptId"></param>
+    ''' <param name="comment">the change comment of the new version</param>
+    Public Async Sub SaveVersion(Optional scriptId As String = Nothing, Optional comment As String = Nothing)
         If db Is Nothing Then
             Return
         End If
@@ -371,23 +444,29 @@ Public Class ScriptManagerView
             RaiseStatus("no script selected", "warn")
             Return
         End If
+        If _editor Is Nothing Then
+            RaiseStatus("please open the script in the code editor at first", "warn")
+            Return
+        End If
 
         Try
-            Dim code As String = Await Editor.GetContent()
+            ' ask the editor window to save its content and then gets the
+            ' current script text back for write into the database
+            Dim code As String = Await _editor.SaveScript()
 
             If code.StringEmpty Then
-                RaiseStatus("the editor is empty, please open a script version at first", "warn")
+                RaiseStatus("the script of the editor window is empty", "warn")
                 Return
             End If
 
-            Dim ver As VersionRecord = db.SaveVersion(Me.scriptId, code, comment, parentVersionId:=Me.versionId)
+            Dim parent As String = If(_editorVersionId, Me.versionId)
+            Dim ver As VersionRecord = db.SaveVersion(Me.scriptId, code, comment, parentVersionId:=parent)
 
             If ver Is Nothing Then
                 RaiseStatus("the script is not modified", "warn")
             Else
                 versionId = ver.versionId
-
-                Call Editor.MarkAsSaved()
+                _editorVersionId = ver.versionId
 
                 RaiseStatus($"new version {ver.versionId}", "ok")
                 RaiseEvent VersionCreated(Me, ver)
@@ -588,10 +667,14 @@ Public Class ScriptManagerView
         Call CreateScript(name.Trim)
     End Sub
 
+    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
+        Call OpenInEditor()
+    End Sub
+
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim comment As String = Interaction.InputBox("版本变更说明:", "保存新版本", "")
 
-        Call SaveVersionAsync(scriptId, If(comment, ""))
+        Call SaveVersion(scriptId, If(comment, ""))
     End Sub
 
     Private Sub btnRun_Click(sender As Object, e As EventArgs) Handles btnRun.Click
