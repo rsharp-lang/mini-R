@@ -37,8 +37,8 @@ require(['vs/editor/editor.main'], function () {
         document.getElementById('container'),
         {
             value: '',
-            language: 'csharp',
-            theme: 'vs-dark'
+            language: 'r',
+            theme: 'vs-light'
         }
     );
 
@@ -228,3 +228,16 @@ require(['vs/editor/editor.main'], function () {
     send(Outgoing.EditorReady);
     /*===================================================*/
 });
+
+// 调用：设置编辑器内容
+window.setEditorContent = function (content, language) {
+    window.editor.setValue(content);
+    if (language) {
+        monaco.editor.setModelLanguage(window.editor.getModel(), language);
+    }
+};
+
+// 调用：获取编辑器内容
+window.getEditorContent = function () {
+    return window.editor.getValue();
+};

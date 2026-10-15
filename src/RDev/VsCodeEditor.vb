@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
@@ -22,13 +23,16 @@ Public Class VsCodeEditor : Implements IFileReference
     Shared ReadOnly cdn As ZipStream
     Shared ReadOnly editor_js As String
 
+    Dim code As String
+    Dim lang As String
+
     ''' <summary>
     ''' locate an embedded manifest resource by case-insensitive suffix match.
     ''' the embedded monaco resources are named "RDev.monaco-editor.zip" /
     ''' "RDev.monaco-editor.html" (no folder prefix), so match by suffix.
     ''' </summary>
     Private Shared Function GetManifestResource(suffix As String) As Stream
-        Dim asm As System.Reflection.Assembly = GetType(VsCodeEditor).Assembly
+        Dim asm As Assembly = GetType(VsCodeEditor).Assembly
         For Each name As String In asm.GetManifestResourceNames()
             If name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase) Then
                 Return asm.GetManifestResourceStream(name)
@@ -64,10 +68,6 @@ Public Class VsCodeEditor : Implements IFileReference
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
         AddHandler WebView21.CoreWebView2.WebResourceRequested, AddressOf OnWebResourceRequested
         AddHandler WebView21.CoreWebView2.WebMessageReceived, AddressOf OnWebMessageReceived
-
-        ' inject MonacoEnvironment.getWorkerUrl before any page script runs so the
-        ' workers are served from the zip (which has no base/worker/workerMain.js).
-        Await WebView21.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(BuildWorkerScript())
 
         ' navigate to the virtual host; the document itself comes from the embedded html
         WebView21.CoreWebView2.Navigate(host)
@@ -150,64 +150,26 @@ Public Class VsCodeEditor : Implements IFileReference
     End Function
 
     ''' <summary>
-    ''' build the MonacoEnvironment.getWorkerUrl injector. the worker file names are
-    ''' hashed in the packaged zip, so discover them from the assets folder.
-    ''' </summary>
-    Private Function BuildWorkerScript() As String
-        Dim labelToFile As New Dictionary(Of String, String)
-        Dim prefixToLabel As New Dictionary(Of String, String) From {
-            {"editor.worker", "editor"},
-            {"json.worker", "json"},
-            {"css.worker", "css"},
-            {"html.worker", "html"},
-            {"ts.worker", "typescript"}
-        }
-
-        For Each entry As String In cdn.GetFiles()
-            If entry.StartsWith("min/vs/assets/", StringComparison.OrdinalIgnoreCase) AndAlso entry.IndexOf(".worker", StringComparison.OrdinalIgnoreCase) >= 0 Then
-                Dim baseName = IO.Path.GetFileName(entry)
-                For Each kvp In prefixToLabel
-                    If baseName.StartsWith(kvp.Key, StringComparison.OrdinalIgnoreCase) Then
-                        If Not labelToFile.ContainsKey(kvp.Value) Then
-                            labelToFile(kvp.Value) = baseName
-                        End If
-                        If kvp.Value = "typescript" AndAlso Not labelToFile.ContainsKey("javascript") Then
-                            labelToFile("javascript") = baseName
-                        End If
-                    End If
-                Next
-            End If
-        Next
-
-        Dim sb As New System.Text.StringBuilder()
-        sb.Append("window.MonacoEnvironment=window.MonacoEnvironment||{};")
-        sb.Append("window.MonacoEnvironment.getWorkerUrl=function(workerId,label){")
-        sb.Append("var w=")
-        sb.Append("{")
-        Dim first = True
-        For Each kvp In labelToFile
-            If Not first Then sb.Append(",")
-            first = False
-            sb.Append("""").Append(kvp.Key).Append(""":""").Append(kvp.Value).Append("""")
-        Next
-        sb.Append("};")
-        sb.Append("var f=w[label]||w['editor'];")
-        sb.Append("return '").Append(host).Append("assets/'+f;")
-        sb.Append("};")
-        Return sb.ToString()
-    End Function
-
-    ''' <summary>
     ''' set the editor content and optionally its language from the host.
     ''' </summary>
     Public Async Function SetContent(content As String, Optional language As String = Nothing) As Task
-        If WebView21.CoreWebView2 Is Nothing Then Return
+        code = content
+        lang = language
+
+        If Not WebView21.CoreWebView2 Is Nothing Then
+            Await SetContentInternal(content, language)
+        End If
+    End Function
+
+    Private Async Function SetContentInternal(content As String, Optional language As String = Nothing) As Task
         Dim script As String
+
         If String.IsNullOrEmpty(language) Then
             script = "window.setEditorContent(" & System.Text.Json.JsonSerializer.Serialize(content) & ");"
         Else
             script = "window.setEditorContent(" & System.Text.Json.JsonSerializer.Serialize(content) & "," & System.Text.Json.JsonSerializer.Serialize(language) & ");"
         End If
+
         Await WebView21.CoreWebView2.ExecuteScriptAsync(script)
     End Function
 
@@ -221,4 +183,7 @@ Public Class VsCodeEditor : Implements IFileReference
         Return System.Text.Json.JsonSerializer.Deserialize(Of String)(result)
     End Function
 
+    Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
+
+    End Sub
 End Class

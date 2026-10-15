@@ -38,6 +38,7 @@ Public Class RsharpDevVscode
         End If
 
         vscode.FilePath = FilePath
+        vscode.SetContent(FilePath.ReadAllText, "r")
 
         Return Me
     End Function
