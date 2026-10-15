@@ -6632,6 +6632,9 @@ Global
 		..\galaxy\src\RibbonEventBinding\RibbonEventBinding.projitems*{72a4c1ee-5cbf-4f72-9b71-c997d7e33c18}*SharedItemsImports = 13
 		..\galaxy\src\LicenseFramework\Shared\LicenseShared.projitems*{9a577141-0e9a-36a2-872b-fd316db164a5}*SharedItemsImports = 5
 		..\galaxy\src\WebViewHelper\WebViewHelper.projitems*{9a577141-0e9a-36a2-872b-fd316db164a5}*SharedItemsImports = 5
+		..\galaxy\src\RibbonEventBinding\RibbonEventBinding.projitems*{a665798e-dad3-47ba-94db-b8a83488b5d9}*SharedItemsImports = 5
+		..\galaxy\src\WebViewHelper\WebViewHelper.projitems*{a665798e-dad3-47ba-94db-b8a83488b5d9}*SharedItemsImports = 5
+		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{a665798e-dad3-47ba-94db-b8a83488b5d9}*SharedItemsImports = 5
 		..\galaxy\src\WebViewHelper\WebViewHelper.projitems*{ceb7782e-585a-48f5-95b9-4c01cead6b0c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
