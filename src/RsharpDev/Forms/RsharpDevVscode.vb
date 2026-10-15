@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
@@ -18,14 +19,14 @@ Public Class RsharpDevVscode
     Public Property FilePath As String Implements IFileReference.FilePath
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
 
-    Dim WithEvents vscode As New VsCodeEditor
-
     Private Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Controls.Add(vscode)
-        vscode.Dock = DockStyle.Fill
+        Dim console = CommonRuntime.GetOutputWindow
+
         TabText = "New script"
         Text = TabText
 
+        vscode.Dock = DockStyle.Fill
+        vscode.lspLog = Sub(msg) console.AppendTo("lsp", msg)
         vscode.SetMinimapEnabled(True)
         vscode.SetLineNumbers(LineNumbersMode.On)
     End Sub

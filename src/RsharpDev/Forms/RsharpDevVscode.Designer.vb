@@ -25,17 +25,35 @@ Partial Class RsharpDevVscode
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevVscode))
-        Me.SuspendLayout()
-        '
-        'RsharpDevVscode
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RsharpDevVscode"
-        Me.Text = "vscode"
-        Me.ResumeLayout(False)
+        vscode = New RDev.VsCodeEditor()
+        SuspendLayout()
+        ' 
+        ' VsCodeEditor1
+        ' 
+        vscode.Dock = DockStyle.Fill
+        vscode.FilePath = Nothing
+        vscode.Location = New Point(0, 0)
+        vscode.Margin = New Padding(4, 4, 4, 4)
+        vscode.Name = "VsCodeEditor1"
+        vscode.Size = New Size(1000, 640)
+        vscode.TabIndex = 1
+        ' 
+        ' RsharpDevVscode
+        ' 
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(1000, 640)
+        Controls.Add(vscode)
+        DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
+        DoubleBuffered = True
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Name = "RsharpDevVscode"
+        ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
+        TabPageContextMenuStrip = DockContextMenuStrip1
+        Text = "vscode"
+        ResumeLayout(False)
 
     End Sub
+
+    Friend WithEvents vscode As RDev.VsCodeEditor
 End Class

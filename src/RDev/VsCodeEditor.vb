@@ -5,7 +5,6 @@ Imports languageserver
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.Web.WebView2.Core
 
@@ -102,6 +101,8 @@ Public Class VsCodeEditor : Implements IFileReference
         Throw New System.Resources.MissingManifestResourceException("Embedded resource ending with '" & suffix & "' was not found in assembly " & asm.FullName & ".")
     End Function
 
+    Public Property lspLog As Action(Of String) = AddressOf System.Diagnostics.Debug.WriteLine
+
     Shared Sub New()
         ' load the embedded monaco-editor.zip into the in-memory zip virtual fs.
         ' the manifest resource stream is released after copying into a standalone
@@ -122,6 +123,8 @@ Public Class VsCodeEditor : Implements IFileReference
         End Using
     End Sub
 
+    Dim WithEvents _core As CoreWebView2
+
     Private Async Sub VsCodeEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await WebViewLoader.Init(WebView21)
 
@@ -129,34 +132,35 @@ Public Class VsCodeEditor : Implements IFileReference
         ' only posts a message when IsReady = True (it is False by default).
         _channel = New WebView2CommandChannel(WebView21) With {.IsReady = True}
         _editorReady = False
+        _core = WebView21.CoreWebView2
 
         ' intercept every request to our virtual host and serve it from the zip
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
-        AddHandler WebView21.CoreWebView2.WebResourceRequested, AddressOf OnWebResourceRequested
-        AddHandler WebView21.CoreWebView2.WebMessageReceived, AddressOf OnWebMessageReceived
 
         ' create the in-process R# language server lazily and warm it up on a
         ' background thread: the REnv load + global symbol scan take seconds and
         ' must not block the UI thread (nor the editor startup).
         If _lsp Is Nothing Then
-            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, New DebugTextWriter()))
+            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, New DebugTextWriter(lspLog)))
         End If
 
-        Call Task.Run(Sub()
-                          Try
-                              Dim server = _lsp.Value
+        Call Task.Run(
+            Sub()
+                Try
+                    Dim server = _lsp.Value
 
-                              System.Diagnostics.Debug.WriteLine("[rsharp-lsp] server ready: " & server.GetType.Name)
-                          Catch ex As Exception
-                              System.Diagnostics.Debug.WriteLine("[rsharp-lsp] warmup failed: " & ex.Message)
-                          End Try
-                      End Sub)
+                    System.Diagnostics.Debug.WriteLine("[rsharp-lsp] server ready: " & server.GetType.Name)
+                Catch ex As Exception
+                    System.Diagnostics.Debug.WriteLine("[rsharp-lsp] warmup failed: " & ex.Message)
+                End Try
+            End Sub)
 
         ' navigate to the virtual host; the document itself comes from the embedded html
+        _lspLog("open monaco-editor.")
         WebView21.CoreWebView2.Navigate(host)
     End Sub
 
-    Private Sub OnWebResourceRequested(sender As Object, e As CoreWebView2WebResourceRequestedEventArgs)
+    Private Sub OnWebResourceRequested(sender As Object, e As CoreWebView2WebResourceRequestedEventArgs) Handles _core.WebResourceRequested
         Dim def = e.GetDeferral()
         Try
             Dim localPath = New Uri(e.Request.Uri).LocalPath
@@ -191,7 +195,7 @@ Public Class VsCodeEditor : Implements IFileReference
         End Try
     End Sub
 
-    Private Sub OnWebMessageReceived(sender As Object, e As CoreWebView2WebMessageReceivedEventArgs)
+    Private Sub OnWebMessageReceived(sender As Object, e As CoreWebView2WebMessageReceivedEventArgs) Handles _core.WebMessageReceived
         Dim message As String = e.WebMessageAsJson
 
         ' parse with System.Text.Json for robust, typed payload extraction.
@@ -392,12 +396,22 @@ Public Class VsCodeEditor : Implements IFileReference
             End Get
         End Property
 
+        ReadOnly _log As Action(Of String)
+
+        Sub New()
+            _log = AddressOf System.Diagnostics.Debug.WriteLine
+        End Sub
+
+        Sub New(log As Action(Of String))
+            _log = log
+        End Sub
+
         Public Overrides Sub Write(value As String)
-            System.Diagnostics.Debug.Write(value)
+            _log(value)
         End Sub
 
         Public Overrides Sub WriteLine(value As String)
-            System.Diagnostics.Debug.WriteLine(value)
+            _log(value)
         End Sub
     End Class
 
