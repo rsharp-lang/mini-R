@@ -68,6 +68,14 @@
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="vscode\monaco-editor.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="vscode\monaco-editor.zip" />
+  </ItemGroup>
   
   <ItemGroup>
     <Import Include="System.Data" />
