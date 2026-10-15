@@ -15,6 +15,8 @@ Namespace CVS
         Public Const Output As String = "Output"
         Public Const RunResult As String = "RunResult"
         Public Const Status As String = "Status"
+        ''' <summary>the full text search hits of the script code</summary>
+        Public Const SearchResults As String = "SearchResults"
     End Class
 
     ''' <summary>
@@ -31,6 +33,8 @@ Namespace CVS
         Public Const RunScript As String = "RunScript"
         Public Const DeleteScript As String = "DeleteScript"
         Public Const RequestOutput As String = "RequestOutput"
+        ''' <summary>fuzzy search the script code, an empty query lists all scripts</summary>
+        Public Const SearchScripts As String = "SearchScripts"
     End Class
 
     ''' <summary>

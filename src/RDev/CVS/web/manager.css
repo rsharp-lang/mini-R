@@ -324,6 +324,19 @@ body {
     white-space: nowrap;
 }
 
+.item-snippet {
+    margin-top: 2px;
+    padding: 2px 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+    background: var(--side-2);
+    border-radius: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .item-right {
     margin-left: auto;
     font-size: 11px;

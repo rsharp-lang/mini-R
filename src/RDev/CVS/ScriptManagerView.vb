@@ -269,6 +269,9 @@ Public Class ScriptManagerView
 
             Case CvsOutgoing.DeleteScript
                 Call RemoveScript(CvsPayload.Str(payload, "scriptId"))
+
+            Case CvsOutgoing.SearchScripts
+                Call SearchScripts(CvsPayload.Str(payload, "query"))
         End Select
     End Sub
 
@@ -291,6 +294,29 @@ Public Class ScriptManagerView
         End If
 
         Call Post(CvsIncoming.Scripts, db.ListScripts())
+    End Sub
+
+    ''' <summary>
+    ''' fuzzy search the script code with the qgram full text index, an empty
+    ''' query just list all of the scripts of the database.
+    ''' </summary>
+    Private Sub SearchScripts(query As String)
+        If db Is Nothing Then
+            Return
+        End If
+        If query.StringEmpty Then
+            Call SendScripts()
+            Return
+        End If
+
+        Try
+            Dim hits As ScriptSearchHit() = db.SearchScripts(query, top:=30)
+
+            Call Post(CvsIncoming.SearchResults, hits)
+            RaiseStatus($"search '{query}': {hits.Length} hits", "info")
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
     End Sub
 
     Private Sub SelectScript(scriptId As String)

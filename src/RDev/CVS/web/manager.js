@@ -35,6 +35,7 @@
 
     const state = {
         scripts: [],
+        search: null,        // not null: the script list displays the search hits
         versions: [],
         runs: [],
         scriptId: null,
@@ -248,15 +249,16 @@
     /* ============================ render: scripts ============================ */
 
     function renderScripts() {
-        const filter = (dom.scriptFilter.value || '').trim().toLowerCase();
-        const list = state.scripts.filter(function (s) {
-            if (!filter) return true;
-            const name = (s.name || '') + ' ' + (s.title || '');
-            return name.toLowerCase().indexOf(filter) >= 0;
-        });
+        if (state.search) {
+            renderSearchHits();
+            return;
+        }
+
+        const list = state.scripts;
 
         dom.scriptList.innerHTML = '';
         dom.scriptEmpty.hidden = list.length > 0;
+        dom.scriptEmpty.textContent = '暂无脚本，点击 ＋ 新建';
 
         list.forEach(function (s) {
             const li = el('li');
@@ -268,6 +270,37 @@
             li.appendChild(main);
             li.appendChild(el('div', 'item-sub',
                 (s.title || 'no title') + ' · ' + (s.updated || '')));
+
+            li.addEventListener('click', function () { selectScript(s.id); });
+            dom.scriptList.appendChild(li);
+        });
+    }
+
+    /**
+     * the script list is driven by the qgram full text index of the host:
+     * every hit is a script with its similarity rank and a code snippet
+     */
+    function renderSearchHits() {
+        const hits = state.search || [];
+
+        dom.scriptList.innerHTML = '';
+        dom.scriptEmpty.hidden = hits.length > 0;
+        dom.scriptEmpty.textContent = '没有匹配的脚本';
+
+        hits.forEach(function (hit) {
+            const s = hit.script || {};
+            const li = el('li');
+
+            if (s.id === state.scriptId) li.className = 'selected';
+
+            const main = el('div', 'item-main');
+
+            main.appendChild(el('span', 'item-name', s.name || s.id));
+            main.appendChild(el('span', 'badge', (hit.score || 0).toFixed(2)));
+            li.appendChild(main);
+
+            if (hit.snippet) li.appendChild(el('div', 'item-snippet', hit.snippet));
+            if (s.title) li.appendChild(el('div', 'item-sub', s.title));
 
             li.addEventListener('click', function () { selectScript(s.id); });
             dom.scriptList.appendChild(li);
@@ -502,9 +535,17 @@
 
     handlers[Incoming.Scripts] = function (payload) {
         state.scripts = payload || [];
+        // a full script list reply always leaves the search mode
+        state.search = null;
+
         if (state.scripts.length && !state.scriptId) {
             state.scriptId = state.scripts[0].id;
         }
+        renderScripts();
+    };
+
+    handlers[Incoming.SearchResults] = function (payload) {
+        state.search = payload || [];
         renderScripts();
     };
 
@@ -560,7 +601,24 @@
 
     /* ============================ ui events ============================ */
 
-    dom.scriptFilter.addEventListener('input', renderScripts);
+    // the filter box is a full text search box now: the query is evaluated by
+    // the qgram index of the host side (debounced, an empty query lists all)
+    let searchTimer = null;
+
+    dom.scriptFilter.addEventListener('input', function () {
+        const q = (dom.scriptFilter.value || '').trim();
+
+        if (searchTimer) clearTimeout(searchTimer);
+
+        searchTimer = setTimeout(function () {
+            if (!q) {
+                state.search = null;
+                renderScripts();
+            }
+
+            send(Outgoing.SearchScripts, { query: q });
+        }, 250);
+    });
 
     dom.btnNewScript.addEventListener('click', function () {
         dom.newScriptName.value = 'script' + (state.scripts.length + 1) + '.R';

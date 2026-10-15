@@ -6,6 +6,7 @@ Imports System.Text.Encodings.Web
 Imports System.Text.Json
 Imports System.Text.Json.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Data.Trinity.NLP
 
 Namespace CVS
 
@@ -96,9 +97,20 @@ Namespace CVS
         ''' </summary>
         Shared ReadOnly sync As New Object
 
+        ''' <summary>
+        ''' the marker line of the indexed document, the qgram index module
+        ''' generates the document id by it self, so the script id has to be
+        ''' encoded into the document text for map the search result back.
+        ''' </summary>
+        Const DOC_ID_TAG As String = "#cvsid:"
+
         ReadOnly file As String
         Dim index As CvsIndex
         Dim disposed As Boolean
+        ' the qgram full text index of the script code (lazy rebuild)
+        Dim textIndex As QGramFullText
+        Dim textIndexCode As Dictionary(Of String, String)
+        Dim textIndexDirty As Boolean = True
 
         ''' <summary>
         ''' the file path of current database package
@@ -353,6 +365,8 @@ Namespace CVS
                     Call SaveGlobalIndex(zip)
                 End Using
 
+                textIndexDirty = True
+
                 Return rec
             End SyncLock
         End Function
@@ -374,6 +388,8 @@ Namespace CVS
                     Call DeleteFolder(zip, $"scripts/{scriptId}/")
                     Call SaveGlobalIndex(zip)
                 End Using
+
+                textIndexDirty = True
 
                 Return True
             End SyncLock
@@ -405,6 +421,10 @@ Namespace CVS
                     If ver IsNot Nothing Then
                         Call SaveScriptIndex(zip, sidx)
                         Call SaveGlobalIndex(zip)
+
+                        ' the script code was changed, the full text index
+                        ' should be rebuild on the next search
+                        textIndexDirty = True
                     End If
 
                     Return ver
@@ -640,6 +660,202 @@ Namespace CVS
 
                 Return True
             End SyncLock
+        End Function
+
+        ' ===================== full text search =====================
+
+        ''' <summary>
+        ''' build (or reuse) the qgram full text index of the script code. the
+        ''' index is created from the newest version of each script, and it is
+        ''' rebuild in a lazy manner after the database was modified.
+        ''' </summary>
+        Private Function BuildTextIndex() As QGramFullText
+            If textIndex IsNot Nothing AndAlso Not textIndexDirty Then
+                Return textIndex
+            End If
+
+            Dim idx As New QGramFullText(q:=3, tokenlicer:=AddressOf CodeTokens)
+            Dim codes As New Dictionary(Of String, String)
+
+            Using zip As ZipArchive = OpenArchive()
+                For Each script As ScriptRecord In index.scripts
+                    Dim sidx As ScriptIndex = LoadScriptIndex(zip, script.id)
+                    Dim code As String = ""
+
+                    If sidx IsNot Nothing AndAlso sidx.versions.Count > 0 Then
+                        Dim last As VersionRecord = sidx.versions(sidx.versions.Count - 1)
+
+                        code = ReadEntry(zip, CodePath(script.id, last.versionId))
+                    End If
+
+                    If code Is Nothing Then
+                        code = ""
+                    End If
+
+                    codes(script.id) = code
+
+                    ' the script name/title is indexed together with the code
+                    ' so that a query can also hit the script by its name
+                    Dim doc As String = $"{DOC_ID_TAG}{script.id}" & vbLf &
+                                        script.name & vbLf &
+                                        script.title & vbLf &
+                                        code
+
+                    Call idx.Add(doc)
+                Next
+            End Using
+
+            textIndex = idx
+            textIndexCode = codes
+            textIndexDirty = False
+
+            Return textIndex
+        End Function
+
+        ''' <summary>
+        ''' fuzzy search the R# script code of the database, based on the qgram
+        ''' full text index module of the sciBASIC# runtime.
+        ''' </summary>
+        ''' <param name="query">the query words of the search</param>
+        ''' <param name="top">the max number of the result hits</param>
+        ''' <param name="threshold">
+        ''' the q-gram jaccard similarity threshold of one single query word,
+        ''' a larger value makes the search more strict.
+        ''' </param>
+        Public Function SearchScripts(query As String,
+                                      Optional top As Integer = 20,
+                                      Optional threshold As Double = 0.15) As ScriptSearchHit()
+
+            If query.StringEmpty Then
+                Return {}
+            End If
+
+            SyncLock sync
+                Dim idx As QGramFullText = BuildTextIndex()
+                Dim words As String() = idx.Tokenize(Strings.Trim(query).ToLower).Distinct.ToArray
+                Dim hits As New List(Of ScriptSearchHit)
+                Dim seen As New HashSet(Of String)
+
+                ' the qgram index ranks the document by the sum of the word
+                ' similarity, so ask for more hits than required at first: the
+                ' same script may be hit by multiple query words.
+                For Each hit As FindResult In idx.Search(query, top:=top * 3 + 10, threshold:=threshold)
+                    Dim scriptId As String = ParseDocScriptId(hit.text)
+
+                    If scriptId.StringEmpty OrElse seen.Contains(scriptId) Then
+                        Continue For
+                    End If
+
+                    Dim rec As ScriptRecord = GetScript(scriptId)
+
+                    If rec Is Nothing Then
+                        Continue For
+                    End If
+
+                    Dim code As String = Nothing
+
+                    If textIndexCode IsNot Nothing Then
+                        textIndexCode.TryGetValue(scriptId, code)
+                    End If
+
+                    seen.Add(scriptId)
+                    hits.Add(New ScriptSearchHit With {
+                        .script = rec,
+                        .score = Math.Round(hit.similarity, 4),
+                        .snippet = MakeSnippet(code, words)
+                    })
+
+                    If hits.Count >= top Then
+                        Exit For
+                    End If
+                Next
+
+                Return hits.ToArray()
+            End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' the tokenlicer of the qgram index: the first line of the indexed
+        ''' document is the internal document id marker, it must be excluded
+        ''' from the index, otherwise every script would share the very same
+        ''' marker tokens and a fuzzy query would hit all of the scripts with
+        ''' an identical rank.
+        ''' </summary>
+        Private Shared Function CodeTokens(doc As String) As IEnumerable(Of String)
+            If doc Is Nothing Then
+                Return {}
+            End If
+
+            Dim first As Integer = doc.IndexOf(vbLf)
+            Dim body As String = If(first >= 0, doc.Substring(first + 1), doc)
+
+            Return TextSplit.MakeWords(body).Distinct
+        End Function
+
+        ''' <summary>
+        ''' read the script id from the first line of the indexed document
+        ''' </summary>
+        Private Shared Function ParseDocScriptId(doc As String) As String
+            If doc.StringEmpty Then
+                Return Nothing
+            End If
+
+            Dim first As Integer = doc.IndexOf(vbLf)
+            Dim line As String = If(first > 0, doc.Substring(0, first), doc).Trim()
+
+            If Not line.StartsWith(DOC_ID_TAG) Then
+                Return Nothing
+            End If
+
+            Return line.Substring(DOC_ID_TAG.Length).Trim()
+        End Function
+
+        ''' <summary>
+        ''' the code line that contains one of the query words, used as the
+        ''' preview text of one search hit
+        ''' </summary>
+        Private Shared Function MakeSnippet(code As String, words As String(), Optional maxLen As Integer = 160) As String
+            If code.StringEmpty Then
+                Return ""
+            End If
+
+            Dim lines As String() = code.Replace(vbCrLf, vbLf).Split(vbLf)
+            Dim lower As String = code.ToLower()
+
+            For Each line As String In lines
+                Dim text As String = If(line, "").Trim()
+
+                If text.StringEmpty Then
+                    Continue For
+                End If
+
+                For Each word As String In words
+                    If word.StringEmpty Then
+                        Continue For
+                    End If
+                    If text.ToLower().IndexOf(word, StringComparison.Ordinal) >= 0 Then
+                        If text.Length > maxLen Then
+                            text = text.Substring(0, maxLen) & "…"
+                        End If
+
+                        Return text
+                    End If
+                Next
+            Next
+
+            For Each line As String In lines
+                Dim text As String = If(line, "").Trim()
+
+                If Not text.StringEmpty Then
+                    If text.Length > maxLen Then
+                        text = text.Substring(0, maxLen) & "…"
+                    End If
+
+                    Return text
+                End If
+            Next
+
+            Return ""
         End Function
 
         ''' <summary>
