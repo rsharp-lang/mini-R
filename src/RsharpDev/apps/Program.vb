@@ -24,7 +24,7 @@ Friend NotInheritable Class Program
     End Sub
 
     Public Shared Sub LoadSolution(Rproj As String)
-        Dim ribbon = MyApplication.RStudio.ribbon
+        Dim ribbon = RibbonMenu.Menu
 
         _Solution = Solution.LoadRproj(Rproj)
 

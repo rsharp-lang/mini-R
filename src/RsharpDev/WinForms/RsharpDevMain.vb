@@ -1,41 +1,37 @@
 Imports System.ComponentModel
+Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.My
-Imports Microsoft.VisualStudio.WinForms.Docking
-Imports RibbonLib.Interop
 Imports RsharpDev.My
 Imports RsharpDev.My.Resources
 
-Public Class RsharpDevMain
+Public Class RsharpDevMain : Implements AppHost
 
-    Friend ribbon As RibbonItems
+    ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()
 
-    Private Sub showAboutSplash()
-        Call New SplashScreen() With {.AutoClose = True}.ShowDialog()
-    End Sub
+
+    Public Event ResizeForm As AppHost.ResizeFormEventHandler Implements AppHost.ResizeForm
+    Public Event CloseWorkbench As AppHost.CloseWorkbenchEventHandler Implements AppHost.CloseWorkbench
+
+    Private ReadOnly Property AppHost_ClientRectangle As Rectangle Implements AppHost.ClientRectangle
+        Get
+            Return New Rectangle(Location, Size)
+        End Get
+    End Property
+
+    Public ReadOnly Property ActiveDocument As Form Implements AppHost.ActiveDocument
+        Get
+            Return DockPanel1.ActiveDocument
+        End Get
+    End Property
 
     Private Async Sub RsharpDevMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AutoScaleMode = AutoScaleMode.Dpi
-        ribbon = New RibbonItems(RibbonUI)
-        ImageDriver.Register()
 
-        AddHandler ribbon.ButtonNew.ExecuteEvent, Sub() Call VisualStudio.AddDocument(New RsharpDevVscode)
-        AddHandler ribbon.License.ExecuteEvent, Sub() Call New RsharpDevAbout().ShowDialog()
-        AddHandler ribbon.About.ExecuteEvent, Sub() Call showAboutSplash()
-        AddHandler ribbon.ButtonOpen.ExecuteEvent, Sub() Call VisualStudio.OpenFile()
-        AddHandler ribbon.ConfigServer.ExecuteEvent, Sub() VisualStudio.LinuxServerList.DockState = DockState.DockLeft
-        AddHandler ribbon.Console.ExecuteEvent, Sub() VisualStudio.AddDocument(SingletonHolder(Of RsharpDevConsole).Instance)
-        AddHandler ribbon.ViewProperty.ExecuteEvent, Sub() Call VisualStudio.OpenSolution()
-        AddHandler ribbon.Config.ExecuteEvent, Sub() Call New ConfigApp().ShowDialog()
-        AddHandler ribbon.StartPage.ExecuteEvent, Sub() Call VisualStudio.AddDocument(SingletonHolder(Of StartPage).Instance)
-        AddHandler ribbon.Close.ExecuteEvent, Sub() Call Me.Close()
-
-        ribbon.SoluationTabGroup.ContextAvailable = ContextAvailability.NotAvailable
-        ribbon.SoluationTabGroup.Label = "Solution [RsharpDev]"
-        ribbon.SolutionTab.Label = "Solution [RsharpDev]"
-
-        MyApplication.Register(Me)
-
+        Call ImageDriver.Register()
+        Call RibbonMenu.Hook(RibbonUI)
+        Call CommonRuntime.Hook(Me)
+        Call MyApplication.Register(Me)
         Call Program.Initialize()
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()
@@ -44,19 +40,13 @@ Public Class RsharpDevMain
         Await MyApplication.LaunchLanguageServer
     End Sub
 
-    Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing)
-        If icon Is Nothing Then
-            icon = IconResource.preferences_system_notifications
-        End If
-
+    Public Sub ShowStatusMsg(message As String, Optional icon As Image = Nothing) Implements AppHost.StatusMessage
         Call Me.Invoke(
             Sub()
-                ToolStripStatusLabel1.Image = icon
+                ToolStripStatusLabel1.Image = If(icon, IconResource.preferences_system_notifications)
                 ToolStripStatusLabel1.Text = message
             End Sub)
     End Sub
-
-    ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()
 
     Private Sub InitializeVsUI()
         VisualStudioToolStripExtender1.DefaultRenderer = _toolStripProfessionalRenderer
@@ -75,5 +65,50 @@ Public Class RsharpDevMain
 
     Private Sub RsharpDevMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         Call Program.Save()
+        Call CommonRuntime.SaveUISettings()
+    End Sub
+
+    Public Sub SetWorkbenchVisible(visible As Boolean) Implements AppHost.SetWorkbenchVisible
+        Me.Visible = visible
+    End Sub
+
+    Public Sub SetWindowState(stat As FormWindowState) Implements AppHost.SetWindowState
+        Me.WindowState = stat
+    End Sub
+
+    Public Function GetDesktopLocation() As Point Implements AppHost.GetDesktopLocation
+        Return Location
+    End Function
+
+    Public Function GetClientSize() As Size Implements AppHost.GetClientSize
+        Return Size
+    End Function
+
+    Public Function GetDocuments() As IEnumerable(Of Form) Implements AppHost.GetDocuments
+        Return DockPanel1.Documents.OfType(Of Form)
+    End Function
+
+    Public Function GetDockPanel() As Control Implements AppHost.GetDockPanel
+        Return DockPanel1
+    End Function
+
+    Public Function GetWindowState() As FormWindowState Implements AppHost.GetWindowState
+        Return WindowState
+    End Function
+
+    Public Sub SetTitle(title As String) Implements AppHost.SetTitle
+        Text = title
+    End Sub
+
+    Public Sub Warning(msg As String) Implements AppHost.Warning
+        Call StatusMessage(msg, Icons8.Warning)
+    End Sub
+
+    Public Sub LogText(text As String) Implements AppHost.LogText
+        Call CommonRuntime.GetOutputWindow.AppendLine(text)
+    End Sub
+
+    Public Sub ShowProperties(obj As Object) Implements AppHost.ShowProperties
+        Call CommonRuntime.GetPropertyWindow.SetObject(obj)
     End Sub
 End Class
