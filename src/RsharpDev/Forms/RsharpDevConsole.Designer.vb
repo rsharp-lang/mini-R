@@ -25,36 +25,33 @@ Partial Class RsharpDevConsole
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RsharpDevConsole))
-        Me.ConsoleControl1 = New Microsoft.VisualBasic.Windows.Forms.ConsoleControl()
-        Me.SuspendLayout()
-        '
-        'ConsoleControl1
-        '
-        Me.ConsoleControl1.BackColor = System.Drawing.Color.Black
-        Me.ConsoleControl1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.ConsoleControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ConsoleControl1.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ConsoleControl1.ForeColor = System.Drawing.Color.Lime
-        Me.ConsoleControl1.Location = New System.Drawing.Point(0, 0)
-        Me.ConsoleControl1.Name = "ConsoleControl1"
-        ' Me.ConsoleControl1.Ps1Pattern = ""
-        Me.ConsoleControl1.ReadOnly = True
-        Me.ConsoleControl1.Size = New System.Drawing.Size(800, 450)
-        Me.ConsoleControl1.TabIndex = 0
-        Me.ConsoleControl1.Text = ""
-        '
-        'RsharpDevConsole
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.ConsoleControl1)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RsharpDevConsole"
-        Me.Text = "Form1"
-        Me.ResumeLayout(False)
+        WebViewConsole1 = New Microsoft.VisualBasic.Windows.Forms.WebViewConsole()
+        SuspendLayout()
+        ' 
+        ' WebViewConsole1
+        ' 
+        WebViewConsole1.Dock = DockStyle.Fill
+        WebViewConsole1.Location = New Point(0, 0)
+        WebViewConsole1.Name = "WebViewConsole1"
+        WebViewConsole1.Size = New Size(1107, 578)
+        WebViewConsole1.TabIndex = 1
+        ' 
+        ' RsharpDevConsole
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(1107, 578)
+        Controls.Add(WebViewConsole1)
+        DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
+        DoubleBuffered = True
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Name = "RsharpDevConsole"
+        ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
+        TabPageContextMenuStrip = DockContextMenuStrip1
+        Text = "Form1"
+        ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents ConsoleControl1 As Microsoft.VisualBasic.Windows.Forms.ConsoleControl
+    Friend WithEvents WebViewConsole1 As Microsoft.VisualBasic.Windows.Forms.WebViewConsole
 End Class
