@@ -1,60 +1,20 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Monaco Editor</title>
-    <link rel="stylesheet" data-name="vs/editor/editor.main"
-          href="/editor/editor.main.css">
+    <meta charset="UTF-8" />
     <style>
         html, body, #container {
-            width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
-        #container {
-            display: flex;
-        }
     </style>
 </head>
 <body>
     <div id="container"></div>
-    <script src="/loader.js"></script>
-    <script>
-        require.config({ paths: { 'vs': '/' } });
 
-        // MonacoEnvironment.getWorkerUrl is injected from C# (VsCodeEditor) at
-        // document creation time, pointing each worker label to the matching
-        // file inside the embedded monaco-editor.zip (min/vs/assets/*worker*.js).
-        // The embedded zip has no base/worker/workerMain.js, so it must not be
-        // hardcoded here.
-
-        require(['vs/editor/editor.main'], function () {
-            // 创建编辑器实例
-            window.editor = monaco.editor.create(document.getElementById('container'), {
-                value: "",
-                language: 'plaintext',
-                automaticLayout: true  // 自动适应容器大小
-            });
-
-            // 向 WinForm 宿主发送"初始化完成"消息
-            window.chrome.webview.postMessage('initialized');
-        });
-
-        // C# 调用：设置编辑器内容
-        window.setEditorContent = function (content, language) {
-            window.editor.setValue(content);
-            if (language) {
-                monaco.editor.setModelLanguage(window.editor.getModel(), language);
-            }
-        };
-
-        // C# 调用：获取编辑器内容
-        window.getEditorContent = function () {
-            return window.editor.getValue();
-        };
-    </script>
+    <script src="vs/loader.js"></script>
+    <script src="editor.js"></script>
 </body>
 </html>
