@@ -18,13 +18,13 @@ Public Class VsCodeEditor : Implements IFileReference
     Shared Sub New()
         Dim asm As System.Reflection.Assembly = GetType(VsCodeEditor).Assembly
         ' VB embedded resource manifest name = <RootNamespace>.<path-with-dots>
-        Dim resName As String = asm.GetName().Name & ".vscode.monaco-editor.zip"
+        Dim resName As String = asm.GetName().Name & ".monaco-editor.zip"
         Dim res As Stream = asm.GetManifestResourceStream(resName)
 
         If res Is Nothing Then
             ' fallback: locate by suffix in case the manifest name differs
             For Each name As String In asm.GetManifestResourceNames()
-                If name.EndsWith("vscode.monaco-editor.zip", StringComparison.OrdinalIgnoreCase) Then
+                If name.EndsWith("RDev.monaco-editor.zip", StringComparison.OrdinalIgnoreCase) Then
                     resName = name
                     res = asm.GetManifestResourceStream(name)
                     Exit For

@@ -74,6 +74,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="vscode\monaco-editor.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="vscode\monaco-editor.zip" />
   </ItemGroup>
   
