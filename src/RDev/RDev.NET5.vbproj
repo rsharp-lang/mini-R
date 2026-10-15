@@ -70,6 +70,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="vscode\monaco-editor\**" />
+    <EmbeddedResource Remove="vscode\monaco-editor\**" />
+    <None Remove="vscode\monaco-editor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="vscode\editor.js" />
     <None Remove="vscode\monaco-editor.zip" />
   </ItemGroup>
@@ -98,6 +104,7 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\Darwinism\src\computing\Parallel\parallel-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\languageserver\src\languageserver\languageserver.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,8 @@
-﻿Imports System.IO
+﻿Imports System.Diagnostics
+Imports System.IO
 Imports System.Reflection
 Imports System.Text
+Imports languageserver
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -42,6 +44,14 @@ Public Class VsCodeEditor : Implements IFileReference
     Dim _languages As String()
     ' pending tcs used by GetLanguagesAsync to await the Languages reply.
     Dim _languagesTcs As TaskCompletionSource(Of String())
+
+    ' the in-process R# language server. it is created lazily on first use so the
+    ' (slow) REnv load never delays the editor startup, and warmed up on a
+    ' background thread once the WebView is up.
+    Dim _lsp As Lazy(Of RsharpLspServer)
+    ' the R# interpreter + its global environment are not thread safe: every LSP
+    ' call must be serialized.
+    ReadOnly _lspLock As New Threading.SemaphoreSlim(1, 1)
 
     ''' <summary>
     ''' raised when the frontend editor content changes (debounced on the JS side).
@@ -125,6 +135,23 @@ Public Class VsCodeEditor : Implements IFileReference
         WebView21.CoreWebView2.AddWebResourceRequestedFilter(resourceFilter, CoreWebView2WebResourceContext.All)
         AddHandler WebView21.CoreWebView2.WebResourceRequested, AddressOf OnWebResourceRequested
         AddHandler WebView21.CoreWebView2.WebMessageReceived, AddressOf OnWebMessageReceived
+
+        ' create the in-process R# language server lazily and warm it up on a
+        ' background thread: the REnv load + global symbol scan take seconds and
+        ' must not block the UI thread (nor the editor startup).
+        If _lsp Is Nothing Then
+            _lsp = New Lazy(Of RsharpLspServer)(Function() New RsharpLspServer(Nothing, Nothing, New DebugTextWriter()))
+        End If
+
+        Call Task.Run(Sub()
+                          Try
+                              Dim server = _lsp.Value
+
+                              System.Diagnostics.Debug.WriteLine("[rsharp-lsp] server ready: " & server.GetType.Name)
+                          Catch ex As Exception
+                              System.Diagnostics.Debug.WriteLine("[rsharp-lsp] warmup failed: " & ex.Message)
+                          End Try
+                      End Sub)
 
         ' navigate to the virtual host; the document itself comes from the embedded html
         WebView21.CoreWebView2.Navigate(host)
@@ -233,9 +260,147 @@ Public Class VsCodeEditor : Implements IFileReference
                         Call _languagesTcs.TrySetResult(langs)
                         _languagesTcs = Nothing
                     End If
+
+                Case "lsp/request"
+                    ' payload: { id, method, params } coming from a Monaco provider
+                    Dim payloadEl As System.Text.Json.JsonElement
+
+                    If root.TryGetProperty("payload", payloadEl) Then
+                        Call HandleLspRequest(payloadEl)
+                    End If
+
+                Case "lsp/notify"
+                    ' payload: { method, params } -- document synchronization
+                    Dim payloadEl As System.Text.Json.JsonElement
+
+                    If root.TryGetProperty("payload", payloadEl) Then
+                        Call HandleLspNotify(payloadEl)
+                    End If
             End Select
         End Using
     End Sub
+
+    ' ===================== in-process R# language server bridge =====================
+
+    ''' <summary>
+    ''' forward a provider request coming from the Monaco page to the in-process R#
+    ''' language server and post the result back as an lsp/response message. the
+    ''' request runs on a background thread (the call may parse the whole document)
+    ''' and is serialized with the notification path.
+    ''' </summary>
+    Private Sub HandleLspRequest(payload As System.Text.Json.JsonElement)
+        If _channel Is Nothing OrElse _lsp Is Nothing Then Return
+
+        Dim id As Long = payload.GetProperty("id").GetInt64()
+        Dim method As String = payload.GetProperty("method").GetString()
+        Dim paramsJson As String = ExtractParams(payload)
+
+        Dim server = _lsp.Value
+
+        Call Task.Run(Sub()
+                          Call _lspLock.Wait()
+                          Try
+                              Dim req = JsonRpc.MakeRequest(CInt(id), method,
+                                  Microsoft.VisualBasic.MIME.application.json.Javascript.JsonElement.ParseJSON(paramsJson))
+                              Dim resp = server.HandleMessageAsync(req).GetAwaiter().GetResult()
+                              Dim resultNode As Object = Nothing
+                              Dim resEl = resp("result")
+
+                              ' pass the raw json element straight through: rebuilding
+                              ' it from a dictionary would expose the LSP keys to the
+                              ' serializer naming policy
+                              If resEl IsNot Nothing Then
+                                  Using doc As System.Text.Json.JsonDocument = System.Text.Json.JsonDocument.Parse(resEl.BuildJsonString)
+                                      resultNode = doc.RootElement.Clone()
+                                  End Using
+                              End If
+
+                              Dim reply = New Dictionary(Of String, Object) From {
+                                  {"id", id},
+                                  {"result", resultNode}
+                              }
+
+                              ' WebView2CommandChannel.Send calls PostWebMessageAsJson,
+                              ' which must be invoked on the UI thread
+                              Me.Invoke(New Action(
+                                  Sub()
+                                      _channel.Send("lsp/response", reply)
+                                  End Sub))
+                          Catch ex As Exception
+                              Me.Invoke(New Action(
+                                  Sub()
+                                      _channel.Send("lsp/response",
+                                          New Dictionary(Of String, Object) From {{"id", id}, {"error", ex.Message}})
+                                  End Sub))
+                          Finally
+                              Call _lspLock.Release()
+                          End Try
+                      End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' forward a document synchronization notification (didOpen / didChange /
+    ''' didClose) to the language server. notifications never produce a reply.
+    ''' </summary>
+    Private Sub HandleLspNotify(payload As System.Text.Json.JsonElement)
+        If _lsp Is Nothing Then Return
+
+        Dim method As String = payload.GetProperty("method").GetString()
+        Dim paramsJson As String = ExtractParams(payload)
+
+        Dim server = _lsp.Value
+
+        Call Task.Run(Sub()
+                          Call _lspLock.Wait()
+                          Try
+                              Dim note = JsonRpc.MakeNotification(method,
+                                  Microsoft.VisualBasic.MIME.application.json.Javascript.JsonElement.ParseJSON(paramsJson))
+                              Call server.HandleMessageAsync(note).GetAwaiter().GetResult()
+                          Catch ex As Exception
+                              Debug.WriteLine("[rsharp-lsp] notify error: " & ex.Message)
+                          Finally
+                              Call _lspLock.Release()
+                          End Try
+                      End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' read the raw json text of the "params" member of an lsp payload, falling
+    ''' back to the json null literal when the member is missing or null.
+    ''' </summary>
+    Private Shared Function ExtractParams(payload As System.Text.Json.JsonElement) As String
+        Dim paramsEl As System.Text.Json.JsonElement
+
+        If payload.TryGetProperty("params", paramsEl) AndAlso
+           paramsEl.ValueKind <> System.Text.Json.JsonValueKind.Null Then
+            Return paramsEl.GetRawText()
+        End If
+
+        Return "null"
+    End Function
+
+    ''' <summary>
+    ''' routes the language server log to the debugger output. a GUI host has no
+    ''' console attached, so the default stderr sink is useless (and may not even
+    ''' be openable).
+    ''' </summary>
+    Private Class DebugTextWriter
+        Inherits TextWriter
+
+        Public Overrides ReadOnly Property Encoding As Encoding
+            Get
+                Return Encoding.UTF8
+            End Get
+        End Property
+
+        Public Overrides Sub Write(value As String)
+            System.Diagnostics.Debug.Write(value)
+        End Sub
+
+        Public Overrides Sub WriteLine(value As String)
+            System.Diagnostics.Debug.WriteLine(value)
+        End Sub
+    End Class
 
     ''' <summary>
     ''' map a request local path to a zip entry. the embedded zip uses the standard
