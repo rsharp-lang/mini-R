@@ -651,8 +651,47 @@ body {
 
 /* ---------------- run history ---------------- */
 
-#runList {
-    flex: 0 0 auto;
+#runsCard {
+    position: relative;
+}
+
+/* the floating copy-command-line button, only shown for a selected run */
+.fab {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid var(--accent-hover);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+    cursor: pointer;
+}
+
+.fab:hover {
+    background: var(--accent-hover);
+}
+
+.fab:active {
+    transform: translateY(1px);
+}
+
+.fab[hidden] {
+    display: none;
+}
+
+/* reserve room at the bottom of the card so the fab never hides the last run */
+#runsCard.has-fab {
+    padding-bottom: 40px;
+}
     max-height: 220px;
 }
 

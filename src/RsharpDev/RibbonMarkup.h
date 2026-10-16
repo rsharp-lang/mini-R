@@ -127,7 +127,11 @@
 #define cmdButtonOpenCVS_LabelTitle_RESID 60001
 #define cmdButtonOpenCVS_SmallImages_192__RESID 60002
 #define cmdButtonOpenCVS_LargeImages_192__RESID 60003
-#define InternalCmd2_LabelTitle_RESID 60004
-#define InternalCmd4_LabelTitle_RESID 60005
-#define InternalCmd8_LabelTitle_RESID 60006
-#define InternalCmd10_LabelTitle_RESID 60007
+#define cmdButtonSaveAs 30 
+#define cmdButtonSaveAs_LabelTitle_RESID 60004
+#define cmdButtonSaveAs_SmallImages_192__RESID 60005
+#define cmdButtonSaveAs_LargeImages_192__RESID 60006
+#define InternalCmd2_LabelTitle_RESID 60007
+#define InternalCmd4_LabelTitle_RESID 60008
+#define InternalCmd8_LabelTitle_RESID 60009
+#define InternalCmd10_LabelTitle_RESID 60010

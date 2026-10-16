@@ -33,6 +33,7 @@ namespace RibbonLib.Controls
             public const uint cmdTabMain = 1001;
             public const uint cmdGroupCommon = 1002;
             public const uint cmdButtonOpenCVS = 29;
+            public const uint cmdButtonSaveAs = 30;
             public const uint cmdGroupSimple = 1003;
             public const uint cmdConfigServer = 23;
             public const uint cmdRunScript = 18;
@@ -63,6 +64,7 @@ namespace RibbonLib.Controls
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupCommon { get; private set; }
         public RibbonButton ButtonOpenCVS { get; private set; }
+        public RibbonButton ButtonSaveAs { get; private set; }
         public RibbonGroup GroupSimple { get; private set; }
         public RibbonButton ConfigServer { get; private set; }
         public RibbonButton RunScript { get; private set; }
@@ -94,6 +96,7 @@ namespace RibbonLib.Controls
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupCommon = new RibbonGroup(ribbon, Cmd.cmdGroupCommon);
             ButtonOpenCVS = new RibbonButton(ribbon, Cmd.cmdButtonOpenCVS);
+            ButtonSaveAs = new RibbonButton(ribbon, Cmd.cmdButtonSaveAs);
             GroupSimple = new RibbonGroup(ribbon, Cmd.cmdGroupSimple);
             ConfigServer = new RibbonButton(ribbon, Cmd.cmdConfigServer);
             RunScript = new RibbonButton(ribbon, Cmd.cmdRunScript);

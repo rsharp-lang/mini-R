@@ -336,6 +336,14 @@
         <Image MinDPI="192">Resources/folder-documents.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonSaveAs" Id="30" LabelTitle="Save As">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/document-save.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/document-save.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -384,11 +392,12 @@
       </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain" ApplicationModes="0,1">
-          <Group CommandName="cmdGroupCommon" ApplicationModes="0,1" SizeDefinition="FourButtons">
+          <Group CommandName="cmdGroupCommon" ApplicationModes="0,1" SizeDefinition="FiveButtons">
             <Button CommandName="cmdButtonNew" />
             <Button CommandName="cmdButtonOpen" />
             <Button CommandName="cmdButtonSave" />
             <Button CommandName="cmdButtonOpenCVS" />
+            <Button CommandName="cmdButtonSaveAs" />
           </Group>
           <Group CommandName="cmdGroupSimple" ApplicationModes="0" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdConfigServer" />

@@ -30,6 +30,7 @@ Namespace RibbonLib.Controls
             Public Const cmdTabMain As UInteger = 1001
             Public Const cmdGroupCommon As UInteger = 1002
             Public Const cmdButtonOpenCVS As UInteger = 29
+            Public Const cmdButtonSaveAs As UInteger = 30
             Public Const cmdGroupSimple As UInteger = 1003
             Public Const cmdConfigServer As UInteger = 23
             Public Const cmdRunScript As UInteger = 18
@@ -140,6 +141,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonOpenCVS
             End Get
         End Property
+        Private _ButtonSaveAs As RibbonButton
+        Public ReadOnly Property ButtonSaveAs As RibbonButton
+            Get
+                Return _ButtonSaveAs
+            End Get
+        End Property
         Private _GroupSimple As RibbonGroup
         Public ReadOnly Property GroupSimple As RibbonGroup
             Get
@@ -221,6 +228,7 @@ Namespace RibbonLib.Controls
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupCommon = New RibbonGroup(_ribbon, Cmd.cmdGroupCommon)
             _ButtonOpenCVS = New RibbonButton(_ribbon, Cmd.cmdButtonOpenCVS)
+            _ButtonSaveAs = New RibbonButton(_ribbon, Cmd.cmdButtonSaveAs)
             _GroupSimple = New RibbonGroup(_ribbon, Cmd.cmdGroupSimple)
             _ConfigServer = New RibbonButton(_ribbon, Cmd.cmdConfigServer)
             _RunScript = New RibbonButton(_ribbon, Cmd.cmdRunScript)

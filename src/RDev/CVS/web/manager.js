@@ -42,6 +42,7 @@
         versionId: null,
         runId: null,
         metadata: null,
+        run: null,         // the currently selected run history record
         args: {},          // name -> value of the parameter form
         formSpec: [],      // the ArgumentSpec list that the form was built from
         formControls: {},  // name -> {kind,node,spec} of the rendered inputs
@@ -59,8 +60,9 @@
         'scriptFilter', 'btnNewScript', 'versionList', 'versionEmpty',
         'versionColTitle', 'versionComment', 'btnSaveVersion', 'btnOpenEditor',
         'metaGrid', 'metaDesc', 'metaDeps', 'versionBadge', 'paramForm', 'formCard',
+        'runsCard',
         'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'runList', 'runEmpty',
-        'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
+        'btnCopyCmd', 'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
         'newScriptModal', 'newScriptName', 'btnCreateScript', 'btnCancelNew'];
 
     ids.forEach(function (id) { dom[id] = document.getElementById(id); });
@@ -539,6 +541,13 @@
             li.addEventListener('click', function () { selectRun(run); });
             dom.runList.appendChild(li);
         });
+
+        // the floating copy button only makes sense for a selected run that
+        // actually carries a recorded command line
+        const showFab = !!(state.run && state.run.commandLine);
+
+        dom.btnCopyCmd.hidden = !showFab;
+        if (dom.runsCard) dom.runsCard.classList.toggle('has-fab', showFab);
     }
 
     let flashTimer = null;
@@ -608,6 +617,7 @@
 
     function selectRun(run) {
         state.runId = run.runId;
+        state.run = run;
         renderRuns();
         applyRunArguments(run);
         send(Outgoing.RequestOutput, { scriptId: state.scriptId, runId: run.runId });
@@ -819,6 +829,30 @@
             setStatus('copied', 'ok');
         } catch (e) {
             setStatus('copy failed', 'warn');
+        }
+    });
+
+    dom.btnCopyCmd.addEventListener('click', function (e) {
+        // do not also toggle the run selection when the copy button is clicked
+        e.stopPropagation();
+        if (!state.run || !state.run.commandLine) return;
+
+        const text = state.run.commandLine;
+
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            setStatus('命令行已复制 #' + state.run.runId, 'ok');
+        } catch (err) {
+            setStatus('复制失败', 'warn');
         }
     });
 
