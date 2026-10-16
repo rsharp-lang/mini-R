@@ -65,16 +65,20 @@ Public Class RsharpDevVscode
     ' case the error of can not access the closed stream.
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        FilePath = path
-        TabText = FilePath.FileName
+        If Not cvs Then
+            FilePath = path
+            TabText = FilePath.FileName
+        End If
 
         Dim s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
         Return Save(s, encoding)
     End Function
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-        FilePath = path
-        TabText = FilePath.FileName
+        If Not cvs Then
+            FilePath = path
+            TabText = FilePath.FileName
+        End If
 
         Dim s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
         Return Save(s, encoding.CodePage)
