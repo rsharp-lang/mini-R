@@ -17,10 +17,10 @@ Public Class CommentDialog : Inherits Form
     Private ReadOnly tabControl As New TabControl
     Private ReadOnly tabComment As New TabPage
     Private ReadOnly tabDiff As New TabPage
-    Private ReadOnly btnAIGen As New Button
+    Private WithEvents btnAIGen As New Button
     Private ReadOnly btnOK As New Button
     Private ReadOnly btnCancel As New Button
-    Private ReadOnly btnRefreshDiff As New Button
+    Private WithEvents btnRefreshDiff As New Button
     Private ReadOnly generate As Func(Of Task(Of String))
     Private ReadOnly diffFunc As Func(Of String)
     Private _diffText As String = ""
@@ -80,7 +80,7 @@ Public Class CommentDialog : Inherits Form
 
         btnRefreshDiff.Text = "刷新差异"
         btnRefreshDiff.Size = New Size(84, 26)
-        AddHandler btnRefreshDiff.Click, AddressOf btnRefreshDiff_Click
+
 
         Dim diffHead As New FlowLayoutPanel
         diffHead.FlowDirection = FlowDirection.RightToLeft
@@ -127,8 +127,6 @@ Public Class CommentDialog : Inherits Form
         Me.AcceptButton = btnOK
         Me.CancelButton = btnCancel
 
-        AddHandler btnAIGen.Click, AddressOf btnAIGen_Click
-
         ' show the diff (if available) in the review tab
         Call ColorizeDiff(rtbDiff, Me.DiffText)
     End Sub
@@ -160,11 +158,11 @@ Public Class CommentDialog : Inherits Form
         Next
     End Sub
 
-    Private Sub btnRefreshDiff_Click(sender As Object, e As EventArgs)
+    Private Sub btnRefreshDiff_Click(sender As Object, e As EventArgs) Handles btnRefreshDiff.Click
         Call ColorizeDiff(rtbDiff, Me.DiffText)
     End Sub
 
-    Private Async Sub btnAIGen_Click(sender As Object, e As EventArgs)
+    Private Async Sub btnAIGen_Click(sender As Object, e As EventArgs) Handles btnAIGen.Click
         If generate Is Nothing Then
             Return
         End If

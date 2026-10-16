@@ -100,6 +100,17 @@ Public Class ScriptManagerView
     Dim versionId As String
     Dim lastArgs As New List(Of RunArgument)
     Dim lastWorkdir As String
+
+    ''' <summary>
+    ''' the default working folder for script runs: App.Home/rstudio/bin.
+    ''' this replaces the previous default of the runner temp folder so that the
+    ''' html page and the toolbar runs both start from a predictable directory.
+    ''' </summary>
+    Private ReadOnly Property DefaultWorkdir As String
+        Get
+            Return System.IO.Path.Combine(Microsoft.VisualBasic.App.HOME, "rstudio", "bin")
+        End Get
+    End Property
     ' the editor window of the host application + the version that it displays
     Dim _editor As IEditor
     Dim _editorVersionId As String
@@ -339,7 +350,7 @@ Public Class ScriptManagerView
             Call Post(CvsIncoming.VersionDetail, New Dictionary(Of String, Object) From {
                 {"versionId", Nothing},
                 {"metadata", Nothing},
-                {"workdir", runner.TempFolder}
+                {"workdir", DefaultWorkdir}
             })
         End If
     End Sub
@@ -414,7 +425,7 @@ Public Class ScriptManagerView
         Me.versionId = versionId
 
         Dim ver As VersionRecord = db.GetVersion(Me.scriptId, versionId)
-        Dim workdir As String = If(lastWorkdir, runner.TempFolder)
+        Dim workdir As String = If(lastWorkdir, DefaultWorkdir)
 
         Call Post(CvsIncoming.VersionDetail, New Dictionary(Of String, Object) From {
             {"versionId", versionId},
@@ -751,7 +762,7 @@ Public Class ScriptManagerView
             Dim scriptFile As String = runner.ExportScript(vid, code)
 
             If workdir.StringEmpty Then
-                workdir = runner.TempFolder
+                workdir = DefaultWorkdir
             End If
 
             If runner Is Nothing Then
@@ -1019,7 +1030,7 @@ Public Class ScriptManagerView
 
             Dim code As String = db.GetVersionCode(sid, vid)
             Dim scriptFile As String = runner.ExportScript(vid, code)
-            Dim workdir As String = If(lastWorkdir, runner.TempFolder)
+            Dim workdir As String = If(lastWorkdir, DefaultWorkdir)
             Dim result As RunResult = Await runner.Run(scriptFile, args, workdir)
             Dim run As RunRecord = RunRecord.Create(sid, vid)
 
