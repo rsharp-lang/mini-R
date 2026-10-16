@@ -22,6 +22,7 @@ Public Class RsharpDevVscode
 
     Friend cvs As Boolean = False
     Friend editorClosed As Boolean = False
+    Friend modified As Boolean = False
 
     Private Sub RsharpDevVscode_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim console = CommonRuntime.GetOutputWindow
@@ -36,6 +37,8 @@ Public Class RsharpDevVscode
     End Sub
 
     Private Sub vscode_IsDirtyChanged(sender As Object, e As Boolean) Handles vscode.IsDirtyChanged
+        modified = True
+
         If cvs Then
             TabText = $"{FilePath} *"
         Else
@@ -52,6 +55,8 @@ Public Class RsharpDevVscode
             TabText = "New script"
             Text = TabText
         End If
+
+        modified = False
 
         vscode.FilePath = FilePath
         vscode.SetContent(FilePath.ReadAllText, "r")
@@ -94,6 +99,8 @@ Public Class RsharpDevVscode
         Call sw.WriteLine(Await vscode.GetContent)
         Call sw.Flush()
         Call file.Dispose()
+
+        modified = False
     End Sub
 
     Protected Overrides Sub SaveDocument()
@@ -115,6 +122,7 @@ Public Class RsharpDevVscode
         FilePath = title
         vscode.SetContent(code, "r")
         cvs = True
+        modified = False
     End Sub
 
     Public Async Function SaveScript() As Task(Of String) Implements IEditor.SaveScript
@@ -123,5 +131,13 @@ Public Class RsharpDevVscode
 
     Private Sub RsharpDevVscode_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         editorClosed = True
+    End Sub
+
+    Private Sub RsharpDevVscode_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If modified Then
+            If MessageBox.Show("There are unsaved changed in this script editor, continute to close this editor[unsaved change will be lost]?", "Unsaved changed", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+                e.Cancel = True
+            End If
+        End If
     End Sub
 End Class
