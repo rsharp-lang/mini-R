@@ -274,6 +274,9 @@ Public Class ScriptManagerView
             Case CvsOutgoing.RunScript
                 Call RunScriptAsync(payload)
 
+            Case CvsOutgoing.KillTask
+                Call KillCurrentTask()
+
             Case CvsOutgoing.RequestOutput
                 Call SendRunOutput(CvsPayload.Str(payload, "scriptId"), CvsPayload.UInt(payload, "runId"))
 
@@ -735,6 +738,25 @@ Public Class ScriptManagerView
         If Not comment.StringEmpty Then
             RaiseStatus("已生成变更说明", "ok")
         End If
+    End Sub
+
+    ''' <summary>
+    ''' request the host to kill the currently running task process. the kill is
+    ''' delegated to the IRunnerHost instance that ScriptRunner spun up for the
+    ''' current run (RsharpDevConsole.StopProcess).
+    ''' </summary>
+    Private Sub KillCurrentTask()
+        If runner Is Nothing OrElse runner.CurrentHost Is Nothing Then
+            RaiseStatus("当前没有可终止的任务", "warn")
+            Return
+        End If
+
+        Try
+            Call runner.CurrentHost.Kill()
+            RaiseStatus("已发送终止请求，正在关闭任务进程…", "ok")
+        Catch ex As Exception
+            RaiseStatus("终止失败: " & ex.Message, "error")
+        End Try
     End Sub
 
     ' ===================== script run =====================

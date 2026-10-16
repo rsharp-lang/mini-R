@@ -18,7 +18,8 @@
         RunScript: 'RunScript',
         DeleteScript: 'DeleteScript',
         RequestOutput: 'RequestOutput',
-        SuggestComment: 'SuggestComment'
+        SuggestComment: 'SuggestComment',
+        KillTask: 'KillTask'
     };
 
     const Incoming = {
@@ -64,7 +65,7 @@
         'versionColTitle', 'versionComment', 'btnSaveVersion', 'btnOpenEditor',
         'metaGrid', 'metaDesc', 'metaDeps', 'versionBadge', 'paramForm', 'formCard',
         'runsCard',
-        'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'runList', 'runEmpty',
+        'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'btnKillTask', 'runList', 'runEmpty',
         'btnCopyCmd', 'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
         'btnSuggestComment', 'versionCommentBody',
         'btnForkVersion', 'lineageView', 'newScriptHint',
@@ -95,6 +96,7 @@
         dom.btnRun.disabled = busy;
         dom.btnSaveVersion.disabled = busy;
         dom.btnRun.textContent = busy ? '运行中…' : '运行';
+        if (dom.btnKillTask) dom.btnKillTask.disabled = !busy;
         if (busy) setStatus(text || 'running', 'busy');
     }
 
@@ -919,6 +921,13 @@
 
     dom.btnResetArgs.addEventListener('click', function () {
         renderForm(state.metadata ? state.metadata.arguments : []);
+    });
+
+    dom.btnKillTask.addEventListener('click', function () {
+        if (!state.scriptId || !state.versionId) { setStatus('no task selected', 'warn'); return; }
+        if (!window.confirm('确定要强制终止当前正在运行的任务进程吗？此操作不可撤销。')) return;
+        send(Outgoing.KillTask, {});
+        setStatus('terminating task…', 'busy');
     });
 
     dom.btnCopyOutput.addEventListener('click', function () {

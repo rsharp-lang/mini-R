@@ -37,6 +37,8 @@ Namespace CVS
         Public Const RequestOutput As String = "RequestOutput"
         ''' <summary>ask the host to generate a change comment for the new version via the LLM</summary>
         Public Const SuggestComment As String = "SuggestComment"
+        ''' <summary>ask the host to kill the currently running task process</summary>
+        Public Const KillTask As String = "KillTask"
         ''' <summary>fuzzy search the script code, an empty query lists all scripts</summary>
         Public Const SearchScripts As String = "SearchScripts"
     End Class

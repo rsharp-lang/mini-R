@@ -62,7 +62,18 @@ Namespace CVS
         ''' </summary>
         Public Property TempFolder As String
 
+        ''' <summary>
+        ''' the host instance that is running the current (or most recent) task,
+        ''' so that the UI can request a kill via <see cref="IRunnerHost.Kill"/>.
+        ''' </summary>
+        Public ReadOnly Property CurrentHost As IRunnerHost
+            Get
+                Return _currentHost
+            End Get
+        End Property
+
         Dim host As Func(Of IRunnerHost)
+        Dim _currentHost As IRunnerHost
 
         Sub New(host As Func(Of IRunnerHost), Optional rscript As String = Nothing, Optional temp As String = Nothing)
             Me.host = host
@@ -222,6 +233,7 @@ Namespace CVS
             Dim argsLine As String = BuildArgumentLine(args)
             Dim cli As String = $"""{scriptFile}"" {argsLine}".Trim()
             Dim rhost As IRunnerHost = host()
+            _currentHost = rhost
 
             Call rhost.SetTask(RscriptPath, cli, If(workdir.StringEmpty, Nothing, workdir))
 
