@@ -83,4 +83,8 @@ Public Class RsharpDevConsole : Implements IRunnerHost
         exitCode = args.Code
         running = False
     End Sub
+
+    Public Sub Kill() Implements IRunnerHost.Kill
+        Call WebViewConsole1.StopProcess()
+    End Sub
 End Class

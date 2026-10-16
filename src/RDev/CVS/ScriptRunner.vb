@@ -36,6 +36,10 @@ Namespace CVS
     Public Interface IRunnerHost
 
         Sub SetTask(program As String, args As String, workdir As String)
+        ''' <summary>
+        '''Kill current running task. this method will do nothing if the task has already been killed or run finished.
+        ''' </summary>
+        Sub Kill()
 
         Function GetResult() As Task(Of RunResult)
 
