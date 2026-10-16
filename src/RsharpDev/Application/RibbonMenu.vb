@@ -55,10 +55,12 @@ Module RibbonMenu
                 Using fileDlg As New SaveFileDialog
                     If fileDlg.ShowDialog = DialogResult.OK Then
                         Call DirectCast(doc, ISaveHandle).Save(fileDlg.FileName)
+                        Call CommonRuntime.Success($"document saved at location: {fileDlg.FileName}.")
                     End If
                 End Using
             Else
                 Call DirectCast(doc, ISaveHandle).Save(file)
+                Call CommonRuntime.Success("document saved.")
             End If
         Else
             Call CommonRuntime.Warning($"Current document page [{doc.TabText}] can not be saved.")
@@ -79,12 +81,13 @@ Module RibbonMenu
             Dim filter As String = "Save Script File(*.R)|*.R"
 
             If Not file.StringEmpty(, True) Then
-                filter = $"File(*.{file.ExtensionSuffix})|*.{file.ExtensionSuffix}"
+                filter = $"{file.BaseName}(*.{file.ExtensionSuffix})|*.{file.ExtensionSuffix}|Save Script File(*.R)|*.R"
             End If
 
             Using fileDlg As New SaveFileDialog With {.Filter = filter}
                 If fileDlg.ShowDialog = DialogResult.OK Then
                     Call DirectCast(doc, ISaveHandle).Save(fileDlg.FileName)
+                    Call CommonRuntime.Success($"document saved at location: {fileDlg.FileName}.")
                 End If
             End Using
         Else
