@@ -44,7 +44,8 @@
         versionId: null,
         runId: null,
         metadata: null,
-        run: null,         // the currently selected run history record
+        run: null,
+        forkSource: null,         // the currently selected run history record
         args: {},          // name -> value of the parameter form
         formSpec: [],      // the ArgumentSpec list that the form was built from
         formControls: {},  // name -> {kind,node,spec} of the rendered inputs
@@ -66,6 +67,7 @@
         'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'runList', 'runEmpty',
         'btnCopyCmd', 'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
         'btnSuggestComment', 'versionCommentBody',
+        'btnForkVersion', 'lineageView', 'newScriptHint',
         'newScriptModal', 'newScriptName', 'btnCreateScript', 'btnCancelNew'];
 
     ids.forEach(function (id) { dom[id] = document.getElementById(id); });
@@ -277,9 +279,65 @@
             li.appendChild(main);
             li.appendChild(el('div', 'item-sub',
                 (s.title || 'no title') + ' · ' + (s.updated || '')));
+            li.appendChild(makeScriptDelete(s));
 
             li.addEventListener('click', function () { selectScript(s.id); });
             dom.scriptList.appendChild(li);
+        });
+    }
+
+    /**
+     * build the per-script-list-item delete button. deleting the currently
+     * selected script also resets the right hand panels locally; the host then
+     * refreshes the list via the Scripts message.
+     */
+    function makeScriptDelete(s) {
+        const del = el('button', 'item-del', '×');
+        del.title = '删除脚本';
+        del.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (!window.confirm('确定删除脚本 "' + (s.name || s.id) + '" 及其全部版本与运行记录？')) return;
+            if (state.scriptId === s.id) {
+                state.scriptId = null;
+                state.versionId = null;
+                state.versions = [];
+                state.runs = [];
+                renderVersions();
+                renderRuns();
+                renderMeta(null);
+                renderForm([]);
+                setOutput('');
+                dom.lineageView.innerHTML = '<div class="empty">选择版本后展示其派生来源</div>';
+            }
+            send(Outgoing.DeleteScript, { scriptId: s.id });
+        });
+        return del;
+    }
+
+    /**
+     * render the evolution lineage chain (newest first) that the host computed
+     * by walking parentVersionId, including cross script forks.
+     */
+    function renderLineage(lineage) {
+        dom.lineageView.innerHTML = '';
+        if (!lineage || !lineage.length) {
+            dom.lineageView.innerHTML = '<div class="empty">这是最早的版本（无来源）</div>';
+            return;
+        }
+        lineage.forEach(function (node, i) {
+            const row = el('div', 'lineage-node');
+            const head = el('div', 'lineage-head');
+            head.appendChild(el('span', 'badge', node.versionId));
+            head.appendChild(el('span', 'lineage-script', node.scriptName || node.scriptId));
+            if (node.created) head.appendChild(el('span', 'item-right', node.created));
+            row.appendChild(head);
+            if (node.comment && node.comment.trim()) {
+                row.appendChild(el('div', 'lineage-comment', node.comment));
+            }
+            dom.lineageView.appendChild(row);
+            if (i < lineage.length - 1) {
+                dom.lineageView.appendChild(el('div', 'lineage-arrow', '← 源自'));
+            }
         });
     }
 
@@ -308,6 +366,7 @@
 
             if (hit.snippet) li.appendChild(el('div', 'item-snippet', hit.snippet));
             if (s.title) li.appendChild(el('div', 'item-sub', s.title));
+            li.appendChild(makeScriptDelete(s));
 
             li.addEventListener('click', function () { selectScript(s.id); });
             dom.scriptList.appendChild(li);
@@ -697,6 +756,7 @@
         if (payload.workdir) dom.workdir.value = payload.workdir;
         const comment = payload.comment;
         dom.versionCommentBody.textContent = (comment && comment.trim()) ? comment : '（无变更说明）';
+        renderLineage(payload.lineage);
         renderVersions();
     };
 
@@ -762,6 +822,8 @@
     });
 
     dom.btnNewScript.addEventListener('click', function () {
+        state.forkSource = null;
+        dom.newScriptHint.hidden = true;
         dom.newScriptName.value = 'script' + (state.scripts.length + 1) + '.R';
         dom.newScriptModal.hidden = false;
         dom.newScriptName.focus();
@@ -780,7 +842,16 @@
         dom.newScriptModal.hidden = true;
         if (!name) return;
 
-        send(Outgoing.NewScript, { name: name });
+        const payload = { name: name };
+
+        if (state.forkSource) {
+            payload.sourceScriptId = state.forkSource.scriptId;
+            payload.sourceVersionId = state.forkSource.versionId;
+            state.forkSource = null;
+            dom.newScriptHint.hidden = true;
+        }
+
+        send(Outgoing.NewScript, payload);
         setStatus('creating script', 'busy');
     });
 
@@ -798,6 +869,18 @@
         dom.btnSuggestComment.textContent = '生成中…';
         send(Outgoing.SuggestComment, {});
         // the button is re-enabled by the CommentSuggestion handler
+    });
+
+    dom.btnForkVersion.addEventListener('click', function () {
+        if (!state.scriptId) { setStatus('no script selected', 'warn'); return; }
+        if (!state.versionId) { setStatus('no version selected', 'warn'); return; }
+        const src = findScript(state.scriptId);
+        state.forkSource = { scriptId: state.scriptId, versionId: state.versionId };
+        dom.newScriptHint.hidden = false;
+        dom.newScriptHint.textContent = '将基于版本 ' + state.versionId + ' 的代码创建新脚本';
+        dom.newScriptName.value = ((src && src.name) || 'script') + '_fork.R';
+        dom.newScriptModal.hidden = false;
+        dom.newScriptName.focus();
     });
 
     dom.btnSaveVersion.addEventListener('click', function () {

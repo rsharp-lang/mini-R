@@ -333,7 +333,7 @@ Namespace CVS
         ''' create a new script inside current database, the first version of the
         ''' script is generated from the given script text.
         ''' </summary>
-        Public Function AddScript(name As String, code As String, Optional comment As String = Nothing) As ScriptRecord
+        Public Function AddScript(name As String, code As String, Optional comment As String = Nothing, Optional ancestorVersionId As String = Nothing) As ScriptRecord
             SyncLock sync
                 Dim scriptId As String = $"s{index.nextScriptId:0000}"
                 Dim rec As New ScriptRecord With {
@@ -355,7 +355,7 @@ Namespace CVS
                 }
 
                 Using zip As ZipArchive = OpenArchive()
-                    Dim ver As VersionRecord = SaveVersionInternal(zip, sidx, code, comment, parentVersionId:=Nothing, force:=True)
+                    Dim ver As VersionRecord = SaveVersionInternal(zip, sidx, code, comment, parentVersionId:=ancestorVersionId, force:=True)
 
                     rec.latestVersionId = ver.versionId
                     rec.title = ver.metadata?.title

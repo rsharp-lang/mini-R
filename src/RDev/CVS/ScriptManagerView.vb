@@ -103,6 +103,8 @@ Public Class ScriptManagerView
     ' the editor window of the host application + the version that it displays
     Dim _editor As IEditor
     Dim _editorVersionId As String
+    ' versionId -> scriptId lookup, rebuilt whenever the script list changes
+    Dim versionIndex As Dictionary(Of String, String)
 
     Sub New()
         Call InitializeComponent()
@@ -233,7 +235,15 @@ Public Class ScriptManagerView
                 Call SendScripts()
 
             Case CvsOutgoing.NewScript
-                Call CreateScript(CvsPayload.Str(payload, "name"))
+                Dim name As String = CvsPayload.Str(payload, "name")
+                Dim srcScript As String = CvsPayload.Str(payload, "sourceScriptId")
+                Dim srcVersion As String = CvsPayload.Str(payload, "sourceVersionId")
+
+                If srcScript.StringEmpty OrElse srcVersion.StringEmpty Then
+                    Call CreateScript(name)
+                Else
+                    Call CreateScript(name, srcScript, srcVersion)
+                End If
 
             Case CvsOutgoing.SelectScript
                 Call SelectScript(CvsPayload.Str(payload, "scriptId"))
@@ -282,6 +292,7 @@ Public Class ScriptManagerView
             Return
         End If
 
+        Call RebuildVersionIndex()
         Call Post(CvsIncoming.Scripts, db.ListScripts())
     End Sub
 
@@ -333,6 +344,65 @@ Public Class ScriptManagerView
         End If
     End Sub
 
+    ''' <summary>
+    ''' rebuild the versionId -> scriptId lookup used by <see cref="BuildLineage"/>
+    ''' to resolve cross script ancestors. version ids are globally unique (the
+    ''' serial counter is database scoped), so a single map is enough.
+    ''' </summary>
+    Private Sub RebuildVersionIndex()
+        versionIndex = New Dictionary(Of String, String)
+
+        If db Is Nothing Then
+            Return
+        End If
+
+        For Each s As ScriptRecord In db.ListScripts()
+            For Each v As VersionRecord In db.ListVersions(s.id)
+                If Not versionIndex.ContainsKey(v.versionId) Then
+                    versionIndex(v.versionId) = s.id
+                End If
+            Next
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' walk the parentVersionId chain from the current version and produce an
+    ''' ordered (newest first) list of lineage nodes for the evolution view.
+    ''' </summary>
+    Private Function BuildLineage(scriptId As String, versionId As String) As List(Of Dictionary(Of String, Object))
+        Dim chain As New List(Of Dictionary(Of String, Object))
+        Dim sid As String = scriptId
+        Dim vid As String = versionId
+        Dim guard As Integer = 0
+
+        Do While Not vid.StringEmpty AndAlso guard < 1000
+            guard += 1
+
+            Dim srec As ScriptRecord = db.GetScript(sid)
+            Dim vrec As VersionRecord = db.GetVersion(sid, vid)
+
+            chain.Add(New Dictionary(Of String, Object) From {
+                {"scriptId", sid},
+                {"scriptName", If(srec?.name, sid)},
+                {"versionId", vid},
+                {"comment", If(vrec?.comment, "")},
+                {"created", If(vrec?.created, "")}
+            })
+
+            If vrec Is Nothing OrElse vrec.parentVersionId.StringEmpty Then
+                Exit Do
+            End If
+
+            vid = vrec.parentVersionId
+
+            If versionIndex IsNot Nothing AndAlso versionIndex.ContainsKey(vid) Then
+                sid = versionIndex(vid)
+            End If
+        Loop
+
+        Return chain
+    End Function
+
     Private Sub SelectVersion(scriptId As String, versionId As String)
         If Not scriptId.StringEmpty Then
             Me.scriptId = scriptId
@@ -350,7 +420,8 @@ Public Class ScriptManagerView
             {"versionId", versionId},
             {"metadata", If(ver Is Nothing, Nothing, ver.metadata)},
             {"workdir", workdir},
-            {"comment", If(ver Is Nothing, Nothing, ver.comment)}
+            {"comment", If(ver Is Nothing, Nothing, ver.comment)},
+            {"lineage", If(ver Is Nothing, Nothing, BuildLineage(Me.scriptId, versionId))}
         })
         Call Post(CvsIncoming.Runs, db.ListRuns(Me.scriptId, versionId))
     End Sub
@@ -538,6 +609,26 @@ Public Class ScriptManagerView
     End Function
 
     ''' <summary>
+    ''' the same diff that <see cref="BuildCommentPrompt"/> feeds to the LLM, but
+    ''' returned as a plain unified diff text for the manual review tab of the
+    ''' comment dialog.
+    ''' </summary>
+    Private Shared Function BuildDiffText(newCode As String, oldCode As String) As String
+        If oldCode.StringEmpty Then
+            Return "（这是首个版本，没有历史版本可供对比）"
+        End If
+
+        Dim differ As New MyersDiff()
+        Dim result As DiffResult = differ.Compare(ToLines(oldCode), ToLines(newCode))
+
+        If result.Truncated OrElse result.Items.Count > 2000 Then
+            Return result.ToSummary() & vbCrLf & vbCrLf & "（差异过大，已省略逐行对比；请直接在编辑器中审阅当前代码）"
+        End If
+
+        Return result.ToUnifiedDiff("上一版本.R", "当前版本.R", contextLines:=3)
+    End Function
+
+    ''' <summary>
     ''' split a text into an array of lines (handles both crlf and lf)
     ''' </summary>
     Private Shared Function ToLines(text As String) As String()
@@ -599,6 +690,22 @@ Public Class ScriptManagerView
             RaiseStatus("LLM 生成失败: " & ex.Message, "error")
             Return Nothing
         End Try
+    End Function
+
+    ''' <summary>
+    ''' compute the unified diff of the editor content against its base version,
+    ''' used to populate the review tab of the comment dialog.
+    ''' </summary>
+    Private Async Function ComputeDiffText() As Task(Of String)
+        If _editor Is Nothing Then
+            Return "（编辑器未打开，无法计算差异）"
+        End If
+
+        Dim parentId As String = If(_editorVersionId, Me.versionId)
+        Dim newCode As String = Await _editor.SaveScript()
+        Dim oldCode As String = If(parentId.StringEmpty, "", db.GetVersionCode(Me.scriptId, parentId))
+
+        Return BuildDiffText(newCode, oldCode)
     End Function
 
     ''' <summary>
@@ -720,6 +827,42 @@ Public Class ScriptManagerView
         End Try
     End Sub
 
+    ''' <summary>
+    ''' create a brand new script that is forked from an existing version of
+    ''' another (or the same) script: the source version code becomes the first
+    ''' version of the new script, and its ancestor is recorded in parentVersionId.
+    ''' </summary>
+    Private Sub CreateScript(name As String, sourceScriptId As String, sourceVersionId As String)
+        If db Is Nothing Then
+            Return
+        End If
+        If name.StringEmpty Then
+            name = "script.R"
+        End If
+
+        Try
+            Dim code As String = db.GetVersionCode(sourceScriptId, sourceVersionId)
+
+            If code Is Nothing Then
+                code = ""
+            End If
+
+            Dim rec As ScriptRecord = db.AddScript(name, code, comment:=$"派生自 {sourceScriptId} {sourceVersionId}", ancestorVersionId:=sourceVersionId)
+
+            scriptId = rec.id
+            versionId = rec.latestVersionId
+
+            Call SendScripts()
+            Call Post(CvsIncoming.Versions, db.ListVersions(rec.id))
+            Call SelectVersion(rec.id, versionId)
+            Call OpenInEditor(rec.id, versionId)
+
+            RaiseStatus($"script '{name}' forked from {sourceVersionId}", "ok")
+        Catch ex As Exception
+            RaiseStatus(ex.Message, "error")
+        End Try
+    End Sub
+
     Private Sub RemoveScript(scriptId As String)
         If db Is Nothing OrElse scriptId.StringEmpty Then
             Return
@@ -815,13 +958,21 @@ Public Class ScriptManagerView
         Call OpenInEditor()
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    Private Async Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If scriptId.StringEmpty Then
             RaiseStatus("no script selected", "warn")
             Return
         End If
 
-        Using dlg As New CommentDialog(AddressOf GenerateCommentAsync)
+        Dim diff As String = ""
+
+        Try
+            diff = Await ComputeDiffText()
+        Catch
+            diff = "（计算差异时出错）"
+        End Try
+
+        Using dlg As New CommentDialog(AddressOf GenerateCommentAsync, Function() diff)
             If dlg.ShowDialog(Me) = DialogResult.OK Then
                 Call SaveVersion(scriptId, If(dlg.Comment, ""))
             End If
