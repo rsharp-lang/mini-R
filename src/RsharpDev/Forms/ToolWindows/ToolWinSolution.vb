@@ -72,10 +72,10 @@ Public Class ToolWinSolution
     ''' <param name="e"></param>
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         If Program.Solution Is Nothing Then
-            MyApplication.RStudio.ShowStatusMsg("No solution for build package...", IconResource.StatusAnnotations_Warning_32xLG)
+            CommonRuntime.StatusMessage("No solution for build package...", IconResource.StatusAnnotations_Warning_32xLG)
             Return
         Else
-            MyApplication.RStudio.ShowStatusMsg($"Build package '{Program.Solution.LoadInformation.Package}'...", IconResource.build_Selection_32xLG)
+            CommonRuntime.StatusMessage($"Build package '{Program.Solution.LoadInformation.Package}'...", IconResource.build_Selection_32xLG)
         End If
 
         Dim Rscript = CLI.Rscript.FromEnvironment(App.HOME)
@@ -90,7 +90,7 @@ Public Class ToolWinSolution
                     args:=commandlineArguments,
                     onReadLine:=AddressOf CommonRuntime.GetOutputWindow().AppendLine
                 )
-                Call MyApplication.RStudio.ShowStatusMsg("Ready")
+                Call CommonRuntime.StatusMessage("Ready")
             End Sub).Start()
     End Sub
 End Class

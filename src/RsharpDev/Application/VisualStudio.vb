@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualStudio.WinForms.Docking
@@ -19,11 +20,8 @@ Module VisualStudio
     Friend RefreshRecentList As Action
 
     Sub InitializeUI()
-        SolutionView.Show(MyApplication.RStudio.DockPanel1)
-        SolutionView.DockState = DockState.DockRightAutoHide
-
-        LinuxServerList.Show(MyApplication.RStudio.DockPanel1)
-        LinuxServerList.DockState = DockState.DockLeftAutoHide
+        Call CommonRuntime.RegisterToolWindow(SolutionView, DockState.DockRightAutoHide)
+        Call CommonRuntime.RegisterToolWindow(LinuxServerList, DockState.DockLeftAutoHide)
     End Sub
 
     Public Sub OpenSolution()
@@ -62,8 +60,7 @@ Module VisualStudio
             DirectCast(doc, IFileReference).FilePath = file
         End If
 
-        doc.Show(MyApplication.RStudio.DockPanel1)
-        doc.DockState = DockState.Document
+        Call CommonRuntime.ShowDocument(doc,)
 
         If Not after Is Nothing Then
             Call after(doc)

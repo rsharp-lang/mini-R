@@ -32,8 +32,7 @@ Friend NotInheritable Class Program
         ribbon.SoluationTabGroup.Label = $"Solution [{Solution.LoadInformation.Package}]"
         ribbon.SolutionTab.Label = ribbon.SoluationTabGroup.Label
 
-        MyApplication.RStudio.Text = $"R# Develop Studio [{Rproj}]"
-
+        Call CommonRuntime.AppHost.SetTitle($"R# Develop Studio [{Rproj}]")
         Call ProgressSpinner.DoLoading(
             Sub()
                 VisualStudio.SolutionView.TreeView1.Nodes(Scan0).Nodes.Clear()

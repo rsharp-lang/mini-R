@@ -2,7 +2,6 @@ Imports System.ComponentModel
 Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.My
-Imports RsharpDev.My
 Imports RsharpDev.My.Resources
 
 Public Class RsharpDevMain : Implements AppHost
@@ -31,7 +30,6 @@ Public Class RsharpDevMain : Implements AppHost
         Call ImageDriver.Register()
         Call RibbonMenu.Hook(RibbonUI)
         Call CommonRuntime.Hook(Me)
-        Call MyApplication.Register(Me)
         Call Program.Initialize()
         Call InitializeVsUI()
         Call VisualStudio.InitializeUI()

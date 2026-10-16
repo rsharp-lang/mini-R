@@ -9,12 +9,6 @@ Namespace My
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
-        Public Shared ReadOnly Property RStudio As RsharpDevMain
-
-        Public Shared Sub Register(rstudio As RsharpDevMain)
-            MyApplication._RStudio = rstudio
-        End Sub
-
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Call App.LogException(e.Exception)
         End Sub
