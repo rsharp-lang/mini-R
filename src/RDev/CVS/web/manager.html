@@ -44,10 +44,17 @@
                     <span class="col-title" id="versionColTitle">历史版本</span>
                 </div>
                 <div class="col-tools">
-                    <input type="text" id="versionComment" placeholder="版本变更说明…" autocomplete="off" />
+                    <div class="comment-row">
+                        <input type="text" id="versionComment" placeholder="版本变更说明…" autocomplete="off" />
+                        <button class="btn ghost" id="btnSuggestComment" title="用 AI 根据代码差异生成变更说明">AI 生成</button>
+                    </div>
                     <div class="btn-row">
                         <button class="btn" id="btnSaveVersion" title="把编辑器中的内容保存为一个新版本">保存新版本</button>
                         <button class="btn" id="btnOpenEditor" title="在编辑器中打开选中的版本">编辑器打开</button>
+                    </div>
+                    <div class="comment-view" id="versionCommentView">
+                        <div class="comment-view-head">变更说明</div>
+                        <div class="comment-view-body" id="versionCommentBody">（无变更说明）</div>
                     </div>
                 </div>
                 <ul class="list" id="versionList"></ul>

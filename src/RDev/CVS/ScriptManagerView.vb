@@ -2,8 +2,11 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Text
 Imports System.Text.Json
+Imports System.Threading.Tasks
 Imports RDev.CVS
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Data.MyersDiff
+Imports Ollama
 Imports Microsoft.Web.WebView2.Core
 Imports Microsoft.Web.WebView2.WinForms
 
@@ -244,6 +247,9 @@ Public Class ScriptManagerView
             Case CvsOutgoing.SaveVersion
                 Call SaveVersion(CvsPayload.Str(payload, "scriptId"), CvsPayload.Str(payload, "comment"))
 
+            Case CvsOutgoing.SuggestComment
+                Call SuggestCommentAsync()
+
             Case CvsOutgoing.RunScript
                 Call RunScriptAsync(payload)
 
@@ -343,7 +349,8 @@ Public Class ScriptManagerView
         Call Post(CvsIncoming.VersionDetail, New Dictionary(Of String, Object) From {
             {"versionId", versionId},
             {"metadata", If(ver Is Nothing, Nothing, ver.metadata)},
-            {"workdir", workdir}
+            {"workdir", workdir},
+            {"comment", If(ver Is Nothing, Nothing, ver.comment)}
         })
         Call Post(CvsIncoming.Runs, db.ListRuns(Me.scriptId, versionId))
     End Sub
@@ -487,6 +494,129 @@ Public Class ScriptManagerView
         Catch ex As Exception
             RaiseStatus(ex.Message, "error")
         End Try
+    End Sub
+
+    ' ===================== ai change comment =====================
+
+    ''' <summary>
+    ''' build the prompt that is sent to the LLM: the diff between the old and
+    ''' the new version of the script, produced by the MyersDiff algorithm.
+    ''' </summary>
+    Private Shared Function BuildCommentPrompt(newCode As String, oldCode As String) As String
+        Dim sb As New StringBuilder
+
+        If oldCode.StringEmpty Then
+            ' there is no previous version: just let the model summarize the
+            ' whole new script as the first version change comment
+            Call sb.AppendLine("以下是待保存的 R# 脚本（首个版本）的完整内容：")
+            Call sb.AppendLine()
+            Call sb.AppendLine(newCode)
+            Return sb.ToString()
+        End If
+
+        Dim differ As New MyersDiff()
+        Dim oldLines As String() = ToLines(oldCode)
+        Dim newLines As String() = ToLines(newCode)
+        Dim result As DiffResult = differ.Compare(oldLines, newLines)
+
+        ' when the edit distance is huge (Truncated) or the diff is enormous,
+        ' fall back to sending both full texts with clear labels
+        If result.Truncated OrElse result.Items.Count > 2000 Then
+            Call sb.AppendLine("=== 上一版本代码 ===")
+            Call sb.AppendLine(oldCode)
+            Call sb.AppendLine()
+            Call sb.AppendLine("=== 当前（待保存）版本代码 ===")
+            Call sb.AppendLine(newCode)
+            Return sb.ToString()
+        End If
+
+        Call sb.AppendLine(result.ToSummary())
+        Call sb.AppendLine()
+        Call sb.AppendLine(result.ToUnifiedDiff("上一版本.R", "当前版本.R", contextLines:=3))
+
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>
+    ''' split a text into an array of lines (handles both crlf and lf)
+    ''' </summary>
+    Private Shared Function ToLines(text As String) As String()
+        If text Is Nothing Then
+            Return New String() {}
+        End If
+
+        Return text.Replace(vbCrLf, vbLf).Split(New Char() {vbLf}, StringSplitOptions.None)
+    End Function
+
+    ''' <summary>
+    ''' generate a change comment for the new version of the script by sending
+    ''' the diff between the editor content and the previous version to the LLM.
+    ''' returns the generated comment text, or Nothing when the operation failed.
+    ''' </summary>
+    Private Async Function GenerateCommentAsync() As Task(Of String)
+        If _editor Is Nothing Then
+            RaiseStatus("请先在代码编辑器中打开脚本", "warn")
+            Return Nothing
+        End If
+
+        Dim cfg As LLMConfig = LLMConfig.LoadDefault()
+
+        If cfg.provider.StringEmpty Then
+            RaiseStatus("LLM 未配置（缺少 llm.ini 的 provider）", "warn")
+            Return Nothing
+        End If
+
+        Dim parentId As String = If(_editorVersionId, Me.versionId)
+        Dim newCode As String = Await _editor.SaveScript()
+
+        If newCode.StringEmpty Then
+            RaiseStatus("编辑器内容为空", "warn")
+            Return Nothing
+        End If
+
+        Dim oldCode As String = If(parentId.StringEmpty, "", db.GetVersionCode(Me.scriptId, parentId))
+        Dim prompt As String = BuildCommentPrompt(newCode, oldCode)
+
+        If prompt.StringEmpty Then
+            RaiseStatus("没有可生成的内容", "warn")
+            Return Nothing
+        End If
+
+        Try
+            Dim client As LLMClient = cfg.CreateLLm()
+            client.system_message = "你是一名 R# 脚本版本管理助手。用户会给你一段脚本的新版本与上一版本的代码差异（统一 diff 格式），请据此撰写一段简洁、面向开发者的版本变更说明（中文，2-4 句，聚焦本次实际修改的内容：新增、删除或调整了哪些功能、参数或行为），不要逐行解释，不要重复代码，不要使用代码块标记。"
+
+            Dim resp As LLMsResponse = Await client.Chat(prompt)
+            Dim text As String = If(resp?.output, "")
+
+            If text.StringEmpty Then
+                RaiseStatus("LLM 返回为空", "warn")
+                Return Nothing
+            End If
+
+            Return text.Trim()
+        Catch ex As Exception
+            RaiseStatus("LLM 生成失败: " & ex.Message, "error")
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' host side handler of the html "AI 生成" button: generates a change
+    ''' comment and posts it back to the page (so the page can re-enable its
+    ''' button even when generation failed).
+    ''' </summary>
+    Private Async Sub SuggestCommentAsync()
+        Dim comment As String = Await GenerateCommentAsync()
+
+        ' always post back so the html button can re-enable itself
+        Call Post(CvsIncoming.CommentSuggestion, New Dictionary(Of String, Object) From {
+            {"comment", If(comment, "")}
+        })
+
+        If Not comment.StringEmpty Then
+            RaiseStatus("已生成变更说明", "ok")
+        End If
     End Sub
 
     ' ===================== script run =====================
@@ -686,9 +816,16 @@ Public Class ScriptManagerView
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim comment As String = Interaction.InputBox("版本变更说明:", "保存新版本", "")
+        If scriptId.StringEmpty Then
+            RaiseStatus("no script selected", "warn")
+            Return
+        End If
 
-        Call SaveVersion(scriptId, If(comment, ""))
+        Using dlg As New CommentDialog(AddressOf GenerateCommentAsync)
+            If dlg.ShowDialog(Me) = DialogResult.OK Then
+                Call SaveVersion(scriptId, If(dlg.Comment, ""))
+            End If
+        End Using
     End Sub
 
     Private Sub btnRun_Click(sender As Object, e As EventArgs) Handles btnRun.Click

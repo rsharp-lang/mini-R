@@ -15,6 +15,8 @@ Namespace CVS
         Public Const Output As String = "Output"
         Public Const RunResult As String = "RunResult"
         Public Const Status As String = "Status"
+        ''' <summary>the generated change comment for the new version (host -> page)</summary>
+        Public Const CommentSuggestion As String = "CommentSuggestion"
         ''' <summary>the full text search hits of the script code</summary>
         Public Const SearchResults As String = "SearchResults"
     End Class
@@ -33,6 +35,8 @@ Namespace CVS
         Public Const RunScript As String = "RunScript"
         Public Const DeleteScript As String = "DeleteScript"
         Public Const RequestOutput As String = "RequestOutput"
+        ''' <summary>ask the host to generate a change comment for the new version via the LLM</summary>
+        Public Const SuggestComment As String = "SuggestComment"
         ''' <summary>fuzzy search the script code, an empty query lists all scripts</summary>
         Public Const SearchScripts As String = "SearchScripts"
     End Class

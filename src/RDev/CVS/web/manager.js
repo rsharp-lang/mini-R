@@ -17,7 +17,8 @@
         SaveVersion: 'SaveVersion',
         RunScript: 'RunScript',
         DeleteScript: 'DeleteScript',
-        RequestOutput: 'RequestOutput'
+        RequestOutput: 'RequestOutput',
+        SuggestComment: 'SuggestComment'
     };
 
     const Incoming = {
@@ -28,7 +29,8 @@
         VersionDetail: 'VersionDetail',
         Output: 'Output',
         RunResult: 'RunResult',
-        Status: 'Status'
+        Status: 'Status',
+        CommentSuggestion: 'CommentSuggestion'
     };
 
     /* ============================ state ============================ */
@@ -63,6 +65,7 @@
         'runsCard',
         'formHint', 'workdir', 'btnRun', 'btnResetArgs', 'runList', 'runEmpty',
         'btnCopyCmd', 'runsHint', 'outputView', 'outputHint', 'btnCopyOutput',
+        'btnSuggestComment', 'versionCommentBody',
         'newScriptModal', 'newScriptName', 'btnCreateScript', 'btnCancelNew'];
 
     ids.forEach(function (id) { dom[id] = document.getElementById(id); });
@@ -692,7 +695,21 @@
         renderMeta(payload.metadata);
         renderForm(payload.metadata ? payload.metadata.arguments : []);
         if (payload.workdir) dom.workdir.value = payload.workdir;
+        const comment = payload.comment;
+        dom.versionCommentBody.textContent = (comment && comment.trim()) ? comment : '（无变更说明）';
         renderVersions();
+    };
+
+    handlers[Incoming.CommentSuggestion] = function (payload) {
+        dom.btnSuggestComment.disabled = false;
+        dom.btnSuggestComment.textContent = 'AI 生成';
+        const comment = payload && payload.comment ? payload.comment : '';
+        if (comment) {
+            dom.versionComment.value = comment;
+            setStatus('已填入 AI 生成的变更说明', 'ok');
+        } else {
+            setStatus('AI 生成失败', 'warn');
+        }
     };
 
     handlers[Incoming.Output] = function (payload) {
@@ -773,6 +790,15 @@
     });
 
     dom.btnOpenEditor.addEventListener('click', function () { openInEditor(state.versionId); });
+
+    dom.btnSuggestComment.addEventListener('click', function () {
+        if (!state.scriptId) { setStatus('no script selected', 'warn'); return; }
+        if (!state.versionId) { setStatus('no version selected', 'warn'); return; }
+        dom.btnSuggestComment.disabled = true;
+        dom.btnSuggestComment.textContent = '生成中…';
+        send(Outgoing.SuggestComment, {});
+        // the button is re-enabled by the CommentSuggestion handler
+    });
 
     dom.btnSaveVersion.addEventListener('click', function () {
         if (!state.scriptId) {

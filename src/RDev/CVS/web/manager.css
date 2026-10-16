@@ -455,6 +455,68 @@ body {
     color: var(--muted);
 }
 
+/* the ai-suggest button is a secondary (ghost) button */
+.btn.ghost {
+    flex: 0 0 auto;
+    min-width: 72px;
+    color: var(--accent);
+    background: var(--bg);
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.btn.ghost:hover:not(:disabled) {
+    background: #EEF6FD;
+    border-color: var(--accent-hover);
+}
+
+.btn.ghost:disabled {
+    opacity: .55;
+    cursor: default;
+    color: var(--muted);
+    background: var(--side-2);
+    border-color: var(--border);
+}
+
+/* the comment input and the ai button share one row */
+.comment-row {
+    display: flex;
+    gap: 6px;
+}
+
+.comment-row input {
+    flex: 1 1 auto;
+}
+
+/* read-only area that shows the full change comment of the selected version */
+.comment-view {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.comment-view-head {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .4px;
+    color: var(--muted);
+}
+
+.comment-view-body {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-2);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 200px;
+    overflow: auto;
+}
+
 /* ---------------- detail cards ---------------- */
 
 .card {
@@ -691,8 +753,6 @@ body {
 /* reserve room at the bottom of the card so the fab never hides the last run */
 #runsCard.has-fab {
     padding-bottom: 40px;
-}
-    max-height: 220px;
 }
 
 .run-item {
